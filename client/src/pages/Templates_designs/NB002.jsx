@@ -1,7 +1,15 @@
 import BrandLogo from "../../assets/Logos/brandLogo.png";
 import qrCode from "../../assets/Images/qr-code-demo.png";
 
-export default function NB002() {
+export default function NB002(props) {
+
+  const { billedTo, items } = props.invoiceDetails || {};
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+
   return (
     <div className="flex justify-center item-center mx-auto mt-20 mb-7 bg-gray-600">
       {/* main card */}
@@ -32,19 +40,19 @@ export default function NB002() {
                 </p>
               </li>
               <li>
-                <p className="text-xl font-bold tracking-wider">Imani Olowe</p>
+                <p className="text-xl font-bold tracking-wider">{billedTo ? billedTo.client : ''}</p>
               </li>
               <li className="text-sm">
-                <p>+123-456-7890</p>
+                <p>{billedTo ? billedTo.phoneNumber : ''}</p>
               </li>
               <li className="text-sm">
-                <p>63 Ivy Road, Hawkville, GA, USA 31036</p>
+                <p>{billedTo ? billedTo.address : ''}</p>
               </li>
             </ul>
 
             <ul className="text-right self-end">
               <li>Invoice No. 12345</li>
-              <li>16 June 2025</li>
+              <li>{currentDate}</li>
             </ul>
           </div>
         </div>
@@ -59,42 +67,20 @@ export default function NB002() {
             </tr>
           </thead>
           <tbody className="text-sm">
-            <tr>
-              <td className="py-2 border-2 border-slate-700 pb-2 px-2">
-                Eggshell Camisole Top
-              </td>
-              <td className="py-2 border-2 border-slate-700 text-center">1</td>
-              <td className="py-2 border-2 border-slate-700 text-center">
-                $<span>123</span>
-              </td>
-              <td className="py-2 border-2 border-slate-700 text-center">
-                $<span>123</span>
-              </td>
-            </tr>
-            <tr>
-              <td className="py-2 border-2 border-slate-700 pb-2 px-2">
-                Eggshell Camisole Top
-              </td>
-              <td className="py-2 border-2 border-slate-700 text-center">1</td>
-              <td className="py-2 border-2 border-slate-700 text-center">
-                $<span>123</span>
-              </td>
-              <td className="py-2 border-2 border-slate-700 text-center">
-                $<span>123</span>
-              </td>
-            </tr>
-            <tr>
-              <td className="py-2 border-2 border-slate-700 pb-2 px-2">
-                Eggshell Camisole Top
-              </td>
-              <td className="py-2 border-2 border-slate-700 text-center">1</td>
-              <td className="py-2 border-2 border-slate-700 text-center">
-                $<span>123</span>
-              </td>
-              <td className="py-2 border-2 border-slate-700 text-center">
-                $<span>123</span>
-              </td>
-            </tr>
+          { items &&
+              items.map((row) => (
+                <tr>
+                <td className="pb-2 px-2">{row.itemName}</td>
+                <td className="text-center">{row.qty}</td>
+                <td className="text-center">
+                  $<span>{row.rate}</span>
+                </td>
+                <td className="text-center">
+                  $<span>{row.amount}</span>
+                </td>
+              </tr>
+              ))
+            }
           </tbody>
         </table>
 
@@ -102,7 +88,7 @@ export default function NB002() {
         <div className="float-right min-w-[20%] mt-6 space-y-4 mb-32  ">
           <p className="flex justify-between items-center">
             <span className="font-semibold">Subtotal</span>
-            <span>$500</span>
+            <span>${props.grandTotal}</span>
           </p>
           <p className="flex justify-between items-center">
             <span className="font-semibold">Tax</span>
