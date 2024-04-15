@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import BrandLogo from "../../assets/Logos/brandLogo.png";
 
 export default function NB001(props) {
@@ -8,6 +9,15 @@ export default function NB001(props) {
     day: 'numeric',
     year: 'numeric'
   });
+  const [grandTotal, setGrandTotal] = useState(0);
+  useEffect(() => {
+    let GT = 0;
+    items.forEach((item) => {
+      GT += parseInt(item.amount);
+    });
+    setGrandTotal(GT);
+  }, [items]);
+
   
   return (
     <div className="flex justify-center item-center mx-auto">
@@ -76,7 +86,7 @@ export default function NB001(props) {
         <div className="float-right min-w-[20%] mt-6 space-y-4 mb-32  ">
           <p className="flex justify-between items-center">
             <span className="font-semibold">Subtotal</span>
-            <span>$500</span>
+            <span>${grandTotal}</span>
           </p>
           <p className="flex justify-between items-center">
             <span className="font-semibold">Tax</span>
