@@ -19,13 +19,18 @@ export default function Step2() {
     }
   }, [location.state]);
 
-  const [invoiceCode, setInvoiceCode] = useState('NB001');
+  const [invoiceCode, setInvoiceCode] = useState({
+    code: "NB001",
+    id: 0,
+  });
   const invoiceComponents = [
-    {code : 'NB001', component : <NB001 invoiceDetails={invoiceDetails} />},
-    {code : 'NB002', component : <NB002 invoiceDetails={invoiceDetails} />},
-  ]
+    { code: "NB001", component: <NB001 invoiceDetails={invoiceDetails} /> },
+    { code: "NB002", component: <NB002 invoiceDetails={invoiceDetails} /> },
+  ];
 
-  const selectedTemplate = invoiceComponents.find(item => item.code === invoiceCode);
+  const selectedTemplate = invoiceComponents.find(
+    (item) => item.code === invoiceCode.code
+  );
   return (
     <div className="bg-img-common">
       <NavbarAfterLogin />
@@ -38,7 +43,8 @@ export default function Step2() {
               id={index}
               title={item.title}
               image={item.image}
-              code={(id) => setInvoiceCode(DesignsInfo[id].imgCode)}
+              selectedID={invoiceCode.id}
+              code={(id) => setInvoiceCode({code : DesignsInfo[id].imgCode, id : id})}
             />
           ))}
         </div>
