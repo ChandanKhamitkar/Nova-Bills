@@ -1,3 +1,18 @@
+# NovaBills
+> [!IMPORTANT]
+> The simple solution to business to make invoices / Bills to their customers.
+
+## Features
+
+- 3 simple steps to create an invoice.
+    - Enter the esssential details like **Billing To** and **Items**
+    - Select your preffered template design.
+    - Download and share ready invoice to your customer in the **pdf** format.
+- Track your invoice finances.
+- Update payment status `Paid` / `Pending`
+- Monthly **Report** will be shown using graph.
+- Weekly Report will be sent to Business Owner `mail`
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
