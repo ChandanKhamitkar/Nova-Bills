@@ -2,7 +2,7 @@ import BrandLogo from "../../assets/Logos/brandLogo.png";
 
 export default function NB001(props) {
 
-  const { billedTo, items } = props.invoiceDetails || {};
+  const { billedTo, items, owner } = props.invoiceDetails || {};
   const currentDate = new Date().toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
@@ -94,13 +94,15 @@ export default function NB001(props) {
             <div>
               <p className="text-2xl font-mono mb-20">Thankyou!</p>
               <p className="uppercase font-semibold">payment information</p>
-              <p>Briard Bank</p>
+              <p>Bank Name : {owner ? owner.bankName : ''}</p>
               <p>UPI ID: 19324709127@oksbi</p>
-              <p>Account Holder Date</p>
+              <p>Account Holder Name : {owner ? owner.accountName : ''}</p>
+              <p>Account Number : {owner ? owner.accountNumber : ''}</p>
             </div>
             <div className="self-end">
-              <p className="font-serif text-xl">Samira Hadid</p>
-              <p>123, Anywhere St, Any City, ST 12345</p>
+              <p className="font-serif text-xl">{owner ? owner.fullName : ''}</p>
+              <p>{owner ? owner.mail : ''}</p>
+              <p>{owner ? owner.address : ''}, {owner ? owner.city : ''}, {owner ? owner.pincode : ''}</p>
             </div>
           </div>
         </div>

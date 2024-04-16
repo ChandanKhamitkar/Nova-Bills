@@ -3,7 +3,7 @@ import qrCode from "../../assets/Images/qr-code-demo.png";
 
 export default function NB002(props) {
 
-  const { billedTo, items } = props.invoiceDetails || {};
+  const { billedTo, items, owner } = props.invoiceDetails || {};
   const currentDate = new Date().toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
@@ -105,9 +105,10 @@ export default function NB002(props) {
           <div>
             <p className="font-bold tracking-wide text-lg">Payment Method :</p>
             <div className="text-slate-600 font-normal space-y-1 tracking-wide text-sm">
-              <p>Bank Name : Briard Bank</p>
+              <p>Bank Name : {owner ? owner.bankName : ''}</p>
               <p>UPI ID: 19324709127@oksbi</p>
-              <p>Drew Feig</p>
+              <p>Account Holder Name : {owner ? owner.accountName : ''}</p>
+              <p>Account Number : {owner ? owner.accountNumber : ''}</p>
             </div>
             <img src={qrCode} alt="demo qr code" className="w-20 h-20 mt-4 opacity-85" />
           </div>
@@ -115,9 +116,9 @@ export default function NB002(props) {
           <div className="w-full flex justify-between items-center">
             <p className="text-2xl font-sans font-medium ">Thank Your for purchase!</p>
             <div className="w-max text-center space-y-4">
-              <p className="font-sans text-xl">Samira Hadid</p>
+              <p className="font-sans text-xl">{owner ? owner.fullName : ''}</p>
               <div className="w-full h-px bg-black"></div>
-              <p>123, Anywhere St, Any City, ST 12345</p>
+              <p>{owner ? owner.address : ''}, {owner ? owner.city : ''}, {owner ? owner.pincode : ''}</p>
             </div>
           </div>
         </div>

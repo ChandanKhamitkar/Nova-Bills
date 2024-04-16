@@ -1,4 +1,4 @@
-import { Mail, Phone, User, Map, LandPlot, MapPin } from "lucide-react";
+import { Mail, Phone, User, Map, LandPlot, MapPin, Landmark, UserCheck, Hash } from "lucide-react";
 
 const BilledByInfo = [
 
@@ -31,6 +31,21 @@ const BilledByInfo = [
         title : "Add pincode",
         name : "pincode",
         icon : (<MapPin size={19}/>)
+    },
+    {
+        title : "Add Bank Name",
+        name : "bankName",
+        icon : (<Landmark size={19}/>)
+    },
+    {
+        title : "Add Account Holder Name",
+        name : "accountName",
+        icon : (<UserCheck size={19}/>)
+    },
+    {
+        title : "Add Account Number",
+        name : "accountNumber",
+        icon : (<Hash size={19}/>)
     },
 ];
 

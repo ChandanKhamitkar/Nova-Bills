@@ -1,14 +1,42 @@
 import DetailCard from "./DetailCard";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavbarAfterLogin from "../components/Navbars/NavbarAfterLogin";
 import TableRow from "./TableRow.jsx";
 import BilledToInfo from "../../utils/BilledTo/BillledToInfo.js";
 import BilledByInfo from "../../utils/BilledBy/BilledByInfo.js";
 import Show from "../components/PopupModals/Show.jsx";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function InvoiceInput() {
   const navigate = useNavigate();
+
+  const [administrationDetails, setAdministrationDetails] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = Cookies.get("nb_token");
+        const response = await axios.get(
+          "http://localhost:8000/api/user/getProfileData",
+          {
+            headers: {
+              "content-type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("Billed by data : ", response.data);
+        setAdministrationDetails(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [setAdministrationDetails]);
+
   const [rows, setRows] = useState([]);
   const [showModal, setShowModal] = useState(true);
   const [formData, setFormData] = useState({
@@ -53,14 +81,23 @@ export default function InvoiceInput() {
   };
 
   const [billedBy, setBilledBy] = useState({
-    fullName : false,
-    email : false,
-    phoneNumber : false,
-    address : false,
-    city : false,
-    pincode : false,
+    fullName: false,
+    email: false,
+    phoneNumber: false,
+    address: false,
+    city: false,
+    pincode: false,
+    bankName: false,
+    accountName: false,
+    accountNumber: false,
   });
 
+  const seletedAdministrationDetails = Object.keys(billedBy)
+    .filter((key) => billedBy[key])
+    .reduce((result, key) => {
+      result[key] = administrationDetails[key];
+      return result;
+    }, {});
 
   return (
     <div
@@ -103,16 +140,20 @@ export default function InvoiceInput() {
               </p>
               <div className="w-full flex flex-wrap gap-4">
                 {BilledByInfo.map((you, index) => (
-                  <p onClick={(e) => {
-                    e.preventDefault();
-                    setBilledBy(prevState => ({
-                      ...prevState,
-                      [you.name]: !prevState[you.name]
-                    }));
-                  }} key={index} className={`px-4 py-1 rounded-lg border border-slate-800 flex justify-center items-center space-x-2 w-max hover:shadow hover:shadow-slate-800 cursor-pointer ${billedBy[you.name] ? "bg-gray-800 text-white" : ""}`}>
-                    <span className="text-blue-300">
-                      {you.icon}
-                    </span>
+                  <p
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setBilledBy((prevState) => ({
+                        ...prevState,
+                        [you.name]: !prevState[you.name],
+                      }));
+                    }}
+                    key={index}
+                    className={`select-none px-4 py-1 rounded-lg border border-slate-800 flex justify-center items-center space-x-2 w-max hover:shadow hover:shadow-slate-800 cursor-pointer ${
+                      billedBy[you.name] ? "bg-gray-800 text-white" : ""
+                    }`}
+                  >
+                    <span className="text-blue-300">{you.icon}</span>
                     <span>{you.title}</span>
                   </p>
                 ))}
@@ -190,7 +231,11 @@ export default function InvoiceInput() {
               console.log("row data : ", rows);
               console.log("billed to : ", formData);
               navigate("/selectTemplate", {
-                state: { billedTo: formData, items: rows },
+                state: {
+                  billedTo: formData,
+                  items: rows,
+                  owner: seletedAdministrationDetails,
+                },
               });
             }}
             className="bg-cyan-500  rounded-md px-6 py-2 text-white shadow-md hover:shadow-xl tracking-wide"
