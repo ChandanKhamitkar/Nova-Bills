@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import NavbarAfterLogin from "../components/Navbars/NavbarAfterLogin";
 import TableRow from "./TableRow.jsx";
 import BilledToInfo from "../../utils/BilledTo/BillledToInfo.js";
+import BilledByInfo from "../../utils/BilledBy/BilledByInfo.js";
 import Show from "../components/PopupModals/Show.jsx";
 
 export default function InvoiceInput() {
-
   const navigate = useNavigate();
   const [rows, setRows] = useState([]);
   const [showModal, setShowModal] = useState(true);
@@ -52,6 +52,16 @@ export default function InvoiceInput() {
     setRows(updatedRows);
   };
 
+  const [billedBy, setBilledBy] = useState({
+    fullName : false,
+    email : false,
+    phoneNumber : false,
+    address : false,
+    city : false,
+    pincode : false,
+  });
+
+
   return (
     <div
       className="bg-image bg-fixed bg-center bg-no-repeat bg-cover pb-12"
@@ -66,7 +76,6 @@ export default function InvoiceInput() {
           className="w-full flex flex-col justify-center items-center space-y-6 p-8"
         >
           <p className="text-3xl font-mono">Invoice</p>
-
           <div className="flex w-full justify-around ">
             <div className="input flex flex-col w-fit static">
               <label
@@ -86,8 +95,29 @@ export default function InvoiceInput() {
               />
             </div>
           </div>
-
           <div className="flex justify-center items-center space-x-4 w-full">
+            <div className="bg-gray-400 bg-opacity-50 rounded-lg p-6 flex flex-col w-1/2 shadow-lg space-y-4">
+              <p className="text-left text-xl font-medium border-b border-dashed border-gray-700 w-fit mb-3">
+                Billed By{" "}
+                <span className="text-sm text-slate-700">Your Details</span>
+              </p>
+              <div className="w-full flex flex-wrap gap-4">
+                {BilledByInfo.map((you, index) => (
+                  <p onClick={(e) => {
+                    e.preventDefault();
+                    setBilledBy(prevState => ({
+                      ...prevState,
+                      [you.name]: !prevState[you.name]
+                    }));
+                  }} key={index} className={`px-4 py-1 rounded-lg border border-slate-800 flex justify-center items-center space-x-2 w-max hover:shadow hover:shadow-slate-800 cursor-pointer ${billedBy[you.name] ? "bg-gray-800 text-white" : ""}`}>
+                    <span className="text-blue-300">
+                      {you.icon}
+                    </span>
+                    <span>{you.title}</span>
+                  </p>
+                ))}
+              </div>
+            </div>
             <div className="bg-gray-400 bg-opacity-50 rounded-lg p-6 flex flex-col w-1/2 shadow-lg space-y-4">
               <p className="text-left text-xl font-medium border-b border-dashed border-gray-700 w-fit mb-3">
                 Billed To{" "}
@@ -108,7 +138,6 @@ export default function InvoiceInput() {
               </div>
             </div>
           </div>
-
           <table className="w-full space-y-6">
             <thead>
               <tr>
@@ -138,7 +167,6 @@ export default function InvoiceInput() {
               ))}
             </tbody>
           </table>
-
           <button
             onClick={(e) => handleAddRows(e)}
             className="borderborder-gray-800 w-full py-3 bg-slate-100 bg-opacity-50 rounded-xl flex justify-center items-center space-x-1 shadow hover:shadow-2xl"
@@ -161,7 +189,9 @@ export default function InvoiceInput() {
               e.preventDefault();
               console.log("row data : ", rows);
               console.log("billed to : ", formData);
-              navigate("/selectTemplate", {state : {billedTo : formData, items : rows}})
+              navigate("/selectTemplate", {
+                state: { billedTo: formData, items: rows },
+              });
             }}
             className="bg-cyan-500  rounded-md px-6 py-2 text-white shadow-md hover:shadow-xl tracking-wide"
           >
