@@ -11,7 +11,7 @@ export default function NB002(props) {
   });
 
   return (
-    <div className="flex justify-center item-center mx-auto mt-20 mb-7 bg-gray-600">
+    <div className="flex justify-center item-center mx-auto">
       {/* main card */}
       <div className="bg-gray-100  min-w-[999px] min-h-[1000px] py-16 px-14">
         {/* div containing logo Invoice title, billed to details, invoiceNO, date */}
