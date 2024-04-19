@@ -22,6 +22,12 @@ module.exports = {
           },
         },
       },
+      colors : {
+        'correct-black-dark' : 'rgb(26 34 44)',
+        'correct-black-light' : 'rgb(36 48 63)',
+        'txt-dark' : 'rgb(174 183 192)',
+        'border-table-dark-light' : 'rgb(46 58 71)',
+      },
     },
   },
   plugins: [],
