@@ -8,7 +8,8 @@ import Verification from "./routes/Verification/sendOTP.js";
 import Authentication from "./middleware/Auth.js";
 import getProfileData from "./routes/Profile/getProfileData.js";
 import updateProfile from "./routes/Profile/updateProfile.js";
-import invoiceRoute from "./routes/Invoice/Add/invoice.js";
+import invoiceRouteAdd from "./routes/Invoice/Add/invoice.js";
+import invoiceRouteGet from "./routes/Invoice/Get/invoice.js";
 // import errorHandler from "./middleware/errorHandler.js";
 
 dotenv.config();
@@ -27,7 +28,8 @@ app.use(login);
 app.use(Verification);
 app.use(Authentication, getProfileData);
 app.use(Authentication, updateProfile);
-app.use(Authentication, invoiceRoute);
+app.use(Authentication, invoiceRouteAdd);
+app.use(Authentication, invoiceRouteGet);
 
 // app.use(errorHandler);
 

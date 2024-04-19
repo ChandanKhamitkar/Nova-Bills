@@ -1,8 +1,42 @@
 import NavbarAfterLogin from "../components/Navbars/NavbarAfterLogin";
-// import { CircleCheck } from "lucide-react";
 import { Ban } from "lucide-react";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
+// import { CircleCheck } from "lucide-react";
 
 export default function Finances() {
+  const [invoiceData, setInvoiceData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = Cookies.get("nb_token");
+        const response = await axios.get(
+          "http://localhost:8000/api/user/getInvoice",
+          {
+            headers: {
+              "content-type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.data.success) {
+          setInvoiceData(response.data.invoiceData);
+        } else {
+          toast.error("Error in retriving data!");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Internal server error!");
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="bg-correct-black-dark h-auto pb-96">
       <NavbarAfterLogin darkMode={true} />
@@ -43,185 +77,47 @@ export default function Finances() {
               </tr>
             </thead>
             <tbody>
-              <tr className="hover:bg-blue-100 hover:bg-opacity-5 border-b border-border-table-dark-light">
-                <td className=" p-6 text-center bg-correct-black-light text-white font-semibold">
-                  Malcolm Lockyer
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  Mar,22 2024
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  NB001
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  $1961
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  <span className="px-3 py-1 rounded-xl bg-green-400 text-white font-semibold">
-                    Paid
-                  </span>
-                </td>
-                <td className=" p-6 flex justify-center items-center bg-correct-black-light cursor-pointer hover:text-yellow-400 text-gray-400">
-                  <div className="flex flex-col justify-center items-center">
-                    <Ban />
-                    <p>Mark Unpaid</p>
-                  </div>
-                </td>
-              </tr>
-              <tr className="hover:bg-blue-100 hover:bg-opacity-5 border-b border-border-table-dark-light">
-                <td className=" p-6 text-center bg-correct-black-light text-white font-semibold">
-                  Malcolm Lockyer
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  Mar,22 2024
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  NB001
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  $1961
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  <span className="px-3 py-1 rounded-xl bg-green-400 text-white font-semibold">
-                    Paid
-                  </span>
-                </td>
-                <td className=" p-6 flex justify-center items-center bg-correct-black-light cursor-pointer hover:text-yellow-400 text-gray-400">
-                  <div className="flex flex-col justify-center items-center">
-                    <Ban />
-                    <p>Mark Unpaid</p>
-                  </div>
-                </td>
-              </tr>
-              <tr className="hover:bg-blue-100 hover:bg-opacity-5 border-b border-border-table-dark-light">
-                <td className=" p-6 text-center bg-correct-black-light text-white font-semibold">
-                  Malcolm Lockyer
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  Mar,22 2024
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  NB001
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  $1961
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  <span className="px-3 py-1 rounded-xl bg-green-400 text-white font-semibold">
-                    Paid
-                  </span>
-                </td>
-                <td className=" p-6 flex justify-center items-center bg-correct-black-light cursor-pointer hover:text-yellow-400 text-gray-400">
-                  <div className="flex flex-col justify-center items-center">
-                    <Ban />
-                    <p>Mark Unpaid</p>
-                  </div>
-                </td>
-              </tr>
-              <tr className="hover:bg-blue-100 hover:bg-opacity-5 border-b border-border-table-dark-light">
-                <td className=" p-6 text-center bg-correct-black-light text-white font-semibold">
-                  Malcolm Lockyer
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  Mar,22 2024
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  NB001
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  $1961
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  <span className="px-3 py-1 rounded-xl bg-green-400 text-white font-semibold">
-                    Paid
-                  </span>
-                </td>
-                <td className=" p-6 flex justify-center items-center bg-correct-black-light cursor-pointer hover:text-yellow-400 text-gray-400">
-                  <div className="flex flex-col justify-center items-center">
-                    <Ban />
-                    <p>Mark Unpaid</p>
-                  </div>
-                </td>
-              </tr>
-              <tr className="hover:bg-blue-100 hover:bg-opacity-5 border-b border-border-table-dark-light">
-                <td className=" p-6 text-center bg-correct-black-light text-white font-semibold">
-                  Malcolm Lockyer
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  Mar,22 2024
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  NB001
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  $1961
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  <span className="px-3 py-1 rounded-xl bg-green-400 text-white font-semibold">
-                    Paid
-                  </span>
-                </td>
-                <td className=" p-6 flex justify-center items-center bg-correct-black-light cursor-pointer hover:text-yellow-400 text-gray-400">
-                  <div className="flex flex-col justify-center items-center">
-                    <Ban />
-                    <p>Mark Unpaid</p>
-                  </div>
-                </td>
-              </tr>
-              <tr className="hover:bg-blue-100 hover:bg-opacity-5 border-b border-border-table-dark-light">
-                <td className=" p-6 text-center bg-correct-black-light text-white font-semibold">
-                  Malcolm Lockyer
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  Mar,22 2024
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  NB001
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  $1961
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  <span className="px-3 py-1 rounded-xl bg-green-400 text-white font-semibold">
-                    Paid
-                  </span>
-                </td>
-                <td className=" p-6 flex justify-center items-center bg-correct-black-light cursor-pointer hover:text-yellow-400 text-gray-400">
-                  <div className="flex flex-col justify-center items-center">
-                    <Ban />
-                    <p>Mark Unpaid</p>
-                  </div>
-                </td>
-              </tr>
-              <tr className="hover:bg-blue-100 hover:bg-opacity-5 border-b border-border-table-dark-light">
-                <td className=" p-6 text-center bg-correct-black-light text-white font-semibold">
-                  Malcolm Lockyer
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  Mar,22 2024
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  NB001
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  $1961
-                </td>
-                <td className=" p-6 text-center bg-correct-black-light text-gray-400">
-                  <span className="px-3 py-1 rounded-xl bg-green-400 text-white font-semibold">
-                    Paid
-                  </span>
-                </td>
-                <td className=" p-6 flex justify-center items-center bg-correct-black-light cursor-pointer hover:text-yellow-400 text-gray-400">
-                  <div className="flex flex-col justify-center items-center">
-                    <Ban />
-                    <p>Mark Unpaid</p>
-                  </div>
-                </td>
-              </tr>
+              {invoiceData.map((item, index) => (
+                <tr
+                  key={index}
+                  className="hover:bg-blue-100 hover:bg-opacity-5 border-b border-border-table-dark-light"
+                >
+                  <td className=" p-6 text-center bg-correct-black-light text-white font-semibold">
+                    {item.billedTo}
+                  </td>
+                  <td className=" p-6 text-center bg-correct-black-light text-gray-400">
+                    {item.date}
+                  </td>
+                  <td className=" p-6 text-center bg-correct-black-light text-gray-400">
+                    {item.invoiceNo}
+                  </td>
+                  <td className=" p-6 text-center bg-correct-black-light text-gray-400">
+                    ${item.amount}
+                  </td>
+                  <td className=" p-6 text-center bg-correct-black-light text-gray-400">
+                    {item.status ? (
+                      <span className="px-3 py-1 rounded-xl bg-green-400 text-white font-semibold">
+                        Paid
+                      </span>
+                    ) : (
+                      <span className="px-3 py-1 rounded-xl bg-yellow-400 text-white font-semibold">
+                        Unpaid
+                      </span>
+                    )}
+                  </td>
+                  <td className=" p-6 flex justify-center items-center bg-correct-black-light cursor-pointer hover:text-yellow-400 text-gray-400">
+                    <div className="flex flex-col justify-center items-center">
+                      <Ban />
+                      <p>Mark Unpaid</p>
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }
