@@ -35,7 +35,7 @@ export default function Finances() {
     };
 
     fetchData();
-  }, []);
+  }, [setInvoiceData]);
 
   return (
     <div className="bg-correct-black-dark h-auto pb-96">

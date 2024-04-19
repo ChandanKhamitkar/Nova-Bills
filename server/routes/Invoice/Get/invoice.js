@@ -11,7 +11,6 @@ export default router.get("/api/user/getInvoice", async (req, res) => {
       .then(item => {
           return res.status(200).json({ invoiceData: item, success: true });
       });
-    res.status(200).json({ success: true });
   } catch (error) {
     console.log("Error : ", error);
     res.status(500).json({ success: false });
