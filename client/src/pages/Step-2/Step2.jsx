@@ -13,6 +13,8 @@ import { FileDown } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import Cookies from "js-cookie";
 
+const baseURL = process.env.REACT_APP_BASE_API_URL;
+
 
 export default function Step2() {
   const location = useLocation();
@@ -91,7 +93,7 @@ export default function Step2() {
     const token = Cookies.get("nb_token");
 
     try {
-      const response = await axios.post("http://localhost:8000/api/user/addInvoice", {
+      const response = await axios.post(`${baseURL}/api/user/addInvoice`, {
         invoiceNo : "NB0001",
         billedTo : invoiceDetails["billedTo"].client,
         amount : grandTotal,

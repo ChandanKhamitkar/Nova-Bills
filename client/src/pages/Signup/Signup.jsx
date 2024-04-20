@@ -6,6 +6,8 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import OTPModal from "../components/PopupModals/OTPModal";
 
+const baseURL = process.env.REACT_APP_BASE_API_URL;
+
 export default function Signup() {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -32,7 +34,7 @@ export default function Signup() {
       return;
     }
       const callBack = async () => {
-        await axios.post("http://localhost:8000/api/user/sendOTP", {
+        await axios.post(`${baseURL}/api/user/sendOTP`, {
           email : formData.email,
         })
         .then((res) => {
@@ -57,7 +59,7 @@ export default function Signup() {
         toast.error("Kindy re-check your both passwords")
       } else {
         await axios
-          .post("http://localhost:8000/api/user/signup", {
+          .post(`${baseURL}/api/user/signup`, {
             companyName: formData.companyName,
             email: formData.email,
             password: formData.password,

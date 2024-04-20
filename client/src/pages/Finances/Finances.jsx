@@ -6,6 +6,8 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 // import { CircleCheck } from "lucide-react";
 
+const baseURL = process.env.REACT_APP_BASE_API_URL;
+
 export default function Finances() {
   const [invoiceData, setInvoiceData] = useState([]);
 
@@ -14,7 +16,7 @@ export default function Finances() {
       try {
         const token = Cookies.get("nb_token");
         const response = await axios.get(
-          "http://localhost:8000/api/user/getInvoice",
+          `${baseURL}/api/user/getInvoice`,
           {
             headers: {
               "content-type": "application/json",

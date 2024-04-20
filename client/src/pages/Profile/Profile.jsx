@@ -9,6 +9,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import updateProfile from "../../utils/Profile/UpdatableInfo.js";
 
+const baseURL = process.env.REACT_APP_BASE_API_URL;
+
 export default function Profile() {
   const navigate = useNavigate();
 
@@ -20,7 +22,7 @@ export default function Profile() {
     try {
       const token = Cookies.get("nb_token");
       const response = await axios.get(
-        "http://localhost:8000/api/user/getProfileData",
+        `${baseURL}/api/user/getProfileData`,
         {
           headers: {
             "content-type": "application/json",

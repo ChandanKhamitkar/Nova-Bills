@@ -6,6 +6,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const baseURL = process.env.REACT_APP_BASE_API_URL;
+
 export default function Login() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -24,7 +26,7 @@ export default function Login() {
   const login = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8000/api/user/login", {
+      const res = await axios.post(`${baseURL}/api/user/login`, {
         email: formData.email,
         password: formData.password,
       });

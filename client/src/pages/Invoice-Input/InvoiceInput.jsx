@@ -9,6 +9,10 @@ import Show from "../components/PopupModals/Show.jsx";
 import axios from "axios";
 import Cookies from "js-cookie";
 
+
+const baseURL = process.env.REACT_APP_BASE_API_URL;
+
+
 export default function InvoiceInput() {
   const navigate = useNavigate();
 
@@ -19,7 +23,7 @@ export default function InvoiceInput() {
       try {
         const token = Cookies.get("nb_token");
         const response = await axios.get(
-          "http://localhost:8000/api/user/getProfileData",
+          `${baseURL}/api/user/getProfileData`,
           {
             headers: {
               "content-type": "application/json",
