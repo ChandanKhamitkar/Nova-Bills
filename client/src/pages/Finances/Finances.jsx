@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-// import { CircleCheck } from "lucide-react";
+import { CircleCheck } from "lucide-react";
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
@@ -15,18 +15,15 @@ export default function Finances() {
     const fetchData = async () => {
       try {
         const token = Cookies.get("nb_token");
-        const response = await axios.get(
-          `${baseURL}/api/user/getInvoice`,
-          {
-            headers: {
-              "content-type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${baseURL}/api/user/getInvoice`, {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (response.data.success) {
-          setInvoiceData(response.data.invoiceData);
+          setInvoiceData(response.data.invoiceData.reverse());
         } else {
           toast.error("Error in retriving data!");
         }
@@ -37,7 +34,35 @@ export default function Finances() {
     };
 
     fetchData();
-  }, [setInvoiceData]);
+  }, []);
+
+  const handlePaymentStatus = async (ID, status) => {
+    try {
+      const token = Cookies.get("nb_token");
+      const response = await axios.put(
+        `${baseURL}/api/user/PaymentStatus`,
+        {
+          ID,
+          status,
+        },
+        {
+          headers : {
+           'content-type' : 'application/json',
+           Authorization : `Bearer ${token}` 
+          },
+        }
+      );
+      if(response.data.success){
+        toast.success("Status Updated");
+      }
+      else{
+        toast.error("Issue in the updating status.");
+      }
+    } catch (error) {
+      console.log(Error);
+      toast.error("Internal Server Error!");
+    }
+  };
 
   return (
     <div className="bg-correct-black-dark h-auto pb-96">
@@ -107,11 +132,34 @@ export default function Finances() {
                       </span>
                     )}
                   </td>
-                  <td className=" p-6 flex justify-center items-center bg-correct-black-light cursor-pointer hover:text-yellow-400 text-gray-400">
-                    <div className="flex flex-col justify-center items-center">
-                      <Ban />
-                      <p>Mark Unpaid</p>
-                    </div>
+                  <td className=" p-6 flex justify-center items-center bg-correct-black-light cursor-pointer text-gray-400">
+                    {item.status ? (
+                      <div
+                        onClick={() => {
+                          const updatedData = [...invoiceData];
+                          updatedData[index].status = !item.status;
+                          setInvoiceData(updatedData);
+                          handlePaymentStatus(item._id, item.status)
+                        }}
+                        className="flex flex-col justify-center items-center  hover:text-yellow-400"
+                      >
+                        <Ban />
+                        <p>Mark Unpaid</p>
+                      </div>
+                    ) : (
+                      <div
+                      onClick={() => {
+                        const updatedData = [...invoiceData];
+                        updatedData[index].status = !item.status;
+                        setInvoiceData(updatedData);
+                        handlePaymentStatus(item._id, item.status)
+                      }}
+                        className="flex flex-col justify-center items-center  hover:text-green-400"
+                      >
+                        <CircleCheck />
+                        <p>Mark Paid</p>
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}

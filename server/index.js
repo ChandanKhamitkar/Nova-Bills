@@ -10,6 +10,7 @@ import getProfileData from "./routes/Profile/getProfileData.js";
 import updateProfile from "./routes/Profile/updateProfile.js";
 import invoiceRouteAdd from "./routes/Invoice/Add/invoice.js";
 import invoiceRouteGet from "./routes/Invoice/Get/invoice.js";
+import paymentStatus from "./routes/Invoice/Update/PaymentStatus/paymentStatus.js";
 // import errorHandler from "./middleware/errorHandler.js";
 
 dotenv.config();
@@ -30,6 +31,7 @@ app.use(Authentication, getProfileData);
 app.use(Authentication, updateProfile);
 app.use(Authentication, invoiceRouteAdd);
 app.use(Authentication, invoiceRouteGet);
+app.use(Authentication, paymentStatus);
 
 // app.use(errorHandler);
 

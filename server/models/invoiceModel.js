@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 import User from "./userModel.js";
+import { string } from "zod";
 
 const {Schema, model} = mongoose;
 
 const invoiceSchema = new Schema(
     {
         date : {
-            type : Date,
+            type : String,
         },
         
         invoiceNo : {
