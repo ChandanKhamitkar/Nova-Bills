@@ -9,7 +9,14 @@ export default router.post("/api/user/addInvoice", async (req, res) => {
 
   try {
 
+    let currentDate = new Date().toLocaleDateString('en-IN', {
+      month: "short",
+      day: 'numeric',
+      year: 'numeric'
+    });
+
     const newInvoice = new Invoices({
+        date : currentDate,
         invoiceNo,
         billedTo,
         amount,
@@ -17,7 +24,6 @@ export default router.post("/api/user/addInvoice", async (req, res) => {
     });
 
     const savedInvoice = await newInvoice.save();
-    console.log("created invoice : ", savedInvoice);
     res.status(200).json({success : true});
 
   } catch (error) {
