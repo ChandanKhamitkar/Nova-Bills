@@ -8,6 +8,7 @@ import BilledByInfo from "../../utils/BilledBy/BilledByInfo.js";
 import Show from "../components/PopupModals/Show.jsx";
 import axios from "axios";
 import Cookies from "js-cookie";
+import toast, { Toaster } from "react-hot-toast";
 
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
@@ -96,12 +97,53 @@ export default function InvoiceInput() {
     accountNumber: false,
   });
 
+  const [grandTotal, setGrandTotal] = useState(0);
+  useEffect(() => {
+    let GT = 0;
+    rows.forEach((item) => {
+      GT += parseInt(item.amount);
+    });
+    setGrandTotal(GT);
+  }, [rows]);
+
   const seletedAdministrationDetails = Object.keys(billedBy)
     .filter((key) => billedBy[key])
     .reduce((result, key) => {
       result[key] = administrationDetails[key];
       return result;
     }, {});
+
+    const invoice = async (e) => {
+      e.preventDefault();
+  
+      const token = Cookies.get("nb_token");
+  
+      try {
+        const response = await axios.post(`${baseURL}/api/user/addInvoice`, {
+          invoiceNo : "NB0001",
+          billedTo : formData.client,
+          amount : grandTotal,
+        },
+        {
+          headers : {
+            'content-type' : 'application/json',
+            Authorization : `Bearer ${token}`,
+          }
+        }
+      );
+  
+        if(response.data.success){
+          toast.success("Invoice Stored");
+        }
+        else{
+          toast.error("Failed to add invoice to database.");
+        }
+        
+      } catch (error) {
+        console.log("Error adding invoice : ",error);
+        toast.error("Interal Server error!");
+      }
+    };
 
   return (
     <div
@@ -234,10 +276,12 @@ export default function InvoiceInput() {
               e.preventDefault();
               console.log("row data : ", rows);
               console.log("billed to : ", formData);
+              invoice(e);
               navigate("/selectTemplate", {
                 state: {
                   billedTo: formData,
                   items: rows,
+                  grandTotal : grandTotal,
                   owner: seletedAdministrationDetails,
                 },
               });
@@ -250,6 +294,7 @@ export default function InvoiceInput() {
       </div>
       {showModal && <Show onClose={() => setShowModal(false)} />}
       {/* </div> */}
+      <Toaster />
     </div>
   );
 }

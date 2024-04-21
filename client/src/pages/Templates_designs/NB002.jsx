@@ -3,7 +3,7 @@ import qrCode from "../../assets/Images/qr-code-demo.png";
 
 export default function NB002(props) {
 
-  const { billedTo, items, owner } = props.invoiceDetails || {};
+  const { billedTo, items, owner, grandTotal } = props.invoiceDetails || {};
   const currentDate = new Date().toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
@@ -88,7 +88,7 @@ export default function NB002(props) {
         <div className="float-right min-w-[20%] mt-6 space-y-4 mb-32  ">
           <p className="flex justify-between items-center">
             <span className="font-semibold">Subtotal</span>
-            <span>${props.grandTotal}</span>
+            <span>${grandTotal}</span>
           </p>
           <p className="flex justify-between items-center">
             <span className="font-semibold">Tax</span>
