@@ -1,15 +1,15 @@
 import NavbarAfterLogin from "../components/Navbars/NavbarAfterLogin";
-import { Ban } from "lucide-react";
+import { Ban, CircleCheck, Ellipsis, SquareX, Pencil, FileDown } from "lucide-react";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-import { CircleCheck } from "lucide-react";
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 export default function Finances() {
   const [invoiceData, setInvoiceData] = useState([]);
+  const [moreVisibleIndex, setMoreVisibleIndex] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,6 +64,9 @@ export default function Finances() {
     }
   };
 
+  const toggleMoreVisible = (index) => {
+    setMoreVisibleIndex(index === moreVisibleIndex ? null : index);
+  };
   return (
     <div className="bg-correct-black-dark h-auto pb-96">
       <NavbarAfterLogin darkMode={true} />
@@ -99,7 +102,7 @@ export default function Finances() {
                   Status
                 </th>
                 <th className=" text-txt-dark font-semibold text-lg p-5">
-                  Action
+                  {" "}
                 </th>
               </tr>
             </thead>
@@ -132,7 +135,7 @@ export default function Finances() {
                       </span>
                     )}
                   </td>
-                  <td className=" p-6 flex justify-center items-center bg-correct-black-light cursor-pointer text-gray-400">
+                  <td className=" p-6 flex justify-center items-center bg-correct-black-light cursor-pointer text-gray-400 space-x-5">
                     {item.status ? (
                       <div
                         onClick={() => {
@@ -143,8 +146,8 @@ export default function Finances() {
                         }}
                         className="flex flex-col justify-center items-center  hover:text-yellow-400"
                       >
-                        <Ban />
-                        <p>Mark Unpaid</p>
+                        <Ban size={22} />
+                        <p className="text-sm">Mark Unpaid</p>
                       </div>
                     ) : (
                       <div
@@ -157,9 +160,23 @@ export default function Finances() {
                         className="flex flex-col justify-center items-center  hover:text-green-400"
                       >
                         <CircleCheck />
-                        <p>Mark Paid</p>
+                        <p className="text-sm">Mark Paid</p>
                       </div>
                     )}
+                    <div key={index} onClick={() => toggleMoreVisible(index)} className="relative flex justify-center items-center flex-col text-gray-400 self-end">
+                      <Ellipsis /> 
+                      <p className="text-sm">More</p>
+                    </div>
+                    {moreVisibleIndex === index && (
+                      <div className="w-[10%] absolute h-auto right-14 z-[100] bg-white rounded-md px-1 py-6 text-black">
+                        <ul className="space-y-2">
+                          <li className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2"><span className="text-gray-600"><SquareX size={17}/></span><span> Cancel Order</span></li>
+                          <li className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2"><span className="text-gray-600"><Pencil size={17}/></span><span> Edit Order</span></li>
+                          <li className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2"><span className="text-gray-600"><FileDown size={17}/></span><span> Download</span></li>
+                        </ul>
+                      </div>
+                    )}
+   
                   </td>
                 </tr>
               ))}
