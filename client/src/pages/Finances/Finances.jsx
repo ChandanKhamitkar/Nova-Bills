@@ -1,15 +1,22 @@
 import NavbarAfterLogin from "../components/Navbars/NavbarAfterLogin";
-import { Ban } from "lucide-react";
+import {
+  Ban,
+  CircleCheck,
+  Ellipsis,
+  SquareX,
+  Pencil,
+  FileDown,
+} from "lucide-react";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-import { CircleCheck } from "lucide-react";
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 export default function Finances() {
   const [invoiceData, setInvoiceData] = useState([]);
+  const [moreVisibleIndex, setMoreVisibleIndex] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,16 +53,15 @@ export default function Finances() {
           status,
         },
         {
-          headers : {
-           'content-type' : 'application/json',
-           Authorization : `Bearer ${token}` 
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      if(response.data.success){
+      if (response.data.success) {
         toast.success("Status Updated");
-      }
-      else{
+      } else {
         toast.error("Issue in the updating status.");
       }
     } catch (error) {
@@ -64,6 +70,36 @@ export default function Finances() {
     }
   };
 
+  const handleOrderStatus = async (ID, status) => {
+    try {
+      const token = Cookies.get("nb_token");
+      const response = await axios.put(
+        `${baseURL}/api/user/OrderStatus`,
+        {
+          ID,
+          status,
+        },
+        {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.data.success) {
+        toast.success("Order Cancled!");
+      } else {
+        toast.error("Issue in the cancling order.");
+      }
+    } catch (error) {
+      console.log(Error);
+      toast.error("Internal Server Error!");
+    }
+  };
+
+  const toggleMoreVisible = (index) => {
+    setMoreVisibleIndex(index === moreVisibleIndex ? null : index);
+  };
   return (
     <div className="bg-correct-black-dark h-auto pb-96">
       <NavbarAfterLogin darkMode={true} />
@@ -98,9 +134,7 @@ export default function Finances() {
                 <th className=" text-txt-dark font-semibold text-lg p-5">
                   Status
                 </th>
-                <th className=" text-txt-dark font-semibold text-lg p-5">
-                  Action
-                </th>
+                <th className=" text-txt-dark font-semibold text-lg p-5"> </th>
               </tr>
             </thead>
             <tbody>
@@ -109,19 +143,39 @@ export default function Finances() {
                   key={index}
                   className="hover:bg-blue-100 hover:bg-opacity-5 border-b border-border-table-dark-light"
                 >
-                  <td className=" p-6 text-center bg-correct-black-light text-white font-semibold">
+                  <td
+                    className={`p-6 text-center bg-correct-black-light text-white font-semibold ${
+                      !item.orderStatus ? "order-cancel" : ""
+                    }`}
+                  >
                     {item.billedTo}
                   </td>
-                  <td className=" p-6 text-center bg-correct-black-light text-gray-400">
+                  <td
+                    className={`p-6 text-center bg-correct-black-light text-white ${
+                      !item.orderStatus ? "order-cancel" : ""
+                    }`}
+                  >
                     {item.date}
                   </td>
-                  <td className=" p-6 text-center bg-correct-black-light text-gray-400">
+                  <td
+                    className={`p-6 text-center bg-correct-black-light text-white ${
+                      !item.orderStatus ? "order-cancel" : ""
+                    }`}
+                  >
                     {item.invoiceNo}
                   </td>
-                  <td className=" p-6 text-center bg-correct-black-light text-gray-400">
+                  <td
+                    className={`p-6 text-center bg-correct-black-light text-white ${
+                      !item.orderStatus ? "order-cancel" : ""
+                    }`}
+                  >
                     ${item.amount}
                   </td>
-                  <td className=" p-6 text-center bg-correct-black-light text-gray-400">
+                  <td
+                    className={`p-6 text-center bg-correct-black-light text-white ${
+                      !item.orderStatus ? "order-cancel" : ""
+                    }`}
+                  >
                     {item.status ? (
                       <span className="px-3 py-1 rounded-xl bg-green-400 text-white font-semibold">
                         Paid
@@ -132,32 +186,77 @@ export default function Finances() {
                       </span>
                     )}
                   </td>
-                  <td className=" p-6 flex justify-center items-center bg-correct-black-light cursor-pointer text-gray-400">
+                  <td
+                    className={`p-6 flex justify-center items-center bg-correct-black-light cursor-pointer text-gray-400 space-x-5 ${
+                      !item.orderStatus ? "order-cancel" : ""
+                    }`}
+                  >
                     {item.status ? (
                       <div
                         onClick={() => {
                           const updatedData = [...invoiceData];
                           updatedData[index].status = !item.status;
                           setInvoiceData(updatedData);
-                          handlePaymentStatus(item._id, item.status)
+                          handlePaymentStatus(item._id, item.status);
                         }}
                         className="flex flex-col justify-center items-center  hover:text-yellow-400"
                       >
-                        <Ban />
-                        <p>Mark Unpaid</p>
+                        <Ban size={22} />
+                        <p className="text-sm">Mark Unpaid</p>
                       </div>
                     ) : (
                       <div
-                      onClick={() => {
-                        const updatedData = [...invoiceData];
-                        updatedData[index].status = !item.status;
-                        setInvoiceData(updatedData);
-                        handlePaymentStatus(item._id, item.status)
-                      }}
+                        onClick={() => {
+                          const updatedData = [...invoiceData];
+                          updatedData[index].status = !item.status;
+                          setInvoiceData(updatedData);
+                          handlePaymentStatus(item._id, item.status);
+                        }}
                         className="flex flex-col justify-center items-center  hover:text-green-400"
                       >
                         <CircleCheck />
-                        <p>Mark Paid</p>
+                        <p className="text-sm">Mark Paid</p>
+                      </div>
+                    )}
+                    <div
+                      key={index}
+                      onClick={() => toggleMoreVisible(index)}
+                      className="relative flex justify-center items-center flex-col text-gray-400 self-end"
+                    >
+                      <Ellipsis />
+                      <p className="text-sm">More</p>
+                    </div>
+                    {moreVisibleIndex === index && (
+                      <div className="w-[10%] absolute h-auto right-14 z-[100] bg-white rounded-md px-1 py-6 text-black">
+                        <ul className="space-y-2">
+                          <li
+                            onClick={() => {
+                              const updatedData = [...invoiceData];
+                              updatedData[index].orderStatus =
+                                !item.orderStatus;
+                              setInvoiceData(updatedData);
+                              handleOrderStatus(item._id, item.orderStatus);
+                            }}
+                            className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2"
+                          >
+                            <span className="text-gray-600">
+                              <SquareX size={17} />
+                            </span>
+                            <span> Cancel Order</span>
+                          </li>
+                          <li className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2">
+                            <span className="text-gray-600">
+                              <Pencil size={17} />
+                            </span>
+                            <span> Edit Order</span>
+                          </li>
+                          <li className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2">
+                            <span className="text-gray-600">
+                              <FileDown size={17} />
+                            </span>
+                            <span> Download</span>
+                          </li>
+                        </ul>
                       </div>
                     )}
                   </td>

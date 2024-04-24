@@ -23,7 +23,7 @@ export default router.post("/api/user/login", async (req, res) => {
     };
 
     const token = jwt.sign(tokenPayload, process.env.TOKEN_SECRET, {
-      expiresIn: "12m",
+      expiresIn: "1d",
     });
     return res.status(200).json({message: "Login Successfull", token : token});
   }
