@@ -120,7 +120,7 @@ export default function InvoiceInput() {
   
       try {
         const response = await axios.post(`${baseURL}/api/user/addInvoice`, {
-          invoiceNo : "NB0001",
+          invoiceNo,
           billedTo : formData.client,
           amount : grandTotal,
         },
@@ -144,6 +144,29 @@ export default function InvoiceInput() {
         toast.error("Interal Server error!");
       }
     };
+
+    const [invoiceNo, setInvoiceNo] = useState(0);
+    useEffect(() => {
+
+      const fetchData = async () => {
+        try {
+          const token = Cookies.get("nb_token");
+          const response = await axios.get(`${baseURL}/api/user/getInvoiceCount`, {
+            headers : {
+              'content-type' : 'application/json',
+              Authorization : `Bearer ${token}`
+            }
+          })
+          if(response.data.success){
+            setInvoiceNo(`000${response.data.count}`);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      fetchData();
+    }, [setInvoiceNo])
 
   return (
     <div
@@ -283,6 +306,7 @@ export default function InvoiceInput() {
                   items: rows,
                   grandTotal : grandTotal,
                   owner: seletedAdministrationDetails,
+                  invoiceNo
                 },
               });
             }}
