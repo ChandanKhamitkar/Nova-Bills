@@ -26,6 +26,11 @@ const invoiceSchema = new Schema(
             type : Boolean,
             default : false,
         },
+
+        orderStatus : {
+            type : Boolean,
+            default : true,
+        },
         
         user: { type: Schema.Types.ObjectId, ref: 'User' }
     },
