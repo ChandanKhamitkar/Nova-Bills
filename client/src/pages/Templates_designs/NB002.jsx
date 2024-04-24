@@ -3,7 +3,7 @@ import qrCode from "../../assets/Images/qr-code-demo.png";
 
 export default function NB002(props) {
 
-  const { billedTo, items, owner, grandTotal } = props.invoiceDetails || {};
+  const { billedTo, items, owner, grandTotal, invoiceNo } = props.invoiceDetails || {};
   const currentDate = new Date().toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
@@ -51,7 +51,7 @@ export default function NB002(props) {
             </ul>
 
             <ul className="text-right self-end">
-              <li>Invoice No. 12345</li>
+              <li>Invoice No. 000{invoiceNo}</li>
               <li>{currentDate}</li>
             </ul>
           </div>

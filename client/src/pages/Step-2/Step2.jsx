@@ -19,11 +19,12 @@ export default function Step2() {
     items: [],
     owner : {},
     grandTotal : 0,
+    invoiceNo : 0
   });
   useEffect(() => {
     if (location.state) {
-      const { billedTo, items, owner, grandTotal } = location.state;
-      setInvoiceDetails({ billedTo, items, owner, grandTotal });
+      const { billedTo, items, owner, grandTotal, invoiceNo } = location.state;
+      setInvoiceDetails({ billedTo, items, owner, grandTotal, invoiceNo });
     }
   }, [location.state]);
 
