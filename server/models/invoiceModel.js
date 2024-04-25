@@ -15,8 +15,15 @@ const invoiceSchema = new Schema(
         },
 
         billedTo : {
-            type : String,
-        },
+            type: {
+              client: String,
+              address: String,
+              city: String,
+              pincode: String,
+              state: String,
+              phoneNumber: String,
+            },
+          },
 
         amount : {
             type : Number,
@@ -31,6 +38,30 @@ const invoiceSchema = new Schema(
             type : Boolean,
             default : true,
         },
+
+        items : [
+            {
+                itemName : {
+                    type : String,
+                    default : ''
+                },
+                
+                qty : {
+                    type : Number,
+                    default : 1
+                },
+                
+                rate : {
+                    type : Number,
+                    default : 1
+                },
+
+                amount : {
+                    type : Number,
+                    default : 1
+                },
+            }
+        ],
         
         user: { type: Schema.Types.ObjectId, ref: 'User' }
     },

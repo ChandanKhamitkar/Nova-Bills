@@ -1,6 +1,6 @@
 import DetailCard from "./DetailCard";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import NavbarAfterLogin from "../components/Navbars/NavbarAfterLogin";
 import TableRow from "./TableRow.jsx";
 import BilledToInfo from "../../utils/BilledTo/BillledToInfo.js";
@@ -16,9 +16,21 @@ const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 export default function InvoiceInput() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [invoiceEditID, setInvoiceEditId] = useState("");
+  useEffect(() => {
+    if(location.state.billedTo && location.state.items){
+      const { billedTo, items, invoiceID } = location.state;
+      console.log("Editing mode on...! -- ", billedTo, items, invoiceID);
+      setRows(items);
+      setFormData(billedTo);
+      setInvoiceEditId(invoiceID);
+    }
+  }, [location.state]);
+
 
   const [administrationDetails, setAdministrationDetails] = useState({});
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,7 +44,6 @@ export default function InvoiceInput() {
             },
           }
         );
-        console.log("Billed by data : ", response.data);
         setAdministrationDetails(response.data);
       } catch (error) {
         console.log(error);
@@ -86,12 +97,12 @@ export default function InvoiceInput() {
   };
 
   const [billedBy, setBilledBy] = useState({
-    fullName: false,
-    email: false,
-    phoneNumber: false,
-    address: false,
-    city: false,
-    pincode: false,
+    fullName: true,
+    email: true,
+    phoneNumber: true,
+    address: true,
+    city: true,
+    pincode: true,
     bankName: false,
     accountName: false,
     accountNumber: false,
@@ -113,7 +124,7 @@ export default function InvoiceInput() {
       return result;
     }, {});
 
-    const invoice = async (e) => {
+    const invoice = async (e, rows) => {
       e.preventDefault();
   
       const token = Cookies.get("nb_token");
@@ -121,8 +132,10 @@ export default function InvoiceInput() {
       try {
         const response = await axios.post(`${baseURL}/api/user/addInvoice`, {
           invoiceNo,
-          billedTo : formData.client,
+          billedTo : formData,
           amount : grandTotal,
+          items : rows,
+          invoiceEditID : invoiceEditID,
         },
         {
           headers : {
@@ -131,7 +144,6 @@ export default function InvoiceInput() {
           }
         }
       );
-  
         if(response.data.success){
           toast.success("Invoice Stored");
         }
@@ -297,9 +309,7 @@ export default function InvoiceInput() {
           <button
             onClick={(e) => {
               e.preventDefault();
-              console.log("row data : ", rows);
-              console.log("billed to : ", formData);
-              invoice(e);
+              invoice(e, rows);
               navigate("/selectTemplate", {
                 state: {
                   billedTo: formData,

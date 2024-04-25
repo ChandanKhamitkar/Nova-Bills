@@ -8,8 +8,12 @@ export default router.get("/api/user/getInvoice", async (req, res) => {
   try {
     const allInvoices = await Invoices.find({ user: ID })
       .populate("user")
-      .then(item => {
-          return res.status(200).json({ invoiceData: item, success: true });
+      .then(items => {
+          const filteredItems = items.map(item => {
+            const { user, ...rest } = item.toObject();
+            return rest;
+          });
+          return res.status(200).json({ invoiceData: filteredItems, success: true });
       });
   } catch (error) {
     console.log("Error : ", error);
