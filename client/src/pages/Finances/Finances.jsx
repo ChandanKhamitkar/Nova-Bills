@@ -11,10 +11,12 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 export default function Finances() {
+  const navigate = useNavigate();
   const [invoiceData, setInvoiceData] = useState([]);
   const [moreVisibleIndex, setMoreVisibleIndex] = useState(null);
 
@@ -244,7 +246,18 @@ export default function Finances() {
                             </span>
                             <span> Cancel Order</span>
                           </li>
-                          <li className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2">
+                          <li
+                            onClick={() => {
+                              navigate("/invoiceinput", {
+                                state: {
+                                  invoiceID : item._id,
+                                  billedTo: item.billedTo,
+                                  items: item.items,
+                                },
+                              });
+                            }}
+                            className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2"
+                          >
                             <span className="text-gray-600">
                               <Pencil size={17} />
                             </span>

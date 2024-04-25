@@ -7,6 +7,7 @@ export default function TableRow (props) {
         <input
           type="text"
           name="itemName"
+          value={props.rows[props.index]?.itemName || ""}
           onChange={(e) => props.handleRowInputChange(e, props.index)}
           className="w-full p-4 text-black outline-none bg-transparent border-b border-slate-900"
           placeholder="Item Name"
@@ -17,6 +18,7 @@ export default function TableRow (props) {
         <input
           type="number"
           name="qty"
+          value={props.rows[props.index]?.qty || ""}
           onChange={(e) => props.handleRowInputChange(e, props.index)}
           className="w-full p-4 text-black outline-none bg-transparent border-b border-slate-900 no-arrows"
           placeholder="1"
@@ -27,6 +29,7 @@ export default function TableRow (props) {
         <input
           type="number"
           name="rate"
+          value={props.rows[props.index]?.rate || ""}
           onChange={(e) => props.handleRowInputChange(e, props.index)}
           className="w-full p-4 text-black outline-none bg-transparent border-b border-slate-900 no-arrows"
           placeholder="₹ 1"
