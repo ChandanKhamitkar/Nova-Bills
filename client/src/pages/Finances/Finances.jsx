@@ -148,7 +148,7 @@ export default function Finances() {
                       !item.orderStatus ? "order-cancel" : ""
                     }`}
                   >
-                    {item.billedTo}
+                    {item.billedTo.client}
                   </td>
                   <td
                     className={`p-6 text-center bg-correct-black-light text-white ${

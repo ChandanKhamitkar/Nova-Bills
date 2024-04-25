@@ -86,12 +86,12 @@ export default function InvoiceInput() {
   };
 
   const [billedBy, setBilledBy] = useState({
-    fullName: false,
-    email: false,
-    phoneNumber: false,
-    address: false,
-    city: false,
-    pincode: false,
+    fullName: true,
+    email: true,
+    phoneNumber: true,
+    address: true,
+    city: true,
+    pincode: true,
     bankName: false,
     accountName: false,
     accountNumber: false,
@@ -113,7 +113,7 @@ export default function InvoiceInput() {
       return result;
     }, {});
 
-    const invoice = async (e) => {
+    const invoice = async (e, rows) => {
       e.preventDefault();
   
       const token = Cookies.get("nb_token");
@@ -121,8 +121,9 @@ export default function InvoiceInput() {
       try {
         const response = await axios.post(`${baseURL}/api/user/addInvoice`, {
           invoiceNo,
-          billedTo : formData.client,
+          billedTo : formData,
           amount : grandTotal,
+          items : rows,
         },
         {
           headers : {
@@ -131,7 +132,6 @@ export default function InvoiceInput() {
           }
         }
       );
-  
         if(response.data.success){
           toast.success("Invoice Stored");
         }
@@ -297,9 +297,7 @@ export default function InvoiceInput() {
           <button
             onClick={(e) => {
               e.preventDefault();
-              console.log("row data : ", rows);
-              console.log("billed to : ", formData);
-              invoice(e);
+              invoice(e, rows);
               navigate("/selectTemplate", {
                 state: {
                   billedTo: formData,

@@ -5,7 +5,7 @@ const router = express.Router();
 
 export default router.post("/api/user/addInvoice", async (req, res) => {
   const ID = req.user;
-  const {invoiceNo, billedTo, amount} = req.body;
+  const {invoiceNo, billedTo, amount, items} = req.body;
 
   try {
 
@@ -20,6 +20,7 @@ export default router.post("/api/user/addInvoice", async (req, res) => {
         invoiceNo,
         billedTo,
         amount,
+        items,
         user : ID,
     });
 
