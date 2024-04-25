@@ -6,14 +6,13 @@ import {
   SquareX,
   Pencil,
   SendToBack,
-  X
+  X,
 } from "lucide-react";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
@@ -147,155 +146,172 @@ export default function Finances() {
               </tr>
             </thead>
             <tbody>
-              
               {invoiceData.map((item, index) => (
                 <>
-                <tr
-                  key={index}
-                  className="hover:bg-blue-100 hover:bg-opacity-5 border-b border-border-table-dark-light"
-                >
-                  <td
-                    className={`p-6 text-center bg-correct-black-light text-white font-semibold ${
-                      !item.orderStatus ? "order-cancel" : ""
-                    }`}
+                  <tr
+                    key={index}
+                    className="hover:bg-blue-100 hover:bg-opacity-5 border-b border-border-table-dark-light"
                   >
-                    {item.billedTo.client}
-                  </td>
-                  <td
-                    className={`p-6 text-center bg-correct-black-light text-white ${
-                      !item.orderStatus ? "order-cancel" : ""
-                    }`}
-                  >
-                    {item.date}
-                  </td>
-                  <td
-                    className={`p-6 text-center bg-correct-black-light text-white ${
-                      !item.orderStatus ? "order-cancel" : ""
-                    }`}
-                  >
-                    {item.invoiceNo}
-                  </td>
-                  <td
-                    className={`p-6 text-center bg-correct-black-light text-white ${
-                      !item.orderStatus ? "order-cancel" : ""
-                    }`}
-                  >
-                    ${item.amount}
-                  </td>
-                  <td
-                    className={`p-6 text-center bg-correct-black-light text-white ${
-                      !item.orderStatus ? "order-cancel" : ""
-                    }`}
-                  >
-                    {item.status ? (
-                      <span className="px-3 py-1 rounded-xl bg-green-400 text-white font-semibold">
-                        Paid
-                      </span>
-                    ) : (
-                      <span className="px-3 py-1 rounded-xl bg-yellow-400 text-white font-semibold">
-                        Unpaid
-                      </span>
-                    )}
-                  </td>
-                  <td
-                    className={`p-6 flex justify-center items-center bg-correct-black-light cursor-pointer text-gray-400 space-x-5 ${
-                      !item.orderStatus ? "order-cancel" : ""
-                    }`}
-                  >
-                    {item.status ? (
-                      <div
-                        onClick={() => {
-                          const updatedData = [...invoiceData];
-                          updatedData[index].status = !item.status;
-                          setInvoiceData(updatedData);
-                          handlePaymentStatus(item._id, item.status);
-                        }}
-                        className="flex flex-col justify-center items-center  hover:text-yellow-400"
-                      >
-                        <Ban size={22} />
-                        <p className="text-sm">Mark Unpaid</p>
-                      </div>
-                    ) : (
-                      <div
-                        onClick={() => {
-                          const updatedData = [...invoiceData];
-                          updatedData[index].status = !item.status;
-                          setInvoiceData(updatedData);
-                          handlePaymentStatus(item._id, item.status);
-                        }}
-                        className="flex flex-col justify-center items-center  hover:text-green-400"
-                      >
-                        <CircleCheck />
-                        <p className="text-sm">Mark Paid</p>
-                      </div>
-                    )}
-                    <div
-                      key={index}
-                      onClick={() => toggleMoreVisible(index)}
-                      className="relative flex justify-center items-center flex-col text-gray-400 self-end"
+                    <td
+                      className={`p-6 text-center bg-correct-black-light text-white font-semibold ${
+                        !item.orderStatus ? "order-cancel" : ""
+                      }`}
                     >
-                      <Ellipsis />
-                      <p className="text-sm">More</p>
-                    </div>
-                    {moreVisibleIndex === index && (
-                      <div className="w-[10%] absolute h-auto right-14 z-[100] bg-white rounded-md px-1 py-2 text-black">
-                        <X onClick={() => toggleMoreVisible(index)} size={18} className="float-right mr-1 mb-4 hover:text-gray-800"/>
-                        <ul className="space-y-2">
-                          <li
-                            onClick={() => {
-                              const updatedData = [...invoiceData];
-                              updatedData[index].orderStatus =
-                                !item.orderStatus;
-                              setInvoiceData(updatedData);
-                              handleOrderStatus(item._id, item.orderStatus);
-                            }}
-                            className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2"
-                          >
-                            <span className="text-gray-600">
-                              <SquareX size={17} />
-                            </span>
-                            <span> Cancel Order</span>
-                          </li>
-                          <li
-                            onClick={() => {
-                              navigate("/invoiceinput", {
-                                state: {
-                                  invoiceID : item._id,
-                                  billedTo: item.billedTo,
-                                  items: item.items,
-                                },
-                              });
-                            }}
-                            className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2"
-                          >
-                            <span className="text-gray-600">
-                              <Pencil size={17} />
-                            </span>
-                            <span> Edit Order</span>
-                          </li>
-                          <li
-                          onClick={() => toggleExpandedRow(index)}
-                          className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2 ">
-                            <span className="text-gray-600">
-                              <SendToBack size={17} />
-                            </span>
-                            <span> View Order Details</span>
-                          </li>
-                        </ul>
+                      {item.billedTo.client}
+                    </td>
+                    <td
+                      className={`p-6 text-center bg-correct-black-light text-white ${
+                        !item.orderStatus ? "order-cancel" : ""
+                      }`}
+                    >
+                      {item.date}
+                    </td>
+                    <td
+                      className={`p-6 text-center bg-correct-black-light text-white ${
+                        !item.orderStatus ? "order-cancel" : ""
+                      }`}
+                    >
+                      {item.invoiceNo}
+                    </td>
+                    <td
+                      className={`p-6 text-center bg-correct-black-light text-white ${
+                        !item.orderStatus ? "order-cancel" : ""
+                      }`}
+                    >
+                      ${item.amount}
+                    </td>
+                    <td
+                      className={`p-6 text-center bg-correct-black-light text-white ${
+                        !item.orderStatus ? "order-cancel" : ""
+                      }`}
+                    >
+                      {item.status ? (
+                        <span className="px-3 py-1 rounded-xl bg-green-400 text-white font-semibold">
+                          Paid
+                        </span>
+                      ) : (
+                        <span className="px-3 py-1 rounded-xl bg-yellow-400 text-white font-semibold">
+                          Unpaid
+                        </span>
+                      )}
+                    </td>
+                    <td
+                      className={`p-6 flex justify-center items-center bg-correct-black-light cursor-pointer text-gray-400 space-x-5 ${
+                        !item.orderStatus ? "order-cancel" : ""
+                      }`}
+                    >
+                      {item.status ? (
+                        <div
+                          onClick={() => {
+                            const updatedData = [...invoiceData];
+                            updatedData[index].status = !item.status;
+                            setInvoiceData(updatedData);
+                            handlePaymentStatus(item._id, item.status);
+                          }}
+                          className="flex flex-col justify-center items-center  hover:text-yellow-400"
+                        >
+                          <Ban size={22} />
+                          <p className="text-sm">Mark Unpaid</p>
+                        </div>
+                      ) : (
+                        <div
+                          onClick={() => {
+                            const updatedData = [...invoiceData];
+                            updatedData[index].status = !item.status;
+                            setInvoiceData(updatedData);
+                            handlePaymentStatus(item._id, item.status);
+                          }}
+                          className="flex flex-col justify-center items-center  hover:text-green-400"
+                        >
+                          <CircleCheck />
+                          <p className="text-sm">Mark Paid</p>
+                        </div>
+                      )}
+                      <div
+                        key={index}
+                        onClick={() => toggleMoreVisible(index)}
+                        className="relative flex justify-center items-center flex-col text-gray-400 self-end"
+                      >
+                        <Ellipsis />
+                        <p className="text-sm">More</p>
                       </div>
-                    )}
-                  </td>
-                </tr>
-                {expandedRowIndex === index && (
+                      {moreVisibleIndex === index && (
+                        <div className="w-[10%] absolute h-auto right-14 z-[100] bg-white rounded-md px-1 py-2 text-black">
+                          <X
+                            onClick={() => {toggleMoreVisible(index);
+                              toggleExpandedRow(index)}}
+                            size={18}
+                            className="float-right mr-1 mb-4 hover:text-gray-800"
+                          />
+                          <ul className="space-y-2">
+                            <li
+                              onClick={() => {
+                                const updatedData = [...invoiceData];
+                                updatedData[index].orderStatus =
+                                  !item.orderStatus;
+                                setInvoiceData(updatedData);
+                                handleOrderStatus(item._id, item.orderStatus);
+                              }}
+                              className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2"
+                            >
+                              <span className="text-gray-600">
+                                <SquareX size={17} />
+                              </span>
+                              <span> Cancel Order</span>
+                            </li>
+                            <li
+                              onClick={() => {
+                                navigate("/invoiceinput", {
+                                  state: {
+                                    invoiceID: item._id,
+                                    billedTo: item.billedTo,
+                                    items: item.items,
+                                  },
+                                });
+                              }}
+                              className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2"
+                            >
+                              <span className="text-gray-600">
+                                <Pencil size={17} />
+                              </span>
+                              <span> Edit Order</span>
+                            </li>
+                            <li
+                              onClick={() => toggleExpandedRow(index)}
+                              className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2 "
+                            >
+                              <span className="text-gray-600">
+                                <SendToBack size={17} />
+                              </span>
+                              <span> View Order Details</span>
+                            </li>
+                          </ul>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                  {expandedRowIndex === index && (
                     <tr>
-                      <td colSpan="6" className="bg-correct-black-light text-white p-6">
-                        Expanded content here for order details...
+                      <td
+                        colSpan="6"
+                        className="bg-correct-black-light text-white p-6"
+                      >
+                        <p className="text-lg mb-3 text-gray-300">Client's order details are :</p>
+                        {item.items.map((details, index) => (
+                          <div
+                            key={index}
+                            className="flex justify-between items-center text-gray-400"
+                          >
+                            <p className="text-center w-[33%]">{details.itemName}</p>
+                            <p className="text-center w-[33%]">x{details.qty}</p>
+                            <p className="text-center w-[33%]">${details.amount}</p>
+                          </div>
+                        ))}
                       </td>
                     </tr>
                   )}
-              </>
+                </>
               ))}
-
             </tbody>
           </table>
         </div>
