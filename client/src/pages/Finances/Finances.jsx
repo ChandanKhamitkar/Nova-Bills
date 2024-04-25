@@ -5,7 +5,8 @@ import {
   Ellipsis,
   SquareX,
   Pencil,
-  FileDown,
+  SendToBack,
+  X
 } from "lucide-react";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
@@ -13,12 +14,14 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 export default function Finances() {
   const navigate = useNavigate();
   const [invoiceData, setInvoiceData] = useState([]);
   const [moreVisibleIndex, setMoreVisibleIndex] = useState(null);
+  const [expandedRowIndex, setExpandedRowIndex] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,6 +105,10 @@ export default function Finances() {
   const toggleMoreVisible = (index) => {
     setMoreVisibleIndex(index === moreVisibleIndex ? null : index);
   };
+
+  const toggleExpandedRow = (index) => {
+    setExpandedRowIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
   return (
     <div className="bg-correct-black-dark h-auto pb-96">
       <NavbarAfterLogin darkMode={true} />
@@ -140,7 +147,9 @@ export default function Finances() {
               </tr>
             </thead>
             <tbody>
+              
               {invoiceData.map((item, index) => (
+                <>
                 <tr
                   key={index}
                   className="hover:bg-blue-100 hover:bg-opacity-5 border-b border-border-table-dark-light"
@@ -229,7 +238,8 @@ export default function Finances() {
                       <p className="text-sm">More</p>
                     </div>
                     {moreVisibleIndex === index && (
-                      <div className="w-[10%] absolute h-auto right-14 z-[100] bg-white rounded-md px-1 py-6 text-black">
+                      <div className="w-[10%] absolute h-auto right-14 z-[100] bg-white rounded-md px-1 py-2 text-black">
+                        <X onClick={() => toggleMoreVisible(index)} size={18} className="float-right mr-1 mb-4 hover:text-gray-800"/>
                         <ul className="space-y-2">
                           <li
                             onClick={() => {
@@ -263,18 +273,29 @@ export default function Finances() {
                             </span>
                             <span> Edit Order</span>
                           </li>
-                          <li className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2">
+                          <li
+                          onClick={() => toggleExpandedRow(index)}
+                          className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2 ">
                             <span className="text-gray-600">
-                              <FileDown size={17} />
+                              <SendToBack size={17} />
                             </span>
-                            <span> Download</span>
+                            <span> View Order Details</span>
                           </li>
                         </ul>
                       </div>
                     )}
                   </td>
                 </tr>
+                {expandedRowIndex === index && (
+                    <tr>
+                      <td colSpan="6" className="bg-correct-black-light text-white p-6">
+                        Expanded content here for order details...
+                      </td>
+                    </tr>
+                  )}
+              </>
               ))}
+
             </tbody>
           </table>
         </div>
