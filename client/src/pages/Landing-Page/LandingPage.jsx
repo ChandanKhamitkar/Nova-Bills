@@ -20,20 +20,26 @@ export default function LandingPage() {
       }}
     >
       <div className="absolute inset-0 backdrop-filter backdrop-blur-lg">
-        <nav className="w-full mt-6 flex justify-between px-6 text-white items-center">
-          <div className="flex space-x-4 items-center">
-            <img src={Logo} alt="Logo" className="w-10 h-10" />
-            <p className="font-semibold text-xl">NovaBills</p>
+        <nav className="w-[70%] mt-6 mx-auto flex justify-between px-6 text-white items-center">
+          <div className="flex justify-center items-center space-x-16">
+            <div className="flex space-x-4 items-center">
+              <img src={Logo} alt="Logo" className="w-10 h-10" />
+              <p className="font-bold text-2xl tracking-wide">NovaBills</p>
+            </div>
+            <div>
+              <ul className="flex space-x-16 cursor-pointer select-none text-gray-200 text-base">
+                <li className="hover:text-white">Features</li>
+                <li className="hover:text-white">Blog</li>
+                <li className="hover:text-white">Pricing</li>
+              </ul>
+            </div>
           </div>
           <div>
-            <ul className="flex space-x-4 font-medium cursor-pointer select-none">
-              {/* <li></li> */}
-              <li>About</li>
-              <li>Services</li>
-              <li onClick={() => navigate("/login")}>Login</li>
-              <li onClick={() => navigate("/signup")}>SignUp</li>
-            </ul>
-          </div>
+              <ul className="flex space-x-6 cursor-pointer select-none text-gray-200 text-base">
+                <li onClick={() => navigate("/login")}>Log in</li>
+                <li onClick={() => navigate("/signup")} className="bg-white rounded-3xl text-black px-3 py-1 text-sm tracking-wide hover:border hover:bg-transparent hover:border-white hover:text-white">Sign Up</li>
+              </ul>
+            </div>
         </nav>
 
         <div className="flex flex-col justify-center items-center text-center w-full h-screen space-y-4">
