@@ -1,6 +1,5 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import axios from "axios";
-
 import LandingPage from "./pages/Landing-Page/LandingPage.jsx";
 import Login from "./pages//Login/Login.jsx";
 import Signup from "./pages/Signup/Signup.jsx";
