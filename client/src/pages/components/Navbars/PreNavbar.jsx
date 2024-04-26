@@ -20,7 +20,7 @@ export default function PreNavbar (){
           </div>
           <div>
               <ul className="flex space-x-6 cursor-pointer select-none text-gray-300 text-base">
-                <li onClick={() => navigate("/login")} className="hover:border rounded-3xl hover:border-white px-3 py-1 bg-slate-100 bg-opacity-10 backdrop-blur-lg">Log in</li>
+                <li onClick={() => navigate("/login")} className="hover:text-white rounded-3xl px-3 py-1 bg-slate-100 bg-opacity-10 backdrop-blur-lg">Log in</li>
                 <li onClick={() => navigate("/signup")} className="bg-white rounded-3xl text-black px-3 py-1 text-sm tracking-wide hover:border hover:bg-transparent hover:border-white hover:text-white">Sign Up</li>
               </ul>
             </div>
