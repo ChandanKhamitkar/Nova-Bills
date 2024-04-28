@@ -36,6 +36,7 @@ export default function LandingPage() {
           <MoveRight size={19} />
         </button>
       </div>
+        
     </div>
   );
 }

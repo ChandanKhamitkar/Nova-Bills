@@ -1,10 +1,11 @@
-import heroImg from "../../assets/Images/dark_blue_spotlight.jpg";
 import Card from "../components/Cards/Welcome/Card.jsx";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import OTPModal from "../components/PopupModals/OTPModal";
+import blueBack from "../../assets/Images/intro_blue_ball.png";
+
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
@@ -110,54 +111,49 @@ export default function Signup() {
   ];
 
   return (
-    <div
-      className="h-screen relative"
-      style={{
-        backgroundImage: `url(${heroImg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="absolute inset-0 backdrop-filter backdrop-blur-lg flex justify-center items-center">
-        <div className="h-3/4 flex justify-center items-center">
-          <div className="min-w-[450px] rounded-2xl h-auto border border-slate-600">
-            <Card
-              title={"Create Your NovaBils account"}
-              subTitle={"Get started for free."}
-            />
+    <div className="min-h-screen w-full  justify-center items-center rounded-md  bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden flex flex-col ">
+      <img
+        src={blueBack}
+        alt="blueBall"
+        className="absolute top-0 right-80 opacity-15  w-[500px] "
+      />
+      <div className="h-3/4 flex justify-center items-center">
+        <div className="min-w-[450px] rounded-2xl h-auto border border-gray-700">
+          <Card
+            title={"Create Your NovaBils account"}
+            subTitle={"Get started for free."}
+          />
 
-            <div className="px-6 py-5 bg-gray-950 bg-opacity-30 rounded-b-2xl">
-              <form className="flex flex-col justify-center items-center space-y-4">
-                <div className="min-w-[80%] space-y-5">
-                  {signupInfo.map((item, index) => (
-                    <div key={index} className=" flex flex-col space-y-1">
-                      <LabelTag title={item.title} name={item.name} />
-                      <InputTag
-                        formData={formData}
-                        change={handleInputChange}
-                        type={item.type}
-                        name={item.name}
-                        placeholder={item.placeholder}
-                      />
-                    </div>
-                  ))}
-                  <button
-                    onClick={requestOTP}
-                    className="w-full bg-blue-500 rounded-3xl shadow-lg text-white py-2 hover:bg-blue-600 hover:focus:ring-1"
-                  >
-                    SignUp
-                  </button>
-                  <p
-                    onClick={() => navigate("/login")}
-                    className="text-white cursor-pointer select-none text-sm"
-                  >
-                    Already have an account!{" "}
-                    <span className="text-blue-600 text-xs">Login</span>
-                  </p>
-                </div>
-              </form>
-            </div>
+          <div className="px-6 py-5 bg-gray-950 bg-opacity-30 rounded-b-2xl">
+            <form className="flex flex-col justify-center items-center space-y-4">
+              <div className="min-w-[80%] space-y-5">
+                {signupInfo.map((item, index) => (
+                  <div key={index} className=" flex flex-col space-y-1">
+                    <LabelTag title={item.title} name={item.name} />
+                    <InputTag
+                      formData={formData}
+                      change={handleInputChange}
+                      type={item.type}
+                      name={item.name}
+                      placeholder={item.placeholder}
+                    />
+                  </div>
+                ))}
+                <button
+                  onClick={requestOTP}
+                  className="w-full bg-blue-500 rounded-3xl shadow-lg text-white py-2 hover:bg-blue-600 hover:focus:ring-1"
+                >
+                  SignUp
+                </button>
+                <p
+                  onClick={() => navigate("/login")}
+                  className="text-white cursor-pointer select-none text-sm"
+                >
+                  Already have an account!{" "}
+                  <span className="text-blue-600 text-xs">Login</span>
+                </p>
+              </div>
+            </form>
           </div>
         </div>
       </div>

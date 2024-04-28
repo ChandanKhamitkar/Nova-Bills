@@ -1,10 +1,10 @@
-import heroImg from "../../assets/Images/dark_blue_spotlight.jpg";
 import Card from "../components/Cards/Welcome/Card.jsx";
 import Cookies from "js-cookie";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import blueBack from "../../assets/Images/intro_blue_ball.png";
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
@@ -44,19 +44,11 @@ export default function Login() {
   };
 
   return (
-    <div
-      className="h-screen relative"
-      style={{
-        backgroundImage: `url(${heroImg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <div className="absolute inset-0 backdrop-filter backdrop-blur-lg flex justify-center items-center">
+    <div className="min-h-screen w-full  justify-center items-center rounded-md  bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden flex flex-col ">
 
-        <div className="h-3/4 flex justify-center items-center">
-          <div className="min-w-[450px] rounded-2xl h-auto border border-slate-600">
+      <img src={blueBack} alt="blueBall" className="absolute top-0 right-80 opacity-15  w-[500px] " />
+        <div className="h-3/4 flex justify-center items-center rounded-2xl">
+          <div className="min-w-[450px] rounded-2xl h-auto border border-gray-700">
 
             <Card title={"Sign in to NovaBils"} subTitle={"Start creating your invoice for your business."} />
 
@@ -118,7 +110,6 @@ export default function Login() {
 
           </div>
         </div>
-      </div>
       <Toaster />
     </div>
   );

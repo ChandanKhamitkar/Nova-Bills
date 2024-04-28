@@ -15,6 +15,7 @@ module.exports = {
       backgroundImage: {
         'my-custom-img-silver': "url('/src/assets/Images/silver-img.jpg')",
         'image' : "url('/src/assets/Images/dark_blue_spotlight.jpg')",
+        'blue-gradient' : "url('/src/assets/Images/intro_blue_ball.png')",
       },
       animation: {
         "meteor-effect": "meteor 5s linear infinite",
@@ -46,6 +47,12 @@ module.exports = {
         'correct-black-light' : 'rgb(36 48 63)',
         'txt-dark' : 'rgb(174 183 192)',
         'border-table-dark-light' : 'rgb(46 58 71)',
+      },
+      gradientColorStops: {
+        'rgb-255-97-97-025': 'rgba(255, 97, 97, 0.25)',
+        'custom-gradient-from': 'var(--tw-gradient-from)',
+        'custom-gradient-via': 'transparent var(--tw-gradient-via-position)',
+        'custom-gradient-to': 'var(--tw-gradient-to)',
       },
     },
   },
