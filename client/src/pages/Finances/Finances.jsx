@@ -13,6 +13,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
+import blue_gradient from "../../assets/Images/blue-gradient.jpg";
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
@@ -97,159 +98,90 @@ export default function Finances() {
       },
     });
   };
+
+  const HeadTitles = [
+    "Client",
+    "BIlled Date",
+    "Invoice No",
+    "Amount",
+    "Status",
+    "",
+  ];
+
   return (
-    <div className="bg-correct-black-dark h-auto pb-96">
-      <NavbarAfterLogin darkMode={true} />
+    <div className=" scroll-smooth h-auto pb-96 min-h-screen w-full  justify-center items-center bg-black/[0.96] antialiased bg-grid-white/[0.025] relative overflow-hidden flex flex-col ">
+      <NavbarAfterLogin  />
 
-      <div className="my-10 w-3/4 mx-auto">
-        <div className="flex justify-between items-center">
-          <p className="text-left w-fit text-3xl my-5 font-bold drop-shadow-md tracking-wide text-white">
-            Finances
-          </p>
-          <p className="w-fit text-txt-dark text-lg drop-shadow-md">
-            Products sold to Clients /
-            <span className="text-blue-600"> History</span>
-          </p>
-        </div>
+      <div className="mt-20 relative">
+        <img
+          src={blue_gradient}
+          alt="blue"
+          className="w-[90%] min-h-screen mx-auto relative saturate-200 opacity-60 rounded-3xl card-fade-2"
+        />
 
-        <div className="rounded-xl shadow-lg shadow-gray-800">
-          <table class="table-auto w-full mx-auto border border-border-table-dark-light">
-            <thead className="bg-correct-black-light w-full rounded-md border-b border-border-table-dark-light">
-              <tr>
-                <TableHead head={"Client"} />
-                <TableHead head={"Billing Date"} />
-                <TableHead head={"Invoice No"} />
-                <TableHead head={"Amount"} />
-                <TableHead head={"Status"} />
-                <TableHead head={""} />
-              </tr>
-            </thead>
-            <tbody>
-              {invoiceData.map((item, index) => (
-                <>
-                  <tr
+        <div className="my-10 w-3/4 mx-auto absolute top-0 left-48 rounded-lg">
+          <div className="flex justify-between items-center">
+            <p className="text-left w-fit text-3xl my-5 font-bold drop-shadow-md tracking-wide text-white">
+              Finances
+            </p>
+            <p className="w-fit text-black/70 text-lg drop-shadow-md">
+              Products sold to Clients /
+              <span className="text-white/70"> History</span>
+            </p>
+          </div>
+
+          <div className="rounded-xl shadow-lg shadow-gray-800">
+            <GridHead info={HeadTitles} />
+            {invoiceData.map((item, index) => (
+              <>
+                <div className="grid grid-cols-7 border-b border-white border-opacity-25">
+                  <GridRow
                     key={index}
-                    className="hover:bg-blue-100 hover:bg-opacity-5 border-b border-border-table-dark-light"
-                  >
-                    <TableRow
-                      txt={item.billedTo.client}
+                    txt={item.billedTo.client}
+                    item={item}
+                    client={true}
+                  />
+                  <GridRow txt={item.date} item={item} />
+                  <GridRow txt={item.invoiceNo} item={item} />
+                  <GridRow txt={item.amount} item={item} />
+                  <RowStatus item={item} />
+                  <StatusHandleButton
+                    item={item}
+                    index={index}
+                    invoiceData={invoiceData}
+                    setInvoiceData={setInvoiceData}
+                    handleUpdateStatus={handleUpdateStatus}
+                    type={item.status ? "Unpaid" : "Paid"}
+                  />
+                  <MoreButton
+                    index={index}
+                    toggleMoreVisible={toggleMoreVisible}
+                  />
+
+                  {moreVisibleIndex === index && (
+                    <MoreDetails
+                      index={index}
                       item={item}
-                      client={true}
+                      invoiceData={invoiceData}
+                      setInvoiceData={setInvoiceData}
+                      handleUpdateStatus={handleUpdateStatus}
+                      toggleMoreVisible={toggleMoreVisible}
+                      toggleExpandedRow={toggleExpandedRow}
+                      handleEditOrder={handleEditOrder}
                     />
-                    <TableRow txt={item.date} item={item} />
-                    <TableRow txt={item.invoiceNo} item={item} />
-                    <TableRow txt={item.amount} item={item} />
-                    <RowStatus item={item} />
-
-                    <td
-                      className={`p-6 flex justify-center items-center bg-correct-black-light cursor-pointer text-gray-400 space-x-5 ${
-                        !item.orderStatus ? "order-cancel" : ""
-                      }`}
-                    >
-                      <StatusHandleButton
-                        item={item}
-                        index={index}
-                        invoiceData={invoiceData}
-                        setInvoiceData={setInvoiceData}
-                        handleUpdateStatus={handleUpdateStatus}
-                        type={item.status ? "Unpaid" : "Paid"}
-                      />
-
-                      <div
-                        key={index}
-                        onClick={() => toggleMoreVisible(index)}
-                        className="relative flex justify-center items-center flex-col text-gray-400 self-end"
-                      >
-                        <Ellipsis />
-                        <p className="text-sm">More</p>
-                      </div>
-
-                      {moreVisibleIndex === index && (
-                        <div className="w-[10%] absolute h-auto right-14 z-[100] bg-white rounded-md px-1 py-2 text-black">
-                          <X
-                            onClick={() => {
-                              toggleMoreVisible(index);
-                            }}
-                            size={18}
-                            className="float-right mr-1 mb-4 hover:text-gray-800"
-                          />
-                          <ul className="space-y-2">
-                            <li
-                              onClick={() => {
-                                const updatedData = [...invoiceData];
-                                updatedData[index].orderStatus =
-                                  !item.orderStatus;
-                                setInvoiceData(updatedData);
-                                handleUpdateStatus(
-                                  item._id,
-                                  item.status,
-                                  "OrderStatus",
-                                  "Order Cancled!",
-                                  "Issue in the cancling order."
-                                );
-                              }}
-                              className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2"
-                            >
-                              <span className="text-gray-600">
-                                <SquareX size={17} />
-                              </span>
-                              <span> Cancel Order</span>
-                            </li>
-                            <li
-                              onClick={() => handleEditOrder(item)}
-                              className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2"
-                            >
-                              <span className="text-gray-600">
-                                <Pencil size={17} />
-                              </span>
-                              <span> Edit Order</span>
-                            </li>
-                            <li
-                              onClick={() => toggleExpandedRow(index)}
-                              className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2 "
-                            >
-                              <span className="text-gray-600">
-                                <SendToBack size={17} />
-                              </span>
-                              <span> View Order Details</span>
-                            </li>
-                          </ul>
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                  {expandedRowIndex === index && (
-                    <tr>
-                      <td
-                        colSpan="6"
-                        className="bg-correct-black-light text-white p-6"
-                      >
-                        <p className="text-lg mb-3 text-gray-300">
-                          Client's order details are :
-                        </p>
-                        {item.items.map((details, index) => (
-                          <div
-                            key={index}
-                            className="flex justify-between items-center text-gray-400"
-                          >
-                            <p className="text-center w-[33%]">
-                              {details.itemName}
-                            </p>
-                            <p className="text-center w-[33%]">
-                              x{details.qty}
-                            </p>
-                            <p className="text-center w-[33%]">
-                              ${details.amount}
-                            </p>
-                          </div>
-                        ))}
-                      </td>
-                    </tr>
                   )}
-                </>
-              ))}
-            </tbody>
-          </table>
+
+
+                  <ExpandedRow
+                    index={index}
+                    expandedRowIndex={expandedRowIndex}
+                    toggleExpandedRow={toggleExpandedRow}
+                    item={item}
+                  />
+                </div>
+              </>
+            ))}
+          </div>
         </div>
       </div>
       <Toaster />
@@ -257,28 +189,34 @@ export default function Finances() {
   );
 }
 
-const TableHead = (props) => {
+const GridHead = ({ info }) => {
   return (
-    <th className=" text-txt-dark font-semibold text-lg p-5">{props.head}</th>
+    <div className="text-center grid grid-cols-7 bg-correct-black-light w-full bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200 border-b border-white border-opacity-25 rounded-t-lg">
+      {info.map((head, index) => (
+        <p key={index} className="text-txt-dark font-semibold text-lg p-5">
+          {head}
+        </p>
+      ))}
+    </div>
   );
 };
 
-const TableRow = ({ txt, item, client }) => {
+const GridRow = ({ txt, item, client }) => {
   return (
-    <td
-      className={`p-6 text-center bg-correct-black-light text-white ${
+    <p
+      className={`p-6 text-center bg-correct-black-light text-white bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200 flex justify-center items-center  ${
         client && "font-semibold"
       } ${!item.orderStatus ? "order-cancel" : ""}`}
     >
       {txt}
-    </td>
+    </p>
   );
 };
 
 const RowStatus = ({ item }) => {
   return (
-    <td
-      className={`p-6 text-center bg-correct-black-light text-white ${
+    <div
+      className={`p-6 text-center bg-correct-black-light text-white bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200 flex justify-center items-center  ${
         !item.orderStatus ? "order-cancel" : ""
       }`}
     >
@@ -289,7 +227,7 @@ const RowStatus = ({ item }) => {
       >
         {item.status ? "Paid" : "Unpaid"}
       </span>
-    </td>
+    </div>
   );
 };
 
@@ -315,13 +253,105 @@ const StatusHandleButton = ({
           "Issue in the updating status."
         );
       }}
-      className={`flex flex-col justify-center items-center  ${
+      className={`cursor-pointer flex flex-col justify-center items-center p-6 text-center bg-correct-black-light text-white bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200   ${
         item.status ? "hover:text-green-400" : "hover:text-yellow-400"
       } `}
     >
       {item.status ? <CircleCheck /> : <Ban size={22} />}
-
       <p className="text-sm">Mark {type}</p>
     </div>
   );
 };
+
+const MoreButton = ({ index, toggleMoreVisible }) => (
+  <div
+    onClick={() => toggleMoreVisible(index)}
+    className="relative flex justify-center items-center flex-col text-gray-100 self-end p-6 text-center bg-correct-black-light bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200 cursor-pointer hover:text-white"
+  >
+    <Ellipsis />
+    <p className="text-sm">More</p>
+  </div>
+);
+
+const ExpandedRow = ({ index, expandedRowIndex, toggleExpandedRow, item }) => (
+  <>
+    {expandedRowIndex === index && (
+      <div className="col-span-7 text-gray-100 self-end p-6 text-center bg-correct-black-light bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200 ring ring-white/5 space-y-4">
+        <div className="flex justify-center items-center">
+          <p className="text-lg text-gray-200 w-full">
+            Client's order details are :
+          </p>
+          <X
+            onClick={() => toggleExpandedRow(index)}
+            className="float-right bg-gray-400 bg-opacity-50 rounded-full p-1 hover:scale-125 cursor-pointer"
+            size={25}
+          />
+        </div>
+        <div className="w-[50&] h-px border border-gray-400 border-opacity-40"></div>
+        {item.items.map((details, index) => (
+          <div
+            key={index}
+            className="flex justify-between items-center text-center "
+          >
+            <p className="w-[33%]">{details.itemName}</p>
+            <p className="w-[33%]">x{details.qty}</p>
+            <p className="w-[33%]">${details.amount}</p>
+          </div>
+        ))}
+      </div>
+    )}
+  </>
+);
+
+
+const MoreDetails = ({ index, item, invoiceData, setInvoiceData, handleUpdateStatus, toggleMoreVisible, toggleExpandedRow, handleEditOrder }) => (
+  <div className="w-[20%] absolute h-auto right-14 z-[100] bg-white rounded-md px-1 py-2 text-black mr-12 mt-10">
+    <X
+      onClick={() => {
+        toggleMoreVisible(index);
+      }}
+      size={18}
+      className="float-right mr-1 mb-4 hover:text-gray-800"
+    />
+    <ul className="space-y-2">
+      <li
+        onClick={() => {
+          const updatedData = [...invoiceData];
+          updatedData[index].orderStatus = !item.orderStatus;
+          setInvoiceData(updatedData);
+          handleUpdateStatus(
+            item._id,
+            item.status,
+            "OrderStatus",
+            "Order Cancled!",
+            "Issue in the cancling order."
+          );
+        }}
+        className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2"
+      >
+        <span className="text-gray-600">
+          <SquareX size={17} />
+        </span>
+        <span> Cancel Order</span>
+      </li>
+      <li
+        onClick={() => handleEditOrder(item)}
+        className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2"
+      >
+        <span className="text-gray-600">
+          <Pencil size={17} />
+        </span>
+        <span> Edit Order</span>
+      </li>
+      <li
+        onClick={() => toggleExpandedRow(index)}
+        className="hover:bg-gray-200 w-full px-3 py-1 hover:scale-105 hover:font-medium text-sm flex justify-start items-center space-x-2 "
+      >
+        <span className="text-gray-600">
+          <SendToBack size={17} />
+        </span>
+        <span> View Order Details</span>
+      </li>
+    </ul>
+  </div>
+);

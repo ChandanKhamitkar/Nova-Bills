@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
-export default function NavbarAfterLogin(props) {
+export default function NavbarAfterLogin() {
   const navigate = useNavigate();
   const [menuVisible, setMenuVisible] = useState(false);
   const handleMenu = () => {
@@ -21,7 +21,7 @@ export default function NavbarAfterLogin(props) {
   }, []);
 
   return (
-    <nav className={`w-full p-6 flex justify-between text-white items-center ${props.darkMode ? 'bg-correct-black-light' : '' }`}>
+    <nav className={`w-full p-6 flex justify-between text-white items-center`}>
       <div className="flex space-x-4 items-center">
         <img src={Logo} alt="Logo" className="w-10 h-10" />
         <p className="font-semibold text-xl">NovaBills</p>

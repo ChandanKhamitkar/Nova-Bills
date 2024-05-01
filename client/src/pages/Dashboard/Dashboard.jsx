@@ -12,7 +12,7 @@ export default function Dashboard() {
       <img
         src={blueBack}
         alt="blueBall"
-        className="absolute top-20 right-96 opacity-15 w-[500px]"
+        className="absolute top-20 right-96 opacity-15 w-[500px] "
       />
 
       <div className="w-[80%] flex flex-col justify-center items-start text-white h-[300px] space-y-4">
