@@ -1,4 +1,4 @@
-import FeaturesCard from "./FeaturesCard.jsx";
+import FeatureBenefit from "../components/Cards/features/FeatureBenefit.jsx";
 import FeaturesInfo from "../../utils/FeaturesInfo.js";
 import NavbarAfterLogin from "../components/Navbars/NavbarAfterLogin.jsx";
 import UserOptionsInfo from "../../utils/UserOptionsInfo.js";
@@ -9,7 +9,6 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen w-full  justify-center items-center rounded-md  bg-black/[0.96] antialiased bg-grid-white/[0.025] relative overflow-hidden flex flex-col ">
       <NavbarAfterLogin />
-      {/* <div className="min-h-0.5 w-[50%] mt-20 mb-10 mx-auto max-w-full flex justify-center items-center lightning-stroke"></div> */}
       <img
         src={blueBack}
         alt="blueBall"
@@ -17,11 +16,10 @@ export default function Dashboard() {
       />
 
       <div className="w-[80%] flex flex-col justify-center items-start text-white h-[300px] space-y-4">
-        <p className="text-4xl font-bold ">Dashboard</p>
+        <p className="text-5xl font-bold from-orange-700 to-orange-400 bg-gradient-to-r bg-clip-text text-transparent">Dashboard</p>
         <p className="text-gray-500 text-lg">
           Powerful features for modern marketing teams
         </p>
-        {/* <p className="text-4xl font-bold ">Powerful features for modern marketing teams</p> */}
       </div>
 
       <div className="w-full py-10 border-y border-gray-900 bg-black/30 backdrop-blur-sm">
@@ -42,7 +40,7 @@ export default function Dashboard() {
 
         <div className="flex justify-center items-center mx-auto flex-wrap my-16 space-x-6">
           {FeaturesInfo.map((item, index) => (
-            <FeaturesCard
+            <FeatureBenefit
               key={index}
               id={index}
               svg={item.svg}

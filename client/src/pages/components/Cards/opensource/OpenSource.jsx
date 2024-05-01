@@ -1,7 +1,7 @@
 export default function OpenSource() {
     return (
-      <div className="w-full py-6 text-center flex flex-col space-y-5 justify-center items-center antialiased bg-gray-900/20 h-[300px] border-y border-y-gray-900 backdrop-blur-sm text-white">
-        <p className="text-5xl font-bold tracking-wide drop-shadow-md ">Proudly Open Source</p>
+      <div className="w-full py-6 text-center flex flex-col space-y-6 justify-center items-center antialiased bg-gray-900/20 min-h-[300px] border-y border-y-gray-900 backdrop-blur-sm text-white">
+        <p className="text-5xl font-bold tracking-wide drop-shadow-md bg-gradient-to-r bg-clip-text text-transparent from-white to-slate-500">Proudly Open Source</p>
         <p className="flex justify-center items-center text-gray-500 w-[30%] text-center text-wrap">
           Our source code is available on GitHub - feel free to read, review, or
           contribute to it however you want!

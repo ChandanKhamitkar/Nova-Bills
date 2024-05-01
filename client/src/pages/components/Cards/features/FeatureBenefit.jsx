@@ -1,5 +1,5 @@
 
-export default function FeaturesCard(props) {
+export default function FeatureBenefit(props) {
     return (
         <div className="w-64 min-h-40 max-h-56 rounded-lg bg-gray-500 bg-opacity-40 border border-gray-600 flex flex-col justify-center items-center space-y-3">
         <div className="rounded-lg bg-gray-500 bg-opacity-65 p-2 shadow-2xl">
