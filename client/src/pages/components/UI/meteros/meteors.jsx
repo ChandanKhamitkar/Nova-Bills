@@ -1,4 +1,4 @@
-import { cn } from "../../../utils/cn.js";
+import { cn } from "../../../../utils/cn.js";
 // import clsx from "clsx";
 import React from "react";
 

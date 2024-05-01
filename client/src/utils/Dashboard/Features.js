@@ -1,9 +1,9 @@
-import Gradient1 from "../assets/Images/gradient-1.jpg";
-import Gradient2 from "../assets/Images/gradient-2.jpg";
-import Gradient3 from "../assets/Images/gradient-3.jpg";
-import Gradient4 from "../assets/Images/gradient-4.jpg";
+import Gradient1 from "../../assets/Images/gradient-1.jpg";
+import Gradient2 from "../../assets/Images/gradient-2.jpg";
+import Gradient3 from "../../assets/Images/gradient-3.jpg";
+import Gradient4 from "../../assets/Images/gradient-4.jpg";
 
-const UserOptionsInfo = [
+const Features = [
   {
     title: "Complete Profile",
     content:
@@ -95,4 +95,4 @@ const UserOptionsInfo = [
   },
 ];
 
-export default UserOptionsInfo;
+export default Features;

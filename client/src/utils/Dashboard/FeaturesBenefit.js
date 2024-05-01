@@ -1,4 +1,4 @@
-const FeaturesInfo = [
+const FeaturesBenefit = [
   {
     svg: (
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(229, 231, 235)" class="bi bi-lightning-charge" viewBox="0 0 16 16">
@@ -29,4 +29,4 @@ const FeaturesInfo = [
   },
 ];
 
-export default FeaturesInfo;
+export default FeaturesBenefit;

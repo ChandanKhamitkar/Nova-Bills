@@ -1,5 +1,5 @@
 import React from "react";
-import { Meteors } from "./meteors";
+import { Meteors } from "../../UI/meteros/meteors.jsx";
 import { useNavigate } from "react-router-dom";
 
 export default function MeteorsCard(props) {

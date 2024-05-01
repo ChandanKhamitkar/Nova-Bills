@@ -1,7 +1,7 @@
 import FeatureBenefit from "../components/Cards/features/FeatureBenefit.jsx";
-import FeaturesInfo from "../../utils/FeaturesInfo.js";
+import FeaturesBenefit from "../../utils/Dashboard/FeaturesBenefit.js";
 import NavbarAfterLogin from "../components/Navbars/NavbarAfterLogin.jsx";
-import UserOptionsInfo from "../../utils/UserOptionsInfo.js";
+import Features from "../../utils/Dashboard/Features.js";
 import blueBack from "../../assets/Images/intro_blue_ball.png";
 import Feature from "../components/Cards/features/Feature.jsx";
 
@@ -24,7 +24,7 @@ export default function Dashboard() {
 
       <div className="w-full py-10 border-y border-gray-900 bg-black/30 backdrop-blur-sm">
         <div className="w-[80%] flex flex-wrap justify-center items-center mx-auto gap-6">
-          {UserOptionsInfo.map((item, index) => (
+          {Features.map((item, index) => (
             <Feature
               key={index}
               id={index}
@@ -39,7 +39,7 @@ export default function Dashboard() {
         </div>
 
         <div className="flex justify-center items-center mx-auto flex-wrap my-16 space-x-6">
-          {FeaturesInfo.map((item, index) => (
+          {FeaturesBenefit.map((item, index) => (
             <FeatureBenefit
               key={index}
               id={index}

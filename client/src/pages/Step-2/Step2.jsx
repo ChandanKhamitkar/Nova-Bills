@@ -1,6 +1,6 @@
 import NavbarAfterLogin from "../components/Navbars/NavbarAfterLogin";
 import DesignsInfo from "../../utils/Designs/DesingsInfo";
-import SampleCard from "../components/Step-2/SampleCard";
+import SampleCard from "../components/Cards/Step-2/SampleCard.jsx";
 import { useRef } from "react";
 import { downloadPDF } from "../components/Download/PDF/pdfConvert.js";
 import { useLocation } from "react-router-dom";
