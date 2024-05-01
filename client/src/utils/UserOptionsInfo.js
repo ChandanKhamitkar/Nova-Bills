@@ -1,3 +1,8 @@
+import Gradient1 from "../assets/Images/gradient-1.jpg";
+import Gradient2 from "../assets/Images/gradient-2.jpg";
+import Gradient3 from "../assets/Images/gradient-3.jpg";
+import Gradient4 from "../assets/Images/gradient-4.jpg";
+
 const UserOptionsInfo = [
   {
     title: "Complete Profile",
@@ -16,6 +21,7 @@ const UserOptionsInfo = [
         <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z" />
       </svg>
     ),
+    imgLink : Gradient1,
     btnTxt: "Create",
     navigateTo: "/profile",
   },
@@ -35,6 +41,7 @@ const UserOptionsInfo = [
         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
       </svg>
     ),
+    imgLink : Gradient2,
     btnTxt: "Create",
     navigateTo: "/invoiceinput",
   },
@@ -60,6 +67,7 @@ const UserOptionsInfo = [
         <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567" />
       </svg>
     ),
+    imgLink : Gradient3,
     btnTxt: "Manage",
     navigateTo: "/finances",
   },
@@ -81,6 +89,7 @@ const UserOptionsInfo = [
         />
       </svg>
     ),
+    imgLink : Gradient4,
     btnTxt: "Manage",
     navigateTo: "/report",
   },

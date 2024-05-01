@@ -16,19 +16,6 @@ export default router.post("/api/user/addInvoice", async (req, res) => {
 
     if(invoiceEditID){
       const invoice = await Invoices.findById(invoiceEditID);
-      if (!invoice) {
-        const newInvoice = new Invoices({
-          date: currentDate,
-          invoiceNo,
-          billedTo,
-          amount,
-          items,
-          user: ID,
-        });
-  
-        const savedInvoice = await newInvoice.save();
-        return res.status(200).json({ success: true });
-      }
 
       invoice.date = currentDate;
       invoice.billedTo = billedTo;
@@ -37,6 +24,19 @@ export default router.post("/api/user/addInvoice", async (req, res) => {
 
       await invoice.save();
       return res.status(200).json({success : true});
+    }
+    else{
+      const newInvoice = new Invoices({
+        date: currentDate,
+        invoiceNo,
+        billedTo,
+        amount,
+        items,
+        user: ID,
+      });
+
+      const savedInvoice = await newInvoice.save();
+      return res.status(200).json({ success: true });
     }
 
   } catch (error) {

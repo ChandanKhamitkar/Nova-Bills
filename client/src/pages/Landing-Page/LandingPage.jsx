@@ -1,9 +1,11 @@
 // import { cn } from "../../utils/cn.js";
 import React from "react";
-import Spotlight from "./Spotlight.jsx";
+import Spotlight from "../components/UI/spotlight/Spotlight.jsx";
 import { useNavigate } from "react-router-dom";
 import { MoveRight } from "lucide-react";
 import PreNavbar from "../components/Navbars/PreNavbar.jsx";
+import OpenSource from "../components/Cards/opensource/OpenSource.jsx";
+
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -36,7 +38,11 @@ export default function LandingPage() {
           <MoveRight size={19} />
         </button>
       </div>
-        
+      <OpenSource />
+
+      <div className="my-10 text-center text-white">
+          <p>Made with ❤️ By Khamitkar Chandan</p>
+      </div>
     </div>
   );
 }

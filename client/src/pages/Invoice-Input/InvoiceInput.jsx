@@ -20,13 +20,16 @@ export default function InvoiceInput() {
 
   const [invoiceEditID, setInvoiceEditId] = useState("");
   useEffect(() => {
-    if(location.state.billedTo && location.state.items){
-      const { billedTo, items, invoiceID } = location.state;
-      console.log("Editing mode on...! -- ", billedTo, items, invoiceID);
-      setRows(items);
-      setFormData(billedTo);
-      setInvoiceEditId(invoiceID);
+    if(location.state){
+      if(location.state.billedTo && location.state.items){
+        const { billedTo, items, invoiceID } = location.state;
+        console.log("Editing mode on...! -- ", billedTo, items, invoiceID);
+        setRows(items);
+        setFormData(billedTo);
+        setInvoiceEditId(invoiceID);
+      }
     }
+
   }, [location.state]);
 
 
