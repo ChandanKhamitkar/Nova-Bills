@@ -4,8 +4,16 @@ import NavbarAfterLogin from "../components/Navbars/NavbarAfterLogin.jsx";
 import Features from "../../utils/Dashboard/Features.js";
 import blueBack from "../../assets/Images/intro_blue_ball.png";
 import Feature from "../components/Cards/features/Feature.jsx";
+import Loader from "../components/Loader/Loader.jsx";
+import { useState } from "react";
 
 export default function Dashboard() {
+
+  const [loading, setLoading] = useState(true);
+  setTimeout(() => {
+    setLoading(false);
+  }, 4000);
+
   return (
     <div className="min-h-screen w-full  justify-center items-center rounded-md  bg-black/[0.96] antialiased bg-grid-white/[0.025] relative overflow-hidden flex flex-col ">
       <NavbarAfterLogin />
@@ -50,6 +58,7 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
+      {loading && <Loader />}
     </div>
   );
 }

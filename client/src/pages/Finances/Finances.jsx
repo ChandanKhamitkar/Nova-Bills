@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import blue_gradient from "../../assets/Images/blue-gradient.jpg";
+import Loader from "../components/Loader/Loader.jsx";
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
@@ -22,11 +23,13 @@ export default function Finances() {
   const [invoiceData, setInvoiceData] = useState([]);
   const [moreVisibleIndex, setMoreVisibleIndex] = useState(null);
   const [expandedRowIndex, setExpandedRowIndex] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = Cookies.get("nb_token");
+        setLoading(true);
         const response = await axios.get(`${baseURL}/api/user/getInvoice`, {
           headers: {
             "content-type": "application/json",
@@ -36,6 +39,7 @@ export default function Finances() {
 
         if (response.data.success) {
           setInvoiceData(response.data.invoiceData.reverse());
+          setLoading(false);
         } else {
           toast.error("Error in retriving data!");
         }
@@ -184,6 +188,7 @@ export default function Finances() {
           </div>
         </div>
       </div>
+      {loading && <Loader />}
       <Toaster />
     </div>
   );

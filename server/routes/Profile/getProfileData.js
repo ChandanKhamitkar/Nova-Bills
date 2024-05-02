@@ -14,6 +14,7 @@ export default router.get("/api/user/getProfileData", async (req, res) => {
     res
       .status(200)
       .json({
+        success : true,
         fullName: user.fullName,
         email : user.email,
         address: user.address,

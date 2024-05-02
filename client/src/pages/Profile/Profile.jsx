@@ -9,27 +9,36 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import updateProfile from "../../utils/Profile/UpdatableInfo.js";
 import blueBack from "../../assets/Images/intro_blue_ball.png";
+import Loader from "../components/Loader/Loader.jsx";
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 export default function Profile() {
   const navigate = useNavigate();
-
   const [showUpdateProfileModal, setShowUpdateProfileModal] = useState(false);
-
   const [profileData, setProfileData] = useState({});
+  const [updateOption, setUpdateOption] = useState("Address");
+  const [loading, setLoading] = useState(false);
 
   const fetchData = useCallback(async () => {
     try {
       const token = Cookies.get("nb_token");
+      setLoading(true);
       const response = await axios.get(`${baseURL}/api/user/getProfileData`, {
         headers: {
           "content-type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
-      setProfileData(response.data);
-      console.log("Profile data fetched successfully!");
+      
+      if(response.data.success){
+        setProfileData(response.data);
+        setLoading(false);
+      }
+      else{
+        toast.error("Server Error!");
+        setLoading(false);
+      }
     } catch (error) {
       console.log("Error : ", error);
       toast.error("Internal server error! | Session Expired");
@@ -42,7 +51,6 @@ export default function Profile() {
     fetchData();
   }, [fetchData]);
 
-  const [updateOption, setUpdateOption] = useState("Address");
 
   return (
     <div className="min-h-screen w-full  justify-center items-center rounded-md  bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden flex flex-col ">
@@ -169,6 +177,7 @@ export default function Profile() {
         />
       )}
       <Toaster />
+      {loading && <Loader />}
     </div>
   );
 }
