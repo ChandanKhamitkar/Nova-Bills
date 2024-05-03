@@ -4,10 +4,14 @@ import { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import Request from "../PopupModals/Request-feature/Request";
 
 export default function NavbarAfterLogin() {
   const navigate = useNavigate();
   const [menuVisible, setMenuVisible] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+
   const handleMenu = () => {
     setMenuVisible(!menuVisible);
   };
@@ -80,7 +84,7 @@ export default function NavbarAfterLogin() {
                   <p className="text-slate-800 tracking-wide text-sm">
                     Missing out on a feature? We'd love to know!
                   </p>
-                  <p className="text-blue-500 space-x-2 cursor-pointer hover:scale-105 font-semibold drop-shadow-md flex justify-start items-center">
+                  <p onClick={() => setShowModal(!showModal)} className="text-blue-500 space-x-2 cursor-pointer hover:scale-105 font-semibold drop-shadow-md flex justify-start items-center">
                     <span>Request a Feature</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -137,6 +141,11 @@ export default function NavbarAfterLogin() {
           </li>
         </ul>
       </div>
+      {showModal && (
+        <Request
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </nav>
   );
 }
