@@ -262,7 +262,7 @@ const StatusHandleButton = ({
         item.status ? "hover:text-green-400" : "hover:text-yellow-400"
       } `}
     >
-      {item.status ? <CircleCheck /> : <Ban size={22} />}
+      {!item.status ? <CircleCheck /> : <Ban size={22} />}
       <p className="text-sm">Mark {type}</p>
     </div>
   );

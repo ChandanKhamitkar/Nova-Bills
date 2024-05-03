@@ -9,6 +9,8 @@ import Show from "../components/PopupModals/Show.jsx";
 import axios from "axios";
 import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
+import blueBack from "../../assets/Images/intro_blue_ball.png";
+
 
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
@@ -185,13 +187,19 @@ export default function InvoiceInput() {
 
   return (
     <div
-      className="bg-image bg-fixed bg-center bg-no-repeat bg-cover pb-12"
+      className="min-h-screen w-full  justify-center items-center rounded-md  bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden flex flex-col  pb-12"
       id="InvoiceInput"
     >
       {/* <div className="absolute inset-0 backdrop-filter backdrop-blur-lg h-full"> */}
       <NavbarAfterLogin />
 
-      <div className="w-3/4 h-auto bg-gray-100 backdrop-blur-md bg-opacity-35 flex justify-center items-center mx-auto my-10 rounded-md border border-gray-400 shadow-md shadow-slate-700">
+
+      <img
+        src={blueBack}
+        alt="blueBall"
+        className="absolute top-0 right-80 opacity-20 w-[1000px] "
+      />
+      <div className="w-3/4 h-auto bg-white/10 backdrop-blur-md bg-opacity-35 flex justify-center items-center mx-auto my-10 rounded-md border border-white/40 shadow-md shadow-slate-700">
         <form
           action=""
           className="w-full flex flex-col justify-center items-center space-y-6 p-8"
@@ -201,7 +209,7 @@ export default function InvoiceInput() {
             <div className="input flex flex-col w-fit static">
               <label
                 htmlFor="dueDate"
-                className="text-blue-500 text-xs font-semibold relative top-2 ml-[7px] px-1 py-0.5 drop-shadow-lg bg-[#e8e8e863] rounded-md  w-fit"
+                className="text-blue-500 text-xs font-semibold relative top-2 ml-[7px] px-1 py-0.5 drop-shadow-lg bg-[#e8e8e8c6] rounded-md  w-fit"
               >
                 Due Date (optional):
               </label>
@@ -217,10 +225,10 @@ export default function InvoiceInput() {
             </div>
           </div>
           <div className="flex justify-center items-center space-x-4 w-full">
-            <div className="bg-gray-400 bg-opacity-50 rounded-lg p-6 flex flex-col w-1/2 shadow-lg space-y-4">
+            <div className="bg-white/20 bg-opacity-50 rounded-lg p-6 flex flex-col w-1/2 shadow-lg space-y-4">
               <p className="text-left text-xl font-medium border-b border-dashed border-gray-700 w-fit mb-3">
                 Billed By{" "}
-                <span className="text-sm text-slate-700">Your Details</span>
+                <span className="text-sm text-slate-800">Your Details</span>
               </p>
               <div className="w-full flex flex-wrap gap-4">
                 {BilledByInfo.map((you, index) => (
@@ -243,10 +251,10 @@ export default function InvoiceInput() {
                 ))}
               </div>
             </div>
-            <div className="bg-gray-400 bg-opacity-50 rounded-lg p-6 flex flex-col w-1/2 shadow-lg space-y-4">
+            <div className="bg-white/20 bg-opacity-50 rounded-lg p-6 flex flex-col w-1/2 shadow-lg space-y-4">
               <p className="text-left text-xl font-medium border-b border-dashed border-gray-700 w-fit mb-3">
                 Billed To{" "}
-                <span className="text-sm text-slate-700">Client Details</span>
+                <span className="text-sm text-slate-800">Client Details</span>
               </p>
               <div className="w-full flex flex-col space-y-8">
                 {BilledToInfo.map((item, index) => (
@@ -323,7 +331,7 @@ export default function InvoiceInput() {
                 },
               });
             }}
-            className="bg-cyan-500  rounded-md px-6 py-2 text-white shadow-md hover:shadow-xl tracking-wide"
+            className="bg-white/10  rounded-md px-6 py-2 text-white shadow-md hover:shadow-xl tracking-wide border border-white/20"
           >
             Confirm & Continue
           </button>

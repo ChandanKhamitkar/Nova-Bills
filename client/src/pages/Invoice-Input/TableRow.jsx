@@ -50,8 +50,8 @@ export default function TableRow (props) {
           xmlns="http://www.w3.org/2000/svg"
           width="22"
           height="22"
-          fill="rgb(55 65 81)"
-          className="bi bi-trash hover:scale-110 hover:drop-shadow-2xl hover:fill-red-800"
+          fill="rgb(0 0 0 / 0.55)"
+          className="bi bi-trash hover:scale-110 hover:drop-shadow-2xl hover:fill-red-800 "
           viewBox="0 0 16 16"
         >
           <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
