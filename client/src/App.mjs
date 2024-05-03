@@ -10,6 +10,7 @@ import NB002 from "./pages/Templates_designs/NB002.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
 import Finances from "./pages/Finances/Finances.jsx";
 import Step2 from "./pages/Step-2/Step2.jsx";
+import Report from "./pages/Report/Report.jsx";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/finances' element={<Finances />} />
           <Route path='/selectTemplate' element={<Step2 />} />
+          <Route path='/report' element={<Report />} />
         </Routes>
       </BrowserRouter>
     </>
