@@ -24,6 +24,11 @@ export default function NavbarAfterLogin() {
     setUser(decodeToken);
   }, []);
 
+  const handleLogout =  (e) => {
+    Cookies.remove('nb_token', { expires: new Date(0) });
+    navigate("/");
+}
+
   return (
     <nav className={`w-full p-6 flex justify-between text-white items-center`}>
       <div className="flex space-x-4 items-center">
@@ -106,7 +111,9 @@ export default function NavbarAfterLogin() {
                   </p>
                 </div>
                 <ul className="text-gray-500 space-y-3">
-                  <li className="hover:scale-110 hover:cursor-pointer text-red-500 hover:bg-gray-100 hover:text-red-500 px-2 py-1 flex justify-start items-center space-x-4">
+                  <li 
+                  onClick={handleLogout}
+                  className="hover:scale-110 hover:cursor-pointer text-red-500 hover:bg-gray-100 hover:text-red-500 px-2 py-1 flex justify-start items-center space-x-4">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
