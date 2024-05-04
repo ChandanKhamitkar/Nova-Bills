@@ -31,6 +31,7 @@ export default function Report() {
       try {
         const token = Cookies.get("nb_token");
         setLoading(true);
+        const PresentYear = new Date().getFullYear();
         const response = await axios.get(`${baseURL}/api/user/getReport`, {
           headers: {
             "content-type": "application/json",
@@ -41,14 +42,16 @@ export default function Report() {
           const ReportData = response.data.ReportData;
 
           const monthlyData = ReportData.reduce((acc, entry) => {
-            const entryMonth = entry.month.split(" ")[1];
-            const existingEntry = acc.find((item) => item.month === entryMonth);
-            if (existingEntry) {
-              existingEntry.amount += entry.amount;
-            } else {
-              acc.push({ month: entryMonth, amount: entry.amount });
+            if(PresentYear === parseInt(entry.month.split(" ")[2])){
+              const entryMonth = entry.month.split(" ")[1];
+              const existingEntry = acc.find((item) => item.month === entryMonth);
+              if (existingEntry) {
+                existingEntry.amount += entry.amount;
+              } else {
+                acc.push({ month: entryMonth, amount: entry.amount });
+              }
             }
-            return acc;
+              return acc;
           }, []);
 
           const yearlyData = ReportData.reduce((acc, entry) => {
