@@ -11,6 +11,7 @@ import updateProfile from "../../utils/Profile/UpdatableInfo.js";
 import blueBack from "../../assets/Images/intro_blue_ball.png";
 import Loader from "../components/Loader/Loader.jsx";
 import { jwtDecode } from "jwt-decode";
+// import { Decryptr } from "../../helper/Decryptr/Decryptr.js";
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
@@ -20,6 +21,15 @@ export default function Profile() {
   const [profileData, setProfileData] = useState({});
   const [updateOption, setUpdateOption] = useState("Address");
   const [loading, setLoading] = useState(false);
+
+  // const DecryptedData = useCallback(() => {
+  //   const AccountObj = updateProfile.Account;
+  //   const Keys = Object.keys(AccountObj);
+  //   Keys.forEach(keyName => {
+  //     const decryptedString = Decryptr(profileData[keyName]);
+  //     setProfileData(prev => ({...prev, [keyName] : decryptedString}))
+  //   });
+  // }, [profileData]);
 
   const fetchData = useCallback(async () => {
     try {
@@ -35,7 +45,6 @@ export default function Profile() {
         navigate("/login");
         return;
       }
-
       setLoading(true);
 
       const response = await axios.get(`${baseURL}/api/user/getProfileData`, {
@@ -55,14 +64,15 @@ export default function Profile() {
     } catch (error) {
       console.log("Error : ", error);
       toast.error("Internal server error! | Session Expired");
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
     }
   }, [navigate]);
+
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+
 
   return (
     <div className="min-h-screen w-full  justify-center items-center rounded-md  bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden flex flex-col ">

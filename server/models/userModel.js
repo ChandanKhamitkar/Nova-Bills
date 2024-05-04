@@ -42,7 +42,7 @@ const userSchema = new Schema(
             type : String,
         },
         accountNumber : {
-            type : Number,
+            type : String,
         },
     },
     {

@@ -1,5 +1,6 @@
 import express from "express";
 import Users from "../../models/userModel.js";
+import { Encryptr } from "../../helpers/Cryptr/Crpytr.js";
 
 const router = express.Router();
 export default router.put("/api/user/updateProfile", async (req, res) => {
@@ -10,7 +11,12 @@ export default router.put("/api/user/updateProfile", async (req, res) => {
     const user = await Users.findById(ID);
     if (user) {
       Object.keys(updateFields).forEach((key) => {
-        user[key] = updateFields[key];
+        if(key === "bankName" || key === "accountName" || key === "accountNumber"){
+          user[key] = Encryptr(updateFields[key]);
+        }
+        else{
+          user[key] = updateFields[key];
+        }
       });
       await user.save();
       return res.status(200).json({ message: "Updated successfully" });

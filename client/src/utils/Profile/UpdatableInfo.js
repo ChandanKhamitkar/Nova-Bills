@@ -38,7 +38,7 @@ const updateProfile = {
             name : "bankName",
           },
           accountName : {
-            type : "number",
+            type : "text",
             name : "accountName",
           },
           accountNumber : {
