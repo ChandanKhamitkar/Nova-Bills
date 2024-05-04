@@ -11,6 +11,7 @@ import Profile from "./pages/Profile/Profile.jsx";
 import Finances from "./pages/Finances/Finances.jsx";
 import Step2 from "./pages/Step-2/Step2.jsx";
 import Report from "./pages/Report/Report.jsx";
+import Nopage from "./pages/Nopage/Nopage.jsx";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path='/finances' element={<Finances />} />
           <Route path='/selectTemplate' element={<Step2 />} />
           <Route path='/report' element={<Report />} />
+          <Route path='*' element={<Nopage />} />
         </Routes>
       </BrowserRouter>
     </>
