@@ -62,7 +62,7 @@ export default function Report() {
             return acc;
           }, []);
           
-          setReportData((prev) => ({ ...prev, monthly: monthlyData }));
+          setReportData((prev) => ({ ...prev, monthly: monthlyData.reverse()}));
           setReportData((prev) => ({ ...prev, yearly: yearlyData.reverse()}));
           setLoading(false);
         } else {
