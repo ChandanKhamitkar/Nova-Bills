@@ -12,7 +12,7 @@ export default router.get("/api/user/getReport", async (req, res) => {
                 const filteredItems = items.map(item => {
                     const { user, ...rest} = item.toObject();
                     const singleData = {
-                        month : rest.date.split(" ")[1],
+                        month : rest.date,
                         amount : rest.amount,
                     }
                     return singleData;
