@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import Request from "../PopupModals/Request-feature/Request";
+import { User, CircleUserRound, Sun } from 'lucide-react';
 
 export default function NavbarAfterLogin() {
   const navigate = useNavigate();
@@ -47,37 +48,15 @@ export default function NavbarAfterLogin() {
       </div>
       <div>
         <ul className="flex space-x-7 font-medium justify-center items-center">
-          <li className="bg-gray-500 bg-opacity-35 rounded-full p-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              fillRule="currentColor"
-              className="bi bi-brightness-high"
-              viewBox="0 0 16 16"
-            >
-              <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708" />
-            </svg>
+          <li className="hidden bg-gray-500 text-gray-400 bg-opacity-35 rounded-full p-2">
+            <Sun size={20}/>
           </li>
           <li onClick={() => navigate("/dashboard")} className="border border-gray-500 rounded-md px-4 py-2 text-sm hover:scale-105 cursor-pointer">
             Return to Dashboard
           </li>
           <li>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="26"
-              height="26"
-              fillRule="currentColor"
-              onClick={handleMenu}
-              className="bi bi-person-circle text-gray-500 cursor-pointer"
-              viewBox="0 0 16 16"
-            >
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-              <path
-                fillRule="evenodd"
-                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
-              />
-            </svg>
+            <CircleUserRound size={28} strokeWidth={1.25} onClick={handleMenu} className="text-gray-400 cursor-pointer"/>
+
             {menuVisible && (
               <div className="w-[20%] absolute right-8 top-16 bg-white border border-gray-300 rounded-lg shadow-md p-2 z-[100] space-y-6 px-3 py-4">
                 <div className="flex justify-start items-center space-x-4">
@@ -121,6 +100,7 @@ export default function NavbarAfterLogin() {
                   </p>
                 </div>
                 <ul className="text-gray-500 space-y-3">
+                  <li onClick={() => navigate("/profile")} className="hover:scale-110 hover:cursor-pointer text-gray-600 hover:bg-gray-100 hover:text-gray-700 px-2 py-1 flex justify-start items-center space-x-4"><span><User size={20}/></span><span>Profile</span></li>
                   <li 
                   onClick={handleLogout}
                   className="hover:scale-110 hover:cursor-pointer text-red-500 hover:bg-gray-100 hover:text-red-500 px-2 py-1 flex justify-start items-center space-x-4">
