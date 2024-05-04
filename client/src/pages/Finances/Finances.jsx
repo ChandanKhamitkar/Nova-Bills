@@ -141,7 +141,7 @@ export default function Finances() {
                 <div className="grid grid-cols-7 border-b border-white border-opacity-25">
                   <GridRow
                     key={index}
-                    txt={item.billedTo.client}
+                    txt={item?.billedTo?.client}
                     item={item}
                     client={true}
                   />
