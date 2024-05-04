@@ -31,15 +31,19 @@ export default function Login() {
         password: formData.password,
       });
 
-      console.log(res.data);
-      Cookies.set("nb_token", res.data.token);
-      toast.success("Login Successful");
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 2000);
+      if(res.data.success){
+        Cookies.set("nb_token", res.data.token);
+        toast.success("Login Successful");
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
+      }
+      else{
+        toast.error("Invalid Credentials!");
+      }
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Invalid Credentials!");
+      toast.error("Server Error | Please try again");
     }
   };
 

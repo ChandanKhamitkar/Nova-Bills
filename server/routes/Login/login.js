@@ -25,10 +25,10 @@ export default router.post("/api/user/login", async (req, res) => {
     const token = jwt.sign(tokenPayload, process.env.TOKEN_SECRET, {
       expiresIn: "1d",
     });
-    return res.status(200).json({message: "Login Successfull", token : token});
+    return res.status(200).json({success : true, message: "Login Successfull", token : token});
   }
 
   else{
-    return res.status(404).json({message : "Invalid Credentials!"});
+    return res.status(201).json({success : false, message : "Invalid Credentials!"});
   }
 });
