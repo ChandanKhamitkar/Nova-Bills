@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { MoveRight } from "lucide-react";
 import PreNavbar from "../components/Navbars/PreNavbar.jsx";
 import OpenSource from "../components/Cards/opensource/OpenSource.jsx";
+import Footer from "../components/Footer/Footer.jsx";
 
 
 export default function LandingPage() {
@@ -40,9 +41,7 @@ export default function LandingPage() {
       </div>
       <OpenSource />
 
-      <div className="my-10 text-center text-white">
-          <p>Made with ❤️ By Khamitkar Chandan</p>
-      </div>
+      <Footer/>
     </div>
   );
 }

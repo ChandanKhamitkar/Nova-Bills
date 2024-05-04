@@ -7,12 +7,13 @@ export default function OpenSource() {
           contribute to it however you want!
         </p>
         <section class="flex justify-center items-center">
-          <button
+          <a
             href="https://github.com/Chandan-6/Nova-Bills"
-            class="group flex justify-center p-2 rounded-md drop-shadow-xl bg-white text-black font-semibold hover:translate-y-3 transition-all duration-500 "
+            target="blank"
+            className="group flex justify-center p-2 rounded-md drop-shadow-xl bg-white text-black font-semibold hover:px-7 hover:rounded-2xl transition-all duration-500 "
           >
             <svg
-              class="w-5"
+              className="w-5"
               viewBox="0 0 15 15"
               fill="black"
               xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +25,7 @@ export default function OpenSource() {
                 clip-rule="evenodd"
               ></path>
             </svg>
-          </button>
+          </a>
         </section>
       </div>
     );

@@ -6,6 +6,7 @@ import blueBack from "../../assets/Images/intro_blue_ball.png";
 import Feature from "../components/Cards/features/Feature.jsx";
 import Loader from "../components/Loader/Loader.jsx";
 import Header from "../components/PageHeaders/Header.jsx";
+import Footer from "../components/Footer/Footer.jsx";
 import { useState } from "react";
 
 export default function Dashboard() {
@@ -55,6 +56,7 @@ export default function Dashboard() {
         </div>
       </div>
       {loading && <Loader />}
+      <Footer />
     </div>
   );
 }
