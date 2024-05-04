@@ -15,6 +15,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import blueBack from "../../assets/Images/intro_blue_ball.png";
+import Header from "../components/PageHeaders/Header.jsx";
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
@@ -95,14 +96,8 @@ export default function Report() {
         className="absolute top-0 right-80 opacity-20 w-[1000px] "
       />
 
-      <div className="w-[80%] flex flex-col justify-center items-start text-white h-[300px] space-y-4">
-        <p className="text-5xl font-bold from-orange-700 to-orange-400 bg-gradient-to-r bg-clip-text text-transparent">
-          Maximize your business effors with proper statistics
-        </p>
-        <p className="text-gray-500 text-lg">
-          Track your statistics in different ways - As per | year | month |
-        </p>
-      </div>
+      <Header title={"Maximize your business efforts with proper statistics"} subTitle={"Track your statistics in different ways - As per | year | month |"}/>
+
       <ResponsiveContainer
         width="80%"
         height={500}
@@ -124,7 +119,7 @@ export default function Report() {
       </ResponsiveContainer>
 
       <div className="flex justify-center items-center space-x-2">
-        <p className="text-white text-lg ">Montly</p>
+        <p className="text-white text-lg ">Present FY</p>
         <div className="mt-10 ">
           <label className="relative inline-flex items-center cursor-pointer">
             <input
@@ -136,7 +131,7 @@ export default function Report() {
             <div className="group peer ring-2  bg-gradient-to-bl from-neutral-800 via-neutral-700 to-neutral-600  rounded-full outline-none duration-1000 after:duration-300 w-20 h-8  shadow-md  peer-focus:outline-none  after:content-[''] after:rounded-full after:absolute after:[background:#0D2B39]   peer-checked:after:rotate-180 after:[background:conic-gradient(from_135deg,_#b2a9a9,_#b2a8a8,_#ffffff,_#d7dbd9_,_#ffffff,_#b2a8a8)]  after:outline-none after:h-6 after:w-6 after:top-1 after:left-1   peer-checked:after:translate-x-12 peer-hover:after:scale-125"></div>
           </label>
         </div>
-        <p className="text-white text-lg ">Yearly</p>
+        <p className="text-white text-lg ">Overall</p>
       </div>
 
       {loading && <Loader />}

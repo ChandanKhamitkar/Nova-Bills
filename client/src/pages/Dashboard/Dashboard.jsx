@@ -5,6 +5,7 @@ import Features from "../../utils/Dashboard/Features.js";
 import blueBack from "../../assets/Images/intro_blue_ball.png";
 import Feature from "../components/Cards/features/Feature.jsx";
 import Loader from "../components/Loader/Loader.jsx";
+import Header from "../components/PageHeaders/Header.jsx";
 import { useState } from "react";
 
 export default function Dashboard() {
@@ -23,12 +24,7 @@ export default function Dashboard() {
         className="absolute top-20 right-96 opacity-15 w-[500px] "
       />
 
-      <div className="w-[80%] flex flex-col justify-center items-start text-white h-[300px] space-y-4">
-        <p className="text-5xl font-bold from-orange-700 to-orange-400 bg-gradient-to-r bg-clip-text text-transparent">Dashboard</p>
-        <p className="text-gray-500 text-lg">
-          Powerful features for modern marketing teams
-        </p>
-      </div>
+<Header title={"Dashboard"} subTitle={"Powerful features for modern marketing teams"}/>
 
       <div className="w-full py-10 border-y border-gray-900 bg-black/30 backdrop-blur-sm">
         <div className="w-[80%] flex flex-wrap justify-center items-center mx-auto gap-6">
