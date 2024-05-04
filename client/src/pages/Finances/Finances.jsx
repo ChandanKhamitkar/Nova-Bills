@@ -15,6 +15,8 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import blue_gradient from "../../assets/Images/blue-gradient.jpg";
 import Loader from "../components/Loader/Loader.jsx";
+import { jwtDecode } from "jwt-decode";
+
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
@@ -29,6 +31,18 @@ export default function Finances() {
     const fetchData = async () => {
       try {
         const token = Cookies.get("nb_token");
+        if (!token) {
+          navigate("/");
+          return;
+        }
+
+        const decodedToken = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        if (decodedToken.exp < currentTime) {
+          navigate("/login");
+          return;
+        }
+
         setLoading(true);
         const response = await axios.get(`${baseURL}/api/user/getInvoice`, {
           headers: {
@@ -50,7 +64,7 @@ export default function Finances() {
     };
 
     fetchData();
-  }, []);
+  }, [navigate]);
 
   const handleUpdateStatus = async (
     ID,
@@ -114,7 +128,7 @@ export default function Finances() {
 
   return (
     <div className=" scroll-smooth h-auto pb-96 min-h-screen w-full  justify-center items-center bg-black/[0.96] antialiased bg-grid-white/[0.025] relative overflow-hidden flex flex-col ">
-      <NavbarAfterLogin  />
+      <NavbarAfterLogin />
 
       <div className="mt-20 relative">
         <img
@@ -174,7 +188,6 @@ export default function Finances() {
                       handleEditOrder={handleEditOrder}
                     />
                   )}
-
 
                   <ExpandedRow
                     index={index}
@@ -308,8 +321,16 @@ const ExpandedRow = ({ index, expandedRowIndex, toggleExpandedRow, item }) => (
   </>
 );
 
-
-const MoreDetails = ({ index, item, invoiceData, setInvoiceData, handleUpdateStatus, toggleMoreVisible, toggleExpandedRow, handleEditOrder }) => (
+const MoreDetails = ({
+  index,
+  item,
+  invoiceData,
+  setInvoiceData,
+  handleUpdateStatus,
+  toggleMoreVisible,
+  toggleExpandedRow,
+  handleEditOrder,
+}) => (
   <div className="w-[20%] absolute h-auto right-14 z-[100] bg-white rounded-md px-1 py-2 text-black mr-12 mt-10">
     <X
       onClick={() => {

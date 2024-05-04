@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import updateProfile from "../../utils/Profile/UpdatableInfo.js";
 import blueBack from "../../assets/Images/intro_blue_ball.png";
 import Loader from "../components/Loader/Loader.jsx";
+import { jwtDecode } from "jwt-decode";
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
@@ -23,19 +24,31 @@ export default function Profile() {
   const fetchData = useCallback(async () => {
     try {
       const token = Cookies.get("nb_token");
+
+      if (!token) {
+        navigate("/");
+        return;
+      }
+      const decodedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      if (decodedToken.exp < currentTime) {
+        navigate("/login");
+        return;
+      }
+
       setLoading(true);
+
       const response = await axios.get(`${baseURL}/api/user/getProfileData`, {
         headers: {
           "content-type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
-      
-      if(response.data.success){
+
+      if (response.data.success) {
         setProfileData(response.data);
         setLoading(false);
-      }
-      else{
+      } else {
         toast.error("Server Error!");
         setLoading(false);
       }
@@ -50,7 +63,6 @@ export default function Profile() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
 
   return (
     <div className="min-h-screen w-full  justify-center items-center rounded-md  bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden flex flex-col ">
@@ -92,8 +104,14 @@ export default function Profile() {
                 Here is your Monthly and Yearly sales.
               </p>
             </div>
-            <RevenueTrack revenue={profileData.monthlyRevenue} txt={"This Month's Revenue"}/>
-            <RevenueTrack revenue={profileData.yearlyRevenue} txt={"This Year's Revenue"}/>
+            <RevenueTrack
+              revenue={profileData.monthlyRevenue}
+              txt={"This Month's Revenue"}
+            />
+            <RevenueTrack
+              revenue={profileData.yearlyRevenue}
+              txt={"This Year's Revenue"}
+            />
           </div>
         </div>
 

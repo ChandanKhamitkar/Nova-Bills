@@ -1,6 +1,6 @@
 import DetailCard from "./DetailCard";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate as navigate, useLocation } from "react-router-dom";
 import NavbarAfterLogin from "../components/Navbars/NavbarAfterLogin";
 import TableRow from "./TableRow.jsx";
 import BilledToInfo from "../../utils/BilledTo/BillledToInfo.js";
@@ -10,6 +10,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
 import blueBack from "../../assets/Images/intro_blue_ball.png";
+import { jwtDecode } from "jwt-decode";
 
 
 
@@ -17,7 +18,6 @@ const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 
 export default function InvoiceInput() {
-  const navigate = useNavigate();
   const location = useLocation();
 
   const [invoiceEditID, setInvoiceEditId] = useState("");
@@ -40,6 +40,17 @@ export default function InvoiceInput() {
     const fetchData = async () => {
       try {
         const token = Cookies.get("nb_token");
+        if(!token){
+          navigate("/");
+          return;
+        }
+
+        const decodedToken = jwtDecode(token);
+        const currentTime = Date.now() / 1000; 
+      if (decodedToken.exp < currentTime) {
+        navigate("/login");
+        return;
+      }
         const response = await axios.get(
           `${baseURL}/api/user/getProfileData`,
           {

@@ -20,9 +20,19 @@ export default function NavbarAfterLogin() {
 
   useEffect(() => {
     const token = Cookies.get("nb_token");
-    const decodeToken = jwtDecode(token);
-    setUser(decodeToken);
-  }, []);
+    if (!token) {
+      navigate("/");
+    } else {
+      try {
+        const decodeToken = jwtDecode(token);
+        setUser(decodeToken);
+      } catch (error) {
+        console.error("Invalid token:", error);
+        navigate("/"); 
+      }
+    }
+  }, [navigate]);
+  
 
   const handleLogout =  (e) => {
     Cookies.remove('nb_token', { expires: new Date(0) });
@@ -42,7 +52,7 @@ export default function NavbarAfterLogin() {
               xmlns="http://www.w3.org/2000/svg"
               width="18"
               height="18"
-              fill="currentColor"
+              fillRule="currentColor"
               className="bi bi-brightness-high"
               viewBox="0 0 16 16"
             >
@@ -57,7 +67,7 @@ export default function NavbarAfterLogin() {
               xmlns="http://www.w3.org/2000/svg"
               width="26"
               height="26"
-              fill="currentColor"
+              fillRule="currentColor"
               onClick={handleMenu}
               className="bi bi-person-circle text-gray-500 cursor-pointer"
               viewBox="0 0 16 16"
@@ -95,7 +105,7 @@ export default function NavbarAfterLogin() {
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
                       height="16"
-                      fill="currentColor"
+                      fillRule="currentColor"
                       className="bi bi-box-arrow-up-right"
                       viewBox="0 0 16 16"
                     >
@@ -118,7 +128,7 @@ export default function NavbarAfterLogin() {
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
                       height="20"
-                      fill="currentColor"
+                      fillRule="currentColor"
                       className="bi bi-box-arrow-in-left"
                       viewBox="0 0 16 16"
                     >

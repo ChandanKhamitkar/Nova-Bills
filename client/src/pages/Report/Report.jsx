@@ -16,6 +16,8 @@ import {
 } from "recharts";
 import blueBack from "../../assets/Images/intro_blue_ball.png";
 import Header from "../components/PageHeaders/Header.jsx";
+import { useNavigate as navigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
@@ -31,6 +33,19 @@ export default function Report() {
     const fetchData = async () => {
       try {
         const token = Cookies.get("nb_token");
+
+        if (!token) {
+          navigate("/");
+          return;
+        }
+
+        const decodedToken = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        if (decodedToken.exp < currentTime) {
+          navigate("/login");
+          return;
+        }
+
         setLoading(true);
         const PresentYear = new Date().getFullYear();
         const response = await axios.get(`${baseURL}/api/user/getReport`, {
@@ -43,16 +58,18 @@ export default function Report() {
           const ReportData = response.data.ReportData;
 
           const monthlyData = ReportData.reduce((acc, entry) => {
-            if(PresentYear === parseInt(entry.month.split(" ")[2])){
+            if (PresentYear === parseInt(entry.month.split(" ")[2])) {
               const entryMonth = entry.month.split(" ")[1];
-              const existingEntry = acc.find((item) => item.month === entryMonth);
+              const existingEntry = acc.find(
+                (item) => item.month === entryMonth
+              );
               if (existingEntry) {
                 existingEntry.amount += entry.amount;
               } else {
                 acc.push({ month: entryMonth, amount: entry.amount });
               }
             }
-              return acc;
+            return acc;
           }, []);
 
           const yearlyData = ReportData.reduce((acc, entry) => {
@@ -65,9 +82,12 @@ export default function Report() {
             }
             return acc;
           }, []);
-          
-          setReportData((prev) => ({ ...prev, monthly: monthlyData.reverse()}));
-          setReportData((prev) => ({ ...prev, yearly: yearlyData.reverse()}));
+
+          setReportData((prev) => ({
+            ...prev,
+            monthly: monthlyData.reverse(),
+          }));
+          setReportData((prev) => ({ ...prev, yearly: yearlyData.reverse() }));
           setLoading(false);
         } else {
           toast.error("please try again!");
@@ -96,7 +116,12 @@ export default function Report() {
         className="absolute top-0 right-80 opacity-20 w-[1000px] "
       />
 
-      <Header title={"Maximize your business efforts with proper statistics"} subTitle={"Track your statistics in different ways - As per | year | month |"}/>
+      <Header
+        title={"Maximize your business efforts with proper statistics"}
+        subTitle={
+          "Track your statistics in different ways - As per | year | month |"
+        }
+      />
 
       <ResponsiveContainer
         width="80%"
