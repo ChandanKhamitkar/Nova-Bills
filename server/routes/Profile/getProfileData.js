@@ -1,6 +1,7 @@
 import express from "express";
 import Users from "../../models/userModel.js";
 import Invoices from "../../models/invoiceModel.js";
+import { Decryptr } from "../../helpers/Cryptr/Crpytr.js";
 
 const router = express.Router();
 
@@ -59,9 +60,9 @@ export default router.get("/api/user/getProfileData", async (req, res) => {
       pincode: user.pincode,
       state: user.state,
       phoneNumber: user.phoneNumber,
-      bankName: user.bankName,
-      accountName: user.accountName,
-      accountNumber: user.accountNumber,
+      bankName: Decryptr(user.bankName),
+      accountName: Decryptr(user.accountName),
+      accountNumber: Decryptr(user.accountNumber),
       monthlyRevenue: montlyRevenue,
       yearlyRevenue: yearlyRevenue,
     });

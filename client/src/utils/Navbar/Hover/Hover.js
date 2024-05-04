@@ -14,7 +14,7 @@ const Hover = [
     {
         icon : (<ShieldCheck/>),
         title : "Privacy",
-        subTitle : "Maintaining privacy...",
+        subTitle : "Encryption is done for private details...",
     },
     {
         icon : (<Layers/>),

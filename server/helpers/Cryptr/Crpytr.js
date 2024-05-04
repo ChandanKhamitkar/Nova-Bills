@@ -1,0 +1,14 @@
+import Cryptr from 'cryptr';
+const cryptr = new Cryptr(process.env.CRYPTR_KEY);
+
+function Encryptr (plainString) {
+    const encryptedString = cryptr.encrypt(plainString);
+    return encryptedString;
+}
+
+function Decryptr (scrambledString) {
+    const decryptedString = cryptr.decrypt(scrambledString);
+    return decryptedString;
+}
+
+export { Encryptr, Decryptr };

@@ -5,7 +5,6 @@ dotevn.config();
 
 
 async function sendEmail(OTP, email) {
-  console.log(`Email got for email.js ${email}`);
   try {
     const cred = {
       service : "gmail",
