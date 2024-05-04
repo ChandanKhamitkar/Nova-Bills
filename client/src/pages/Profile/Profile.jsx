@@ -89,17 +89,17 @@ export default function Profile() {
                 Revenue Track Record
               </p>
               <p className="text-gray-400 text-base text-left">
-                Here is your Weekly and monthly sales.
+                Here is your Monthly and Yearly sales.
               </p>
             </div>
-            <RevenueTrack />
-            <RevenueTrack />
+            <RevenueTrack revenue={profileData.monthlyRevenue} txt={"This Month's Revenue"}/>
+            <RevenueTrack revenue={profileData.yearlyRevenue} txt={"This Year's Revenue"}/>
           </div>
         </div>
 
         <div className="flex justify-center items-center gap-6">
-          <div className="relative drop-shadow-xl w-96 h-72 overflow-hidden rounded-xl bg-gradient-to-r from-slate-950 via-slate-800 to-slate-700 backdrop-blur-sm bg-opacity-45">
-            <div className="absolute flex flex-col space-y-3 items-start py-6 px-4 justify-start text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-[#323132] backdrop-blur-sm bg-opacity-45">
+          <div className="relative drop-shadow-xl w-96 h-72 overflow-hidden rounded-xl bg-stone-50/10 ">
+            <div className="absolute flex flex-col space-y-3 items-start py-6 px-4 justify-start text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-opacity-45 ">
               <div className="flex flex-col justify-between h-full w-full">
                 <p className="text-xl font-bold drop-shadow-md ">Address : </p>
                 <div className="h-px bg-gray-400 w-full"></div>
@@ -131,11 +131,10 @@ export default function Profile() {
                 <Pencil size={15} /> <span>Edit</span>
               </button>
             </div>
-            <div className="absolute w-56 h-48 bg-white blur-[50px] -left-1/2 -top-1/2 opacity-70"></div>
           </div>
 
-          <div className="relative drop-shadow-xl w-96 h-72 overflow-hidden rounded-xl bg-gradient-to-r from-slate-950 via-slate-800 to-slate-700 backdrop-blur-sm bg-opacity-45">
-            <div className="absolute flex flex-col space-y-3 items-start py-6 px-4 justify-start text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-[#323132] backdrop-blur-sm bg-opacity-45">
+          <div className="relative drop-shadow-xl w-96 h-72 overflow-hidden rounded-xl bg-stone-50/10 ">
+            <div className="absolute flex flex-col space-y-3 items-start py-6 px-4 justify-start text-white z-[1] opacity-90 rounded-xl inset-0.5  bg-opacity-45">
               <div className="flex flex-col justify-between h-full w-full">
                 <p className="text-xl font-bold drop-shadow-md ">
                   Account Details :{" "}
@@ -163,8 +162,6 @@ export default function Profile() {
                 </button>
               </div>
             </div>
-
-            <div className="absolute w-56 h-48 bg-white blur-[50px] -left-1/2 -top-1/2 opacity-70"></div>
           </div>
         </div>
       </div>
@@ -182,11 +179,11 @@ export default function Profile() {
   );
 }
 
-const RevenueTrack = () => {
+const RevenueTrack = (props) => {
   return (
     <div className="rounded-lg bg-white/5 w-full flex justify-between items-center py-4 px-5 space-x-4">
-      <p className="text-5xl text-white font-bold ">500$</p>
-      <p className="text-stone-50">This week Earn</p>
+      <p className="text-4xl text-white font-bold ">{props.revenue}$</p>
+      <p className="text-stone-50 drop-shadow-xl">{props.txt}</p>
     </div>
   );
 };
