@@ -2,47 +2,72 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../../../assets/Logos/logo.png";
 import Hover from "../../../utils/Navbar/Hover/Hover";
 import { useState } from "react";
-import { ChevronDown, Ban } from 'lucide-react';
+import { ChevronDown, Ban, Menu, X } from "lucide-react";
 
 export default function PreNavbar() {
   const navigate = useNavigate();
   const [MouseNav, setFeatureNav] = useState({
-    feature : false,
-    blog : false,
-    pricing : false,
+    feature: false,
+    blog: false,
+    pricing: false,
   });
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   return (
-    <nav className="w-[70%] mt-6 mx-auto flex justify-between px-6 text-white items-center">
+    <nav className="w-[70%] lg:w-[90%] mt-6 mx-auto flex justify-between px-6 text-white items-center">
       <div className="flex justify-center items-center space-x-16">
         <div className="flex space-x-4 items-center">
           <img src={Logo} alt="Logo" className="w-10 h-10" />
           <p className="font-bold text-2xl tracking-wide relative">NovaBills</p>
         </div>
         <div>
-          <ul className="flex space-x-16 cursor-pointer select-none text-gray-300 text-base">
+          <ul className="md:hidden flex space-x-16 cursor-pointer select-none text-gray-300 text-base">
             <li
-              onMouseEnter={() => setFeatureNav(prev => ({...prev, feature : true}))}
-              onMouseLeave={() => setFeatureNav(prev => ({...prev, feature : false}))}
+              onMouseEnter={() =>
+                setFeatureNav((prev) => ({ ...prev, feature: true }))
+              }
+              onMouseLeave={() =>
+                setFeatureNav((prev) => ({ ...prev, feature: false }))
+              }
               className="hover:text-white  relative flex justify-center items-center space-x-2"
             >
-              <span>Features</span><span><ChevronDown className={`mt-1 transition-all duration-300 ${MouseNav.feature && "rotate-180"} `} size={17}/></span>
+              <span>Features</span>
+              <span>
+                <ChevronDown
+                  className={`mt-1 transition-all duration-300 ${
+                    MouseNav.feature && "rotate-180"
+                  } `}
+                  size={17}
+                />
+              </span>
             </li>
-            <li 
-            onMouseEnter={() => setFeatureNav(prev => ({...prev, blog : true}))}
-            onMouseLeave={() => setFeatureNav(prev => ({...prev, blog : false}))}
-            className="hover:text-white relative">Blog {MouseNav.blog && <NotLaunched /> }
+            <li
+              onMouseEnter={() =>
+                setFeatureNav((prev) => ({ ...prev, blog: true }))
+              }
+              onMouseLeave={() =>
+                setFeatureNav((prev) => ({ ...prev, blog: false }))
+              }
+              className="hover:text-white relative"
+            >
+              Blog {MouseNav.blog && <NotLaunched />}
             </li>
-            <li 
-            onMouseEnter={() => setFeatureNav(prev => ({...prev, pricing : true}))}
-            onMouseLeave={() => setFeatureNav(prev => ({...prev, pricing : false}))}
-            className="hover:text-white relative">Pricing {MouseNav.pricing && <NotLaunched /> }
+            <li
+              onMouseEnter={() =>
+                setFeatureNav((prev) => ({ ...prev, pricing: true }))
+              }
+              onMouseLeave={() =>
+                setFeatureNav((prev) => ({ ...prev, pricing: false }))
+              }
+              className="hover:text-white relative"
+            >
+              Pricing {MouseNav.pricing && <NotLaunched />}
             </li>
           </ul>
         </div>
       </div>
       <div>
-        <ul className="flex space-x-6 cursor-pointer select-none text-gray-300 text-base">
+        <ul className="md:hidden flex space-x-6 cursor-pointer select-none text-gray-300 text-base">
           <li
             onClick={() => navigate("/login")}
             className="hover:text-white rounded-3xl px-3 py-1 bg-slate-100 bg-opacity-10 backdrop-blur-lg"
@@ -56,6 +81,21 @@ export default function PreNavbar() {
             Sign Up
           </li>
         </ul>
+
+        <div onClick={() => setShowMobileMenu(!showMobileMenu)} className="hidden md:block md:relative cursor-pointer transition-all duration-300 ease-in-out">
+          {!showMobileMenu ? <Menu /> : <X/> }
+        </div>
+        {showMobileMenu && (
+          <div className="absolute z-50 cursor-pointer right-16 shadow-sm shadow-white/20 md:block bg-white w-[150px] mobile:top-15 mobile:right-10 text-black rounded-lg border border-slate-600 p-4">
+            <ul className="space-y-3">
+              <li>Feature</li>
+              <li>Blog</li>
+              <li>Pricing</li>
+              <li onClick={() => navigate("/login")}>Log in</li>
+              <li onClick={() => navigate("/signup")}>Sign up</li>
+            </ul>
+          </div>
+        )}
       </div>
 
       {MouseNav.feature && (
@@ -72,9 +112,6 @@ export default function PreNavbar() {
           </div>
         </div>
       )}
-
-      
-      {/* <NotLaunched /> */}
     </nav>
   );
 }
@@ -92,9 +129,14 @@ const FeaturesHoverCard = (props) => {
 };
 
 const NotLaunched = () => {
-  return(
+  return (
     <div className="bg-white/30 rounded-xl px-4 py-3 border-white/35 shadow-md shadow-white/10 absolute top-8 ">
-      <p className="text-red-500 font-semibold flex justify-center items-center space-x-2 w-28"><span><Ban size={14}/></span><span className="text-red-200 animate-pulse text-xs">Not Updated</span></p>
+      <p className="text-red-500 font-semibold flex justify-center items-center space-x-2 w-28">
+        <span>
+          <Ban size={14} />
+        </span>
+        <span className="text-red-200 animate-pulse text-xs">Not Updated</span>
+      </p>
     </div>
-  )
-}
+  );
+};
