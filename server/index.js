@@ -22,7 +22,12 @@ const app = express();
 const port = 8000;
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-app.use(cors());
+
+// app.use(cors()); // use on deployment mode
+app.use(cors({ // on production mode
+    origin: `${process.env.REACT_APP_BASE_URL}`,
+    optionsSuccessStatus: 200 // Some legacy browsers choke on 204
+}));
 
 app.get("/", (req,res)=>{
     res.status(200).json({message : "NovaBills is a Invoice generator."});
