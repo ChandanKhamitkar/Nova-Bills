@@ -11,7 +11,6 @@ import updateProfile from "../../utils/Profile/UpdatableInfo.js";
 import blueBack from "../../assets/Images/intro_blue_ball.png";
 import Loader from "../components/Loader/Loader.jsx";
 import { jwtDecode } from "jwt-decode";
-// import { Decryptr } from "../../helper/Decryptr/Decryptr.js";
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
@@ -22,14 +21,6 @@ export default function Profile() {
   const [updateOption, setUpdateOption] = useState("Address");
   const [loading, setLoading] = useState(false);
 
-  // const DecryptedData = useCallback(() => {
-  //   const AccountObj = updateProfile.Account;
-  //   const Keys = Object.keys(AccountObj);
-  //   Keys.forEach(keyName => {
-  //     const decryptedString = Decryptr(profileData[keyName]);
-  //     setProfileData(prev => ({...prev, [keyName] : decryptedString}))
-  //   });
-  // }, [profileData]);
 
   const fetchData = useCallback(async () => {
     try {

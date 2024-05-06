@@ -4,6 +4,9 @@ import toast, { Toaster } from "react-hot-toast";
 import Cookies from "js-cookie";
 import axios from "axios";
 
+const baseURL = process.env.REACT_APP_BASE_API_URL;
+
+
 export default function UpdateProfileModal(props) {
   const obj = props.obj;
   const updatingField = props.updateOption;
@@ -36,7 +39,7 @@ export default function UpdateProfileModal(props) {
     try {
       const token = Cookies.get("nb_token");
       const response = await axios.put(
-        "http://localhost:8000/api/user/updateProfile",
+        `${baseURL}/api/user/updateProfile`,
         formData,
         {
           headers: {
