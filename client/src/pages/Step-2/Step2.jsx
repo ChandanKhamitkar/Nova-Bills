@@ -59,7 +59,8 @@ export default function Step2() {
       <NavbarAfterLogin />
 
       <div className="w-[95%] h-full rounded-lg bg-gray-500 bg-opacity-50 backdrop-blur-md p-6 mx-auto my-10">
-        <div className="flex justify-center items-center space-x-7 mx-auto">
+        <div className="flex justify-center items-center gap-7 mx-auto overflow-x-scroll">
+        <div className="hidden md2:block md2:flex-none w-80" />
           {DesignsInfo.map((item, index) => (
             <SampleCard
               key={index}
@@ -74,7 +75,7 @@ export default function Step2() {
           ))}
         </div>
 
-        <div ref={pdfRef} className="mx-7 my-10">
+        <div ref={pdfRef} className="hidden mx-7 my-10">
           {selectedTemplate && selectedTemplate.component}
         </div>
 

@@ -43,7 +43,7 @@ export default function NavbarAfterLogin() {
   return (
     <nav className={`w-full p-6 flex justify-between text-white items-center`}>
       <div className="flex space-x-4 items-center">
-        <div onClick={() => navigate("/dashboard")} className="hidden sm:block text-gray-400"><CircleChevronLeft/></div>
+        <CircleChevronLeft onClick={() => navigate("/dashboard")} className="hidden sm:block text-gray-400 cursor-pointer" />
         <img src={Logo} alt="Logo" className="w-10 h-10 sm:w-8 sm:h-8" />
         <p className="font-semibold text-xl sm:text-base">NovaBills</p>
       </div>

@@ -211,7 +211,7 @@ export default function InvoiceInput() {
       <img
         src={blueBack}
         alt="blueBall"
-        className="absolute top-0 right-80 opacity-20 w-[1000px] md:right-0"
+        className="absolute top-0 right-80 opacity-20 w-[1000px] md:right-0 sm:top-32"
       />
       <div className="w-3/4 md:w-[85%] h-auto bg-white/10 backdrop-blur-md bg-opacity-35 flex justify-center items-center mx-auto my-10 rounded-md border border-white/40 shadow-md shadow-slate-700">
         <form
