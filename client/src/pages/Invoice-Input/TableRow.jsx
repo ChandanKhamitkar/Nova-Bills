@@ -9,7 +9,7 @@ export default function TableRow (props) {
           name="itemName"
           value={props.rows[props.index]?.itemName || ""}
           onChange={(e) => props.handleRowInputChange(e, props.index)}
-          className="w-full p-4 text-black outline-none bg-transparent border-b border-slate-900"
+          className="w-full p-4  md:text-sm mobile:text-xs text-white outline-none bg-transparent border-b border-slate-900"
           placeholder="Item Name"
         />
       </td>
@@ -20,7 +20,7 @@ export default function TableRow (props) {
           name="qty"
           value={props.rows[props.index]?.qty || ""}
           onChange={(e) => props.handleRowInputChange(e, props.index)}
-          className="w-full p-4 text-black outline-none bg-transparent border-b border-slate-900 no-arrows"
+          className="w-full p-4  md:text-sm mobile:text-xs text-white outline-none bg-transparent border-b border-slate-900 no-arrows"
           placeholder="1"
         />
       </td>
@@ -31,7 +31,7 @@ export default function TableRow (props) {
           name="rate"
           value={props.rows[props.index]?.rate || ""}
           onChange={(e) => props.handleRowInputChange(e, props.index)}
-          className="w-full p-4 text-black outline-none bg-transparent border-b border-slate-900 no-arrows"
+          className="w-full p-4  md:text-sm mobile:text-xs text-white outline-none bg-transparent border-b border-slate-900 no-arrows"
           placeholder="₹ 1"
         />
       </td>
@@ -42,7 +42,7 @@ export default function TableRow (props) {
           name="amount"
           value={props.rows[props.index]?.amount || ""}
           disabled
-          className="w-full p-4 text-black outline-none bg-transparent border-b border-slate-900 font-semibold no-arrows"
+          className="w-full p-4  md:text-sm mobile:text-xs text-white outline-none bg-transparent border-b border-slate-900 font-semibold no-arrows"
           placeholder="₹1.00"
         />
         <svg

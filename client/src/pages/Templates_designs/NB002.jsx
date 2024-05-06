@@ -57,7 +57,7 @@ export default function NB002(props) {
           </div>
         </div>
 
-        <table class="border-collapse border border-slate-500 w-full mt-20">
+        <table className="border-collapse border border-slate-500 w-full mt-20">
           <thead>
             <tr className="text-left bg-black text-white uppercase text-sm">
               <th className="py-3 px-2">Item</th>
@@ -68,8 +68,8 @@ export default function NB002(props) {
           </thead>
           <tbody className="text-sm">
           { items &&
-              items.map((row) => (
-                <tr>
+              items.map((row, index) => (
+                <tr key={index}>
                 <td className="pb-2 px-2">{row.itemName}</td>
                 <td className="text-center">{row.qty}</td>
                 <td className="text-center">

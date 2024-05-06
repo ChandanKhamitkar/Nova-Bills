@@ -1,5 +1,5 @@
 import Cryptr from 'cryptr';
-const cryptr = new Cryptr(process.env.CRYPTR_KEY);
+const cryptr = new Cryptr('ldskjfLKKJJ');
 
 function Encryptr (plainString) {
     const encryptedString = cryptr.encrypt(plainString);

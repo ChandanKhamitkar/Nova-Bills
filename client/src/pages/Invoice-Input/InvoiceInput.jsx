@@ -1,6 +1,6 @@
 import DetailCard from "./DetailCard";
 import React, { useEffect, useState } from "react";
-import { useNavigate as navigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
 import NavbarAfterLogin from "../components/Navbars/NavbarAfterLogin";
 import TableRow from "./TableRow.jsx";
 import BilledToInfo from "../../utils/BilledTo/BillledToInfo.js";
@@ -19,6 +19,7 @@ const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 export default function InvoiceInput() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [invoiceEditID, setInvoiceEditId] = useState("");
   useEffect(() => {
@@ -67,7 +68,7 @@ export default function InvoiceInput() {
     };
 
     fetchData();
-  }, [setAdministrationDetails]);
+  }, [setAdministrationDetails, navigate]);
 
   const [rows, setRows] = useState([]);
   const [showModal, setShowModal] = useState(true);
@@ -196,26 +197,28 @@ export default function InvoiceInput() {
       fetchData();
     }, [setInvoiceNo])
 
+    const InputHeadStyling = "border border-slate-600 bg-blue-600 py-2 text-left md:text-sm px-4";
+    const TableHeadings = ["Item", "Quantity" , "Rate", "Amount"];
+
   return (
     <div
       className="min-h-screen w-full  justify-center items-center rounded-md  bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden flex flex-col  pb-12"
       id="InvoiceInput"
     >
-      {/* <div className="absolute inset-0 backdrop-filter backdrop-blur-lg h-full"> */}
       <NavbarAfterLogin />
 
 
       <img
         src={blueBack}
         alt="blueBall"
-        className="absolute top-0 right-80 opacity-20 w-[1000px] "
+        className="absolute top-0 right-80 opacity-20 w-[1000px] md:right-0"
       />
-      <div className="w-3/4 h-auto bg-white/10 backdrop-blur-md bg-opacity-35 flex justify-center items-center mx-auto my-10 rounded-md border border-white/40 shadow-md shadow-slate-700">
+      <div className="w-3/4 md:w-[85%] h-auto bg-white/10 backdrop-blur-md bg-opacity-35 flex justify-center items-center mx-auto my-10 rounded-md border border-white/40 shadow-md shadow-slate-700">
         <form
           action=""
-          className="w-full flex flex-col justify-center items-center space-y-6 p-8"
+          className="w-full flex flex-col justify-center items-center space-y-6 p-8 sm:px-3"
         >
-          <p className="text-3xl font-mono">Invoice</p>
+          <p className="text-3xl font-mono ">Invoice</p>
           <div className="flex w-full justify-around ">
             <div className="input flex flex-col w-fit static">
               <label
@@ -235,9 +238,9 @@ export default function InvoiceInput() {
               />
             </div>
           </div>
-          <div className="flex justify-center items-center space-x-4 w-full">
-            <div className="bg-white/20 bg-opacity-50 rounded-lg p-6 flex flex-col w-1/2 shadow-lg space-y-4">
-              <p className="text-left text-xl font-medium border-b border-dashed border-gray-700 w-fit mb-3">
+          <div className="flex justify-center items-center gap-4 w-full md:flex-col">
+            <div className="bg-white/20 bg-opacity-50 rounded-lg p-6 flex flex-col w-1/2 md:w-[90%] shadow-lg space-y-4">
+              <p className="text-left text-xl  font-medium border-b border-dashed border-gray-700 w-fit mb-3">
                 Billed By{" "}
                 <span className="text-sm text-slate-800">Your Details</span>
               </p>
@@ -252,7 +255,7 @@ export default function InvoiceInput() {
                       }));
                     }}
                     key={index}
-                    className={`select-none px-4 py-1 rounded-lg border border-slate-800 flex justify-center items-center space-x-2 w-max hover:shadow hover:shadow-slate-800 cursor-pointer ${
+                    className={`md:text-sm mobile:text-xs select-none px-4 py-1 rounded-lg border border-slate-800 flex justify-center items-center space-x-2 w-max hover:shadow hover:shadow-slate-800 cursor-pointer ${
                       billedBy[you.name] ? "bg-gray-800 text-white" : ""
                     }`}
                   >
@@ -262,7 +265,7 @@ export default function InvoiceInput() {
                 ))}
               </div>
             </div>
-            <div className="bg-white/20 bg-opacity-50 rounded-lg p-6 flex flex-col w-1/2 shadow-lg space-y-4">
+            <div className="bg-white/20 bg-opacity-50 rounded-lg p-6 flex flex-col w-1/2 md:w-[90%] shadow-lg space-y-4">
               <p className="text-left text-xl font-medium border-b border-dashed border-gray-700 w-fit mb-3">
                 Billed To{" "}
                 <span className="text-sm text-slate-800">Client Details</span>
@@ -285,18 +288,7 @@ export default function InvoiceInput() {
           <table className="w-full space-y-6">
             <thead>
               <tr>
-                <th className="border border-slate-600 bg-blue-600 py-2 text-left px-4">
-                  Item
-                </th>
-                <th className="border border-slate-600 bg-blue-600 py-2 text-left px-4">
-                  Quantity
-                </th>
-                <th className="border border-slate-600 bg-blue-600 py-2 text-left px-4">
-                  Rate
-                </th>
-                <th className="border border-slate-600 bg-blue-600 py-2 text-left px-4">
-                  Amount
-                </th>
+                {TableHeadings.map((head, index) => <th key={index} className={InputHeadStyling}> {head} </th>)}
               </tr>
             </thead>
             <tbody className="bg-gray-800 backdrop-blur-lg bg-opacity-30">
@@ -319,14 +311,14 @@ export default function InvoiceInput() {
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
-              fill="blue"
+              fill="rgb(31 41 55)"
               className="bi bi-plus-square"
               viewBox="0 0 16 16"
             >
               <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
               <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
             </svg>{" "}
-            <span>Add New Item</span>
+            <span className="md:text-sm mobile:text-xs">Add New Item</span>
           </button>
           <button
             onClick={(e) => {
@@ -342,14 +334,13 @@ export default function InvoiceInput() {
                 },
               });
             }}
-            className="bg-white/10  rounded-md px-6 py-2 text-white shadow-md hover:shadow-xl tracking-wide border border-white/20"
+            className="bg-white/10 md:text-sm rounded-md px-6 py-2 mobile:text-xs text-white shadow-md hover:shadow-xl tracking-wide border border-white/20"
           >
             Confirm & Continue
           </button>
         </form>
       </div>
       {showModal && <Show onClose={() => setShowModal(false)} />}
-      {/* </div> */}
       <Toaster />
     </div>
   );

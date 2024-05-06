@@ -12,7 +12,7 @@ export default function DetailCard(props) {
         />
         <label
           htmlFor={props.name}
-          className={`text-gray-800 absolute left-0 cursor-text peer-focus:text-xs transition-all peer-focus:text-blue-700 ${props.value ? `-top-4 text-xs` : 'top-1'}`}
+          className={`text-gray-800 absolute left-0 cursor-text peer-focus:text-xs md:text-sm mobile:text-xs transition-all peer-focus:text-blue-700 ${props.value ? `-top-4 text-xs` : 'top-1'}`}
         >
           {props.label}
         </label>

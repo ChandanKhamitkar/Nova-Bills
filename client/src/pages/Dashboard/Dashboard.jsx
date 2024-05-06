@@ -22,7 +22,7 @@ export default function Dashboard() {
       <img
         src={blueBack}
         alt="blueBall"
-        className="absolute top-20 right-96 opacity-15 w-[500px] "
+        className="absolute top-20 right-96 opacity-15 w-[500px]  md2:right-0 mobile:top-28"
       />
 
 <Header title={"Dashboard"} subTitle={"Powerful features for modern marketing teams"}/>
@@ -43,7 +43,7 @@ export default function Dashboard() {
           ))}
         </div>
 
-        <div className="flex justify-center items-center mx-auto flex-wrap my-16 space-x-6">
+        <div className="flex justify-center items-center mx-auto flex-wrap my-16 gap-6 ">
           {FeaturesBenefit.map((item, index) => (
             <FeatureBenefit
               key={index}

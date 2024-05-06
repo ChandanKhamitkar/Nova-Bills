@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import Request from "../PopupModals/Request-feature/Request";
-import { User, CircleUserRound, Sun } from 'lucide-react';
+import { User, CircleUserRound, Sun, CircleChevronLeft } from 'lucide-react';
 
 export default function NavbarAfterLogin() {
   const navigate = useNavigate();
@@ -43,42 +43,43 @@ export default function NavbarAfterLogin() {
   return (
     <nav className={`w-full p-6 flex justify-between text-white items-center`}>
       <div className="flex space-x-4 items-center">
-        <img src={Logo} alt="Logo" className="w-10 h-10" />
-        <p className="font-semibold text-xl">NovaBills</p>
+        <div onClick={() => navigate("/dashboard")} className="hidden sm:block text-gray-400"><CircleChevronLeft/></div>
+        <img src={Logo} alt="Logo" className="w-10 h-10 sm:w-8 sm:h-8" />
+        <p className="font-semibold text-xl sm:text-base">NovaBills</p>
       </div>
       <div>
         <ul className="flex space-x-7 font-medium justify-center items-center">
           <li className="hidden bg-gray-500 text-gray-400 bg-opacity-35 rounded-full p-2">
             <Sun size={20}/>
           </li>
-          <li onClick={() => navigate("/dashboard")} className="border border-gray-500 rounded-md px-4 py-2 text-sm hover:scale-105 cursor-pointer">
+          <li onClick={() => navigate("/dashboard")} className="sm:hidden border border-gray-500 rounded-md px-4 py-2 text-sm md2:text-xs hover:scale-105 cursor-pointer">
             Return to Dashboard
           </li>
           <li>
             <CircleUserRound size={28} strokeWidth={1.25} onClick={handleMenu} className="text-gray-400 cursor-pointer"/>
 
             {menuVisible && (
-              <div className="w-[20%] absolute right-8 top-16 bg-white border border-gray-300 rounded-lg shadow-md p-2 z-[100] space-y-6 px-3 py-4">
+              <div className="w-[300px] absolute right-8 top-16 bg-white border border-gray-300 rounded-lg shadow-md p-2 z-[100] space-y-6 px-3 py-4">
                 <div className="flex justify-start items-center space-x-4">
                   <img
                     src={userLogoBlue}
                     alt="user logo"
-                    className="w-11 h-11 "
+                    className="w-11 h-11 md:w-9 md:h-9"
                   />
                   <div>
-                    <p className="text-xl font-semibold text-black">
+                    <p className="text-xl font-semibold text-black md:text-base">
                       {user.User.companyName}
                     </p>
-                    <p className="text-sm font-medium text-slate-600">
+                    <p className="text-sm font-medium text-slate-600 md:text-xs">
                       {user.User.email}
                     </p>
                   </div>
                 </div>
                 <div className="w-full px-4 py-2 bg-slate-300 bg-opacity-55 rounded-lg space-y-1">
-                  <p className="text-slate-800 tracking-wide text-sm">
+                  <p className="text-slate-800 tracking-wide text-sm md:text-xs">
                     Missing out on a feature? We'd love to know!
                   </p>
-                  <p onClick={() => setShowModal(!showModal)} className="text-blue-500 space-x-2 cursor-pointer hover:scale-105 font-semibold drop-shadow-md flex justify-start items-center">
+                  <p onClick={() => setShowModal(!showModal)} className="text-blue-500 space-x-2 cursor-pointer hover:scale-105 font-semibold drop-shadow-md flex justify-start items-center md:text-sm">
                     <span>Request a Feature</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

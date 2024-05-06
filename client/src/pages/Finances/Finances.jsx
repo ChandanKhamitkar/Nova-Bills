@@ -119,7 +119,7 @@ export default function Finances() {
 
   const HeadTitles = [
     "Client",
-    "BIlled Date",
+    "Billed Date",
     "Invoice No",
     "Amount",
     "Status",
@@ -130,19 +130,19 @@ export default function Finances() {
     <div className=" scroll-smooth h-auto pb-96 min-h-screen w-full  justify-center items-center bg-black/[0.96] antialiased bg-grid-white/[0.025] relative overflow-hidden flex flex-col ">
       <NavbarAfterLogin />
 
-      <div className="mt-20 relative">
+      <div className="mt-20 relative flex justify-center items-center">
         <img
           src={blue_gradient}
           alt="blue"
-          className="w-[90%] min-h-screen mx-auto relative saturate-200 opacity-60 rounded-3xl card-fade-2"
+          className="w-[90%] min-h-full mx-auto relative saturate-200 opacity-60 rounded-3xl card-fade-2"
         />
 
-        <div className="my-10 w-3/4 mx-auto absolute top-0 left-48 rounded-lg">
+        <div className="my-10 w-3/4 mx-auto absolute top-0 left-1/2 transform -translate-x-1/2 rounded-lg">
           <div className="flex justify-between items-center">
-            <p className="text-left w-fit text-3xl my-5 font-bold drop-shadow-md tracking-wide text-white">
+            <p className="text-left w-fit text-3xl lg2:text-2xl my-5 font-bold drop-shadow-md tracking-wide text-white">
               Finances
             </p>
-            <p className="w-fit text-black/70 text-lg drop-shadow-md">
+            <p className="w-fit text-black/70 text-lg lg2:text-base drop-shadow-md">
               Products sold to Clients /
               <span className="text-white/70"> History</span>
             </p>
@@ -211,7 +211,7 @@ const GridHead = ({ info }) => {
   return (
     <div className="text-center grid grid-cols-7 bg-correct-black-light w-full bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200 border-b border-white border-opacity-25 rounded-t-lg">
       {info.map((head, index) => (
-        <p key={index} className="text-txt-dark font-semibold text-lg p-5">
+        <p key={index} className="text-txt-dark font-semibold text-lg lg2:text-base p-5">
           {head}
         </p>
       ))}
@@ -222,7 +222,7 @@ const GridHead = ({ info }) => {
 const GridRow = ({ txt, item, client }) => {
   return (
     <p
-      className={`p-6 text-center bg-correct-black-light text-white bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200 flex justify-center items-center  ${
+      className={`p-6 text-center bg-correct-black-light text-white bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200 flex justify-center items-center lg2:text-base  md:text-sm md:py-4  ${
         client && "font-semibold"
       } ${!item.orderStatus ? "order-cancel" : ""}`}
     >
@@ -239,7 +239,7 @@ const RowStatus = ({ item }) => {
       }`}
     >
       <span
-        className={`px-3 py-1 rounded-xl ${
+        className={`px-3 py-1 rounded-xl lg2:text-base ${
           item.status ? "bg-green-400" : "bg-yellow-400"
         } text-white font-semibold`}
       >
@@ -271,12 +271,12 @@ const StatusHandleButton = ({
           "Issue in the updating status."
         );
       }}
-      className={`cursor-pointer flex flex-col justify-center items-center p-6 text-center bg-correct-black-light text-white bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200   ${
+      className={`cursor-pointer flex flex-col justify-center items-center p-6 text-center bg-correct-black-light text-white bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200    ${
         item.status ? "hover:text-green-400" : "hover:text-yellow-400"
       } `}
     >
       {!item.status ? <CircleCheck /> : <Ban size={22} />}
-      <p className="text-sm">Mark {type}</p>
+      <p className="text-sm md:text-xs">Mark {type}</p>
     </div>
   );
 };
@@ -284,7 +284,7 @@ const StatusHandleButton = ({
 const MoreButton = ({ index, toggleMoreVisible }) => (
   <div
     onClick={() => toggleMoreVisible(index)}
-    className="relative flex justify-center items-center flex-col text-gray-100 self-end p-6 text-center bg-correct-black-light bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200 cursor-pointer hover:text-white"
+    className="relative flex justify-center items-center flex-col text-gray-100  p-6 text-center bg-correct-black-light bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200 cursor-pointer hover:text-white"
   >
     <Ellipsis />
     <p className="text-sm">More</p>

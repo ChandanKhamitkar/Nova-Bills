@@ -85,8 +85,8 @@ export default function Profile() {
       />
 
       <div className="space-y-7 my-7 py-7 w-full border-y border-gray-900 bg-black/30 backdrop-blur-sm">
-        <div className="flex justify-center items-center gap-6 ">
-          <div className="bg-stone-50/10 h-[500px] p-6 space-y-5 flex flex-col justify-center items-center rounded-lg ">
+        <div className="w-[60%] grid grid-cols-2 mx-auto gap-6 md:grid-cols-1">
+          <div className="bg-stone-50/10 h-[500px] sm:h-[400px] p-6 space-y-5 flex flex-col justify-center items-center rounded-lg ">
             <div className="w-24 h-24 bg-slate-200 rounded-full shadow-lg shadow-gray-700 mx-auto relative flex justify-center items-center">
               <img
                 src={BrandLogo}
@@ -95,22 +95,22 @@ export default function Profile() {
               />
             </div>
             <div className="space-y-2 text-center ">
-              <p className="text-3xl font-semibold text-white text-center antialiased tracking-wide drop-shadow-md">
-                Google
+              <p className="text-3xl sm:text-2xl font-semibold text-white text-center antialiased tracking-wide drop-shadow-md">
+                {profileData.companyName}
               </p>
-              <p className="text-base text-gray-300">Company Type</p>
-              <p className="text-base text-gray-400">
+              <p className="text-base sm:text-sm text-gray-300">Company Type</p>
+              <p className="text-base sm:text-sm text-gray-400">
                 Enter your desired text here, this is the sample text.
               </p>
             </div>
           </div>
 
-          <div className="bg-stone-50/10 h-[500px] p-6 space-y-5 flex flex-col justify-center items-center rounded-lg ">
+          <div className="bg-stone-50/10 h-[500px] sm:h-[400px] p-6 space-y-5 flex flex-col justify-center items-center rounded-lg ">
             <div>
-              <p className="text-2xl text-white font-semibold self-start tracking-wide">
+              <p className="text-2xl sm:text-xl text-white font-semibold self-start tracking-wide">
                 Revenue Track Record
               </p>
-              <p className="text-gray-400 text-base text-left">
+              <p className="text-gray-400 text-base text-left sm:text-xs">
                 Here is your Monthly and Yearly sales.
               </p>
             </div>
@@ -125,13 +125,13 @@ export default function Profile() {
           </div>
         </div>
 
-        <div className="flex justify-center items-center gap-6">
+        <div className="flex justify-center items-center gap-6 md:flex-col">
           <div className="relative drop-shadow-xl w-96 h-72 overflow-hidden rounded-xl bg-stone-50/10 ">
             <div className="absolute flex flex-col space-y-3 items-start py-6 px-4 justify-start text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-opacity-45 ">
               <div className="flex flex-col justify-between h-full w-full">
-                <p className="text-xl font-bold drop-shadow-md ">Address : </p>
+                <p className="text-xl font-bold drop-shadow-md sm:text-base">Address : </p>
                 <div className="h-px bg-gray-400 w-full"></div>
-                <div className="space-y-1 font-mono">
+                <div className="space-y-1 font-mono sm:text-sm">
                   <p>
                     Full Name: <span>{profileData.fullName}</span>{" "}
                   </p>
@@ -164,11 +164,11 @@ export default function Profile() {
           <div className="relative drop-shadow-xl w-96 h-72 overflow-hidden rounded-xl bg-stone-50/10 ">
             <div className="absolute flex flex-col space-y-3 items-start py-6 px-4 justify-start text-white z-[1] opacity-90 rounded-xl inset-0.5  bg-opacity-45">
               <div className="flex flex-col justify-between h-full w-full">
-                <p className="text-xl font-bold drop-shadow-md ">
-                  Account Details :{" "}
+                <p className="text-xl font-bold drop-shadow-md sm:text-base">
+                  Account Details :
                 </p>
                 <div className="h-px bg-gray-400 w-full"></div>
-                <div className="space-y-1 font-mono">
+                <div className="space-y-1 font-mono sm:text-sm">
                   <p>
                     Bank Name: <span>{profileData.bankName}</span>{" "}
                   </p>
@@ -210,8 +210,8 @@ export default function Profile() {
 const RevenueTrack = (props) => {
   return (
     <div className="rounded-lg bg-white/5 w-full flex justify-between items-center py-4 px-5 space-x-4">
-      <p className="text-4xl text-white font-bold ">{props.revenue}$</p>
-      <p className="text-stone-50 drop-shadow-xl">{props.txt}</p>
+      <p className="text-4xl text-white font-bold sm:text-2xl ">{props.revenue}$</p>
+      <p className="text-stone-50 drop-shadow-xl sm:text-xs">{props.txt}</p>
     </div>
   );
 };
