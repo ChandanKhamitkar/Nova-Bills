@@ -3,6 +3,8 @@ import { useRef } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
+const baseURL = process.env.REACT_APP_BASE_API_URL;
+
 export default function OTPModal(props) {
   const modalRef = useRef();
   const otpInputRef = useRef(null);
@@ -17,7 +19,7 @@ export default function OTPModal(props) {
     const enteredOTP = otpInputRef.current.value;
     const verifyOTP = async () => {
       await axios
-        .post("http://localhost:8000/api/user/verifyOTP", {
+        .post(`${baseURL}/api/user/verifyOTP`, {
           enteredOTP,
         })
         .then((res) => {
