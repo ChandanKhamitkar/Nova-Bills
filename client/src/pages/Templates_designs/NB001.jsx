@@ -1,13 +1,42 @@
+import { useState, useEffect } from "react";
 import BrandLogo from "../../assets/Logos/brandLogo.png";
+import axios from "axios";
+import Cookies from "js-cookie";
+
+const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 export default function NB001(props) {
 
+  const [logo, setLogo] = useState("");
   const { billedTo, items, owner, grandTotal, invoiceNo } = props.invoiceDetails || {};
   const currentDate = new Date().toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
     year: 'numeric'
   });
+
+
+  useEffect(() => {
+    const fetchLogo = async () => {
+      try {
+        const token = Cookies.get("nb_token");
+        const response = await axios.get(`${baseURL}/api/user/getLogo`, {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if(response.data.success){
+          setLogo(response.data.photo);
+        }
+      } catch (error) {
+        console.log("Server error!");
+      }
+    };
+
+    fetchLogo();
+  }, []);
   
   return (
     <div className="flex justify-center item-center mx-auto">
@@ -16,7 +45,7 @@ export default function NB001(props) {
         {/* div containing logo Invoice title, billed to details, invoiceNO, date */}
         <div className="flex flex-col justify-center items-center space-y-7">
           <div className="w-full flex justify-between items-center mx-auto ">
-            <img src={BrandLogo} alt="Brand Logo" className="w-16 h-16" />
+            <img src={logo ? `${logo}` : BrandLogo} alt="Brand Logo" className="w-16 h-16" />
             <p className="text-5xl font-mono tracking-wide uppercase">
               Invoice
             </p>

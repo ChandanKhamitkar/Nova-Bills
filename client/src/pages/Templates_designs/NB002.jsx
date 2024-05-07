@@ -1,14 +1,42 @@
+import { useState, useEffect } from "react";
 import BrandLogo from "../../assets/Logos/brandLogo.png";
-import qrCode from "../../assets/Images/qr-code-demo.png";
+import axios from "axios";
+import Cookies from "js-cookie";
+// import qrCode from "../../assets/Images/qr-code-demo.png";
+
+const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 export default function NB002(props) {
 
+  const [logo, setLogo] = useState("");
   const { billedTo, items, owner, grandTotal, invoiceNo } = props.invoiceDetails || {};
   const currentDate = new Date().toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
     year: 'numeric'
   });
+
+  useEffect(() => {
+    const fetchLogo = async () => {
+      try {
+        const token = Cookies.get("nb_token");
+        const response = await axios.get(`${baseURL}/api/user/getLogo`, {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if(response.data.success){
+          setLogo(response.data.photo);
+        }
+      } catch (error) {
+        console.log("Server error!");
+      }
+    };
+
+    fetchLogo();
+  }, []);
 
   return (
     <div className="flex justify-center item-center mx-auto">
@@ -25,7 +53,7 @@ export default function NB002(props) {
                 <p className="font-bold tracking-wide">Paucek and Lage</p>
                 <p>Your Business Partner</p>
               </div>
-              <img src={BrandLogo} alt="Brand Logo" className="w-16 h-16" />
+              <img src={logo ? `${logo}` : BrandLogo} alt="Brand Logo" className="w-16 h-16" />
             </div>
           </div>
 
@@ -110,7 +138,7 @@ export default function NB002(props) {
               <p>Account Holder Name : {owner ? owner.accountName : ''}</p>
               <p>Account Number : {owner ? owner.accountNumber : ''}</p>
             </div>
-            <img src={qrCode} alt="demo qr code" className="w-20 h-20 mt-4 opacity-85" />
+            {/* <img src={qrCode} alt="demo qr code" className="w-20 h-20 mt-4 opacity-85" /> */}
           </div>
 
           <div className="w-full flex justify-between items-center">
