@@ -34,11 +34,11 @@ app.use(express.urlencoded({extended:true}));
 const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.join(__dirname, 'public', 'images')));
 
-//app.use(cors()); // use on deployment mode
-app.use(cors({ // on production mode
-    origin: `${process.env.REACT_APP_BASE_URL}`,
-    optionsSuccessStatus: 200 // Some legacy browsers choke on 204
-}));
+app.use(cors()); // use on deployment mode
+// app.use(cors({ // on production mode
+//     origin: `${process.env.REACT_APP_BASE_URL}`,
+//     optionsSuccessStatus: 200 // Some legacy browsers choke on 204
+// }));
 
 app.get("/", (req,res)=>{
     res.status(200).json({message : "NovaBills is a Invoice generator."});
