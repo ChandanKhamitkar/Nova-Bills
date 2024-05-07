@@ -15,7 +15,7 @@ export default function NavbarAfterLogin() {
   const navigate = useNavigate();
   const [menuVisible, setMenuVisible] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [logo, setLogo] = useState(null);
+  const [logo, setLogo] = useState("");
 
   const handleMenu = () => {
     setMenuVisible(!menuVisible);
@@ -98,7 +98,7 @@ export default function NavbarAfterLogin() {
               <div className="w-[300px] absolute right-8 top-16 bg-white border border-gray-300 rounded-lg shadow-md p-2 z-[100] space-y-6 px-3 py-4">
                 <div className="flex justify-start items-center space-x-4">
                   <img
-                    src={logo ? `${baseURL}/${logo}` : userLogoBlue}
+                    src={logo ? `${logo}` : userLogoBlue}
                     alt="user Business logo"
                     className="w-11 h-11 md:w-9 md:h-9 rounded-full"
                   />

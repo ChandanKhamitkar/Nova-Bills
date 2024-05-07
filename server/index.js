@@ -1,9 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import path from "path";
-import { fileURLToPath } from 'url';
-import {dirname} from "path";
 import connectDB from "./config/dbConnection.js";
 import signup from "./routes/Signup/signup.js";
 import login from "./routes/Login/login.js";
@@ -27,12 +24,12 @@ dotenv.config();
 connectDB();
 const app = express();
 const port = 8000;
-app.use(express.json());
+app.use(express.json({ limit: '99mb' }));
+app.set("view engine", "ejs");
 app.use(express.urlencoded({extended:true}));
 
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.join(__dirname, 'public', 'images')));
+
 
 app.use(cors()); // use on deployment mode
 // app.use(cors({ // on production mode

@@ -20,7 +20,7 @@ export default function Profile() {
   const [updateOption, setUpdateOption] = useState("Address");
   const [loading, setLoading] = useState(false);
   const [profileEditMode, setProfileEditMode] = useState(false);
-  const [brandLogo, setBrandLogo] = useState("");
+  const [image, setImage] = useState("");
 
 
   const fetchData = useCallback(async () => {
@@ -68,18 +68,36 @@ export default function Profile() {
     e.preventDefault();
     setProfileEditMode(true);
   }
+
+  const convertToBase64 = (e) => {
+    // console.log(e);
+    const file = e.target.files[0];
+    const maxSizeInBytes = 1 * 1024 * 1024; // 1 MB
+    // console.log("file size - ", file.size);
+    if (file && file.size > maxSizeInBytes) {
+      toast.error("File size exceeds the limit (1MB). Please select a smaller file.");
+      e.target.value = ''; 
+      return;
+  }
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      //console.log(reader.result); //converts into base64
+      setImage(reader.result);
+    }; 
+    reader.onerror = (error) => {
+      console.log("Error :", error);
+    }
+  }
   
   const handleSave = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const token = Cookies.get("nb_token");
-      const formData = new FormData();
-      formData.append('photo', brandLogo);
-
-      const response = await axios.post(`${baseURL}/api/user/uploadLogo`, formData,  {
+      const response = await axios.post(`${baseURL}/api/user/uploadLogo`, { base64 : image },  {
         headers: {
-          "content-type": "multipart/form-data", 
+          "content-type": "application/json", 
           Authorization: `Bearer ${token}`,
         },
       });
@@ -95,8 +113,8 @@ export default function Profile() {
       console.log("Error : ", error);
       toast.error("Internal server error! | Session Expired");
     }
-    setProfileEditMode(false);
     setLoading(false);
+    setProfileEditMode(false);
   }
 
 
@@ -118,19 +136,20 @@ export default function Profile() {
               {
                 profileData.photo !== "" ?
                   <img
-                  src={`${baseURL}/${profileData.photo}`}
+                  src={profileData.photo}
                   alt="User Business Logo"
                   className="absolute w-full p-2 rounded-full drop-shadow-2xl"
                   />
                   :
                   <p className="text-5xl font-mono drop-shadow-xl">{profileData.companyName[0]}</p>
             }
+
             </div>
             {
               profileEditMode && 
-              <div className="flex justify-center items-center gap-3">
-                <input type="file" accept=".png, .jpg, .jpeg" name="brandLogo" onChange={(e) => setBrandLogo(e.target.files[0])} className="rounded-lg"/>
-                <button onClick={(e) => handleSave(e)} className="bg-white rounded-lg px-3 py-1 text-sm drop-shadow-md">Upload</button>
+              <div className="flex justify-center items-center gap-3 lg:flex-col">
+                <input type="file" accept=".png, .jpg, .jpeg" name="brandLogo" onChange={(e) => convertToBase64(e)} className="rounded-lg"/>
+                <button onClick={(e) => handleSave(e)}  className="bg-white rounded-lg px-3 py-1 text-sm drop-shadow-md">Upload</button>
               </div>
             }
 
