@@ -99,7 +99,7 @@ export default function NavbarAfterLogin() {
                 <div className="flex justify-start items-center space-x-4">
                   <img
                     src={logo ? `${baseURL}/${logo}` : userLogoBlue}
-                    alt="user logo"
+                    alt="user Business logo"
                     className="w-11 h-11 md:w-9 md:h-9 rounded-full"
                   />
                   <div>

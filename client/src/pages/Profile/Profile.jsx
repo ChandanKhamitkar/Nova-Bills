@@ -119,7 +119,7 @@ export default function Profile() {
                 profileData.photo !== "" ?
                   <img
                   src={`${baseURL}/${profileData.photo}`}
-                  alt="User Logo"
+                  alt="User Business Logo"
                   className="absolute w-full p-2 rounded-full drop-shadow-2xl"
                   />
                   :
