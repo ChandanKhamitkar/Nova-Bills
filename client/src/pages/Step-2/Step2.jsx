@@ -92,7 +92,7 @@ export default function Step2() {
           </button>
         </div>
           
-          <p className="hidden md2:block rounded-lg text-base bg-white/15 px-4 py-2 w-[60%] text-center mx-auto my-10 text-red-400 transition-all duration-150 animate-pulse">To dowload PDF open site in Desktop or on larger screen size.</p>
+          <p className="hidden md2:block rounded-lg text-base bg-white/15 px-4 py-2 w-[60%] text-center mx-auto my-10 text-red-400 transition-all duration-150 animate-pulse">To dowload PDF open site in <b> Desktop Mode  ( if your are in mobile view ) </b>or on larger screen size.</p>
           
       </div>
       <Toaster />

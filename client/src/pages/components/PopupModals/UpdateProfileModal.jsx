@@ -69,12 +69,12 @@ export default function UpdateProfileModal(props) {
         <button onClick={props.onClose} className="place-self-end">
           <X size={30} />
         </button>
-        <div className="w-[500px] min-h-72 py-6 px-4 flex flex-col items-center bg-blue-600 rounded-xl space-y-5 shadow-lg shadow-gray-800">
-          <h1 className="uppercase text-2xl font-extrabold">Edit address</h1>
+        <div className="max-w-[500px] py-6 px-20 flex flex-col items-center  bg-blue-600 rounded-xl space-y-5 shadow-lg shadow-gray-800 sm:px-7">
+          <h1 className="uppercase text-2xl md2:text-lg mobile:text-sm font-extrabold text-center ">Edit Details</h1>
           <form className="space-y-5 flex flex-col items-center">
             {Object.keys(obj[updatingField]).map((key, index) => (
               <div key={index} className="flex flex-col justify-start items-start">
-                <label htmlFor={key} className="text-black font-medium ">
+                <label htmlFor={key} className="text-black font-medium  sm:text-sm">
                   {key}
                 </label>{" "}
                 <input
@@ -85,7 +85,7 @@ export default function UpdateProfileModal(props) {
                   type={obj[updatingField][key].type}
                   name={obj[updatingField][key].name}
                   placeholder={obj[updatingField][key].name}
-                  className="rounded-md shadow-lg p-2 text-black no-arrows border border-gray-300 outline-1 outline-gray-300"
+                  className="rounded-md shadow-lg p-2 text-black no-arrows border border-gray-300 outline-1 outline-gray-300 sm:text-sm sm:py-1"
                 />
               </div>
             ))}

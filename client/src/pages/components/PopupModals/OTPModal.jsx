@@ -42,15 +42,15 @@ export default function OTPModal(props) {
       onClick={closeModal}
       className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center select-none"
     >
-      <div className="mt-10 flex flex-col gap-5 text-white">
+      <div className="mt-10 flex flex-col gap-5 text-white mobile:mx-6">
         <button onClick={props.onClose} className="place-self-end">
           <X size={30} />
         </button>
-        <div className="w-[500px] min-h-72 py-6 px-4 flex flex-col items-center bg-blue-600 rounded-xl space-y-5 shadow-lg shadow-gray-800">
+        <div className="max-w-[500px] max-h-72 py-6 px-4 flex flex-col items-center  bg-blue-600 rounded-xl space-y-5 shadow-lg shadow-gray-800">
           <h1 className="uppercase text-2xl font-extrabold">
             otp verification
           </h1>
-          <p className="text-center font-semibold text-2xl">
+          <p className="text-2xl md2:text-lg mobile:text-sm font-semibold text-center ">
             NovaBills has sent you an OTP! to Email, Enter below and get the use
             of amazing features provided.
           </p>
