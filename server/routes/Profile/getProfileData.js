@@ -55,6 +55,7 @@ export default router.get("/api/user/getProfileData", async (req, res) => {
       success: true,
       companyName : user.companyName,
       fullName: user.fullName,
+      photo : user.photo,
       email: user.email,
       address: user.address,
       city: user.city,
