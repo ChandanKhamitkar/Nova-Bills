@@ -75,11 +75,11 @@ export default function Step2() {
           ))}
         </div>
 
-        <div ref={pdfRef} className="hidden mx-7 my-10">
+        <div ref={pdfRef} className="md2:hidden mx-7 my-10">
           {selectedTemplate && selectedTemplate.component}
         </div>
 
-        <div className="w-full flex justify-center items-center my-10">
+        <div className="w-full flex justify-center items-center my-10 md2:hidden">
           <button onClick={() => 
           {
             downloadPDF(pdfRef);
@@ -91,6 +91,9 @@ export default function Step2() {
             <span>Download</span>
           </button>
         </div>
+          
+          <p className="hidden md2:block rounded-lg text-base bg-white/15 px-4 py-2 w-[60%] text-center mx-auto my-10 text-red-400 transition-all duration-150 animate-pulse">To dowload PDF open site in Desktop or on larger screen size.</p>
+          
       </div>
       <Toaster />
     </div>

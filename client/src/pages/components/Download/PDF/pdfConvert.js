@@ -8,19 +8,11 @@ export const downloadPDF = (pdfRef) => {
     const pdf = new jsPDF("p", "mm", "a4", true);
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
-    const imgWidth = canvas.width;
-    const imgHeight = canvas.height;
-    const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-    const imgX = (pdfWidth - imgWidth * ratio) / 2;
-    const imgY = 30;
-    pdf.addImage(
-      imgData,
-      "PNG",
-      imgX,
-      imgY,
-      imgWidth * ratio,
-      imgHeight * ratio
-    );
+    const imgWidth = pdfWidth;
+    const imgHeight = (canvas.height * pdfWidth) / canvas.width; 
+    const imgX = 0; 
+    const imgY = (pdfHeight - imgHeight) / 2; 
+    pdf.addImage(imgData, "PNG", imgX, imgY, imgWidth, imgHeight);
     pdf.save("invoice.pdf");
   });
 };
