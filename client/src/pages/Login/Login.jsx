@@ -88,7 +88,7 @@ export default function Login() {
                       className="bg-gray-700 bg-opacity-35 text-white rounded-xl px-3 py-1  mobile:text-sm"
                     />
                   </div>
-                  <p className="text-gray-500 text-xs text-right hover:text-gray-400 cursor-pointer">
+                  <p onClick={() => navigate("/forgotPassword")} className="text-gray-500 text-xs text-right hover:text-gray-400 cursor-pointer">
                     Forgot Password?
                   </p>
 
