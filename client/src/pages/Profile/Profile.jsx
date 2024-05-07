@@ -1,6 +1,5 @@
 import NavbarAfterLogin from "../components/Navbars/NavbarAfterLogin.jsx";
-import BrandLogo from "../../assets/Logos/brandLogo.png";
-import { Pencil } from "lucide-react";
+import { Pencil, SquarePen } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import UpdateProfileModal from "../components/PopupModals/UpdateProfileModal.jsx";
 import Cookies from "js-cookie";
@@ -20,6 +19,8 @@ export default function Profile() {
   const [profileData, setProfileData] = useState({});
   const [updateOption, setUpdateOption] = useState("Address");
   const [loading, setLoading] = useState(false);
+  const [profileEditMode, setProfileEditMode] = useState(false);
+  const [brandLogo, setBrandLogo] = useState("");
 
 
   const fetchData = useCallback(async () => {
@@ -63,6 +64,40 @@ export default function Profile() {
     fetchData();
   }, [fetchData]);
 
+  const handleEditMode = (e) => {
+    e.preventDefault();
+    setProfileEditMode(true);
+  }
+  
+  const handleSave = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const token = Cookies.get("nb_token");
+      const formData = new FormData();
+      formData.append('photo', brandLogo);
+
+      const response = await axios.post(`${baseURL}/api/user/uploadLogo`, formData,  {
+        headers: {
+          "content-type": "multipart/form-data", 
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if(response.data.success){
+        toast.success("Uploaded successfully");
+        fetchData();
+      }
+      else{
+       toast.error("Error in uploading!!"); 
+      }
+    } catch (error) {
+      console.log("Error : ", error);
+      toast.error("Internal server error! | Session Expired");
+    }
+    setProfileEditMode(false);
+    setLoading(false);
+  }
 
 
   return (
@@ -77,14 +112,28 @@ export default function Profile() {
 
       <div className="space-y-7 my-7 py-7 w-full border-y border-gray-900 bg-black/30 backdrop-blur-sm">
         <div className="w-[60%] grid grid-cols-2 mx-auto gap-6 md:grid-cols-1">
-          <div className="bg-stone-50/10 h-[500px] sm:h-[400px] p-6 space-y-5 flex flex-col justify-center items-center rounded-lg ">
+          <div className="bg-stone-50/10 h-[500px] sm:h-[400px] p-6 space-y-5 flex flex-col justify-center items-center rounded-lg relative ">
+              <SquarePen onClick={(e) => handleEditMode(e)} size={20}  className="float-right self-end absolute text-white/70 top-6 hover:scale-105 cursor-pointer hover:drop-shadow-2xl"/>
             <div className="w-24 h-24 bg-slate-200 rounded-full shadow-lg shadow-gray-700 mx-auto relative flex justify-center items-center">
-              <img
-                src={BrandLogo}
-                alt="User Logo"
-                className="absolute w-full p-2"
-              />
+              {
+                profileData.photo !== "" ?
+                  <img
+                  src={`${baseURL}/${profileData.photo}`}
+                  alt="User Logo"
+                  className="absolute w-full p-2 rounded-full drop-shadow-2xl"
+                  />
+                  :
+                  <p className="text-5xl font-mono drop-shadow-xl">{profileData.companyName[0]}</p>
+            }
             </div>
+            {
+              profileEditMode && 
+              <div className="flex justify-center items-center gap-3">
+                <input type="file" accept=".png, .jpg, .jpeg" name="brandLogo" onChange={(e) => setBrandLogo(e.target.files[0])} className="rounded-lg"/>
+                <button onClick={(e) => handleSave(e)} className="bg-white rounded-lg px-3 py-1 text-sm drop-shadow-md">Upload</button>
+              </div>
+            }
+
             <div className="space-y-2 text-center ">
               <p className="text-3xl sm:text-2xl font-semibold text-white text-center antialiased tracking-wide drop-shadow-md">
                 {profileData.companyName}
@@ -94,6 +143,12 @@ export default function Profile() {
                 Enter your desired text here, this is the sample text.
               </p>
             </div>
+
+            {/* {profileEditMode && 
+                <button onClick={(e) => handleSave(e)} className="bg-black rounded-xl px-3 py-1 text-white absolute bottom-6 ">Save</button>
+            } */}
+
+
           </div>
 
           <div className="bg-stone-50/10 h-[500px] sm:h-[400px] p-6 space-y-5 flex flex-col justify-center items-center rounded-lg ">

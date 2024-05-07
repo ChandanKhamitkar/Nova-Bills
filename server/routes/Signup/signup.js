@@ -34,6 +34,7 @@ export default router.post("/api/user/signup", async (req, res) => {
                 bankName : "",
                 accountName : "",
                 accountNumber : "",
+                photo : "",
             });
             console.log("User signedUp successfully.");
             return res.status(200).json({message : "User signedUp successfully."});
