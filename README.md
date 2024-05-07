@@ -5,13 +5,22 @@
 ## Features
 
 - 3 simple steps to create an invoice.
-    - Enter the esssential details like `**Billing To**` and `**Items**`
+    - Enter the esssential details like `Billing To` and `Items`
     - Select your preffered template design.
     - Download and share ready invoice to your customer in the `**pdf**` format.
 - Track your invoice finances.
 - Update payment status `Paid` / `Pending`
-- Monthly `**Report**` will be shown using graph.
-- Weekly Report will be sent to Business Owner `mail`
+- Monthly `Report` will be shown using graph. | Yet to build.
+
+
+## Welcome Coders
+### Proudly Open Source
+Have an idea! - Raise **PR**
+Have a play with it. 
+- Few Simple Ideas such as:
+    - Light Mode
+    - DRY code
+    - Blog Page
 
 # Getting Started with Create React App
 
