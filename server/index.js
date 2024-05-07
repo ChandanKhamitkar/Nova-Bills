@@ -19,6 +19,8 @@ import invoiceCount from "./routes/Invoice/Get/Count/invoice.js";
 import ReportData from "./routes/Invoice/Get/Report/invoice.js";
 import uploadLogo from "./routes/Profile/uploadLogo.js";
 import GetLogo from "./routes/Navbar/GetLogo/Navbar.js";
+import ForgotPassword from "./routes/ForgotPassword/ForgotPassword.js";
+import ResetPassword from "./routes/ResetPassword/ResetPassword.js";
 // import errorHandler from "./middleware/errorHandler.js";
 
 dotenv.config();
@@ -44,6 +46,7 @@ app.get("/", (req,res)=>{
 app.use(signup);
 app.use(login);
 app.use(Verification);
+app.use(ForgotPassword);
 app.use(Authentication, getProfileData);
 app.use(Authentication, updateProfile);
 app.use(Authentication, invoiceRouteAdd);
@@ -54,6 +57,7 @@ app.use(Authentication, invoiceCount);
 app.use(Authentication, ReportData);
 app.use(Authentication, uploadLogo);
 app.use(Authentication, GetLogo);
+app.use(Authentication, ResetPassword);
 
 // app.use(errorHandler);
 
