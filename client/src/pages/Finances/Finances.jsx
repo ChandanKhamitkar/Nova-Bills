@@ -26,6 +26,8 @@ export default function Finances() {
   const [moreVisibleIndex, setMoreVisibleIndex] = useState(null);
   const [expandedRowIndex, setExpandedRowIndex] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [tableColumns, setTableColumns] = useState(700);
+  const [HeadTitles, setHeadTitles] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -117,24 +119,42 @@ export default function Finances() {
     });
   };
 
-  const HeadTitles = [
-    "Client",
-    "Billed Date",
-    "Invoice No",
-    "Amount",
-    "Status",
-    "",
-  ];
+  useEffect(() => {
+    if (window.innerWidth > 700) {
+      setHeadTitles([
+        "Client",
+        "Billed Date",
+        "Invoice No",
+        "Amount",
+        "Status",
+        "",
+      ]);
+    } else {
+      setHeadTitles(["Invoice No", "Status", ""]);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      let currentWindowSize = window.innerWidth;
+      setTableColumns(currentWindowSize);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
-    <div className=" scroll-smooth h-auto pb-96 min-h-screen w-full  justify-center items-center bg-black/[0.96] antialiased bg-grid-white/[0.025] relative overflow-hidden flex flex-col ">
+    <div className="scroll-smooth  pb-96 min-h-screen h-full w-full  justify-center items-center bg-black/[0.96] antialiased bg-grid-white/[0.025] relative overflow-hidden flex flex-col ">
       <NavbarAfterLogin />
 
       <div className="mt-20 relative flex justify-center items-center">
         <img
           src={blue_gradient}
           alt="blue"
-          className="w-[90%] min-h-full mx-auto relative saturate-200 opacity-60 rounded-3xl card-fade-2"
+          className="w-[90%]  min-h-[300vh] mx-auto relative saturate-200 opacity-60 rounded-3xl card-fade-2"
         />
 
         <div className="my-10 w-3/4 mx-auto absolute top-0 left-1/2 transform -translate-x-1/2 rounded-lg">
@@ -142,26 +162,35 @@ export default function Finances() {
             <p className="text-left w-fit text-3xl lg2:text-2xl my-5 font-bold drop-shadow-md tracking-wide text-white">
               Finances
             </p>
-            <p className="w-fit text-black/70 text-lg lg2:text-base drop-shadow-md">
+            <p className="w-fit TableBench:hidden text-black/70 text-lg lg2:text-base drop-shadow-md">
               Products sold to Clients /
               <span className="text-white/70"> History</span>
             </p>
           </div>
 
-          <div className="rounded-xl shadow-lg shadow-gray-800">
+          <div className="rounded-xl shadow-lg shadow-gray-800 w-full">
             <GridHead info={HeadTitles} />
             {invoiceData.map((item, index) => (
               <>
-                <div className="grid grid-cols-7 border-b border-white border-opacity-25">
-                  <GridRow
+                <div className="grid grid-cols-7 TableBench:grid-cols-4 border-b border-white border-opacity-25">
+                  {tableColumns > 700 && 
+                    <GridRow
                     key={index}
                     txt={item?.billedTo?.client}
                     item={item}
                     client={true}
-                  />
+                    />
+                }
+                {tableColumns > 700 && 
                   <GridRow txt={item.date} item={item} />
-                  <GridRow txt={item.invoiceNo} item={item} />
-                  <GridRow txt={item.amount} item={item} />
+                }
+
+                <GridRow txt={item.invoiceNo} item={item} />
+
+                {tableColumns > 700 && 
+                    <GridRow txt={item.amount} item={item} />
+                }
+                  
                   <RowStatus item={item} />
                   <StatusHandleButton
                     item={item}
@@ -209,9 +238,9 @@ export default function Finances() {
 
 const GridHead = ({ info }) => {
   return (
-    <div className="text-center grid grid-cols-7 bg-correct-black-light w-full bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200 border-b border-white border-opacity-25 rounded-t-lg">
+    <div className="text-center grid grid-cols-7 TableBench:grid-cols-4 bg-correct-black-light w-full bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200 border-b border-white border-opacity-25 rounded-t-lg">
       {info.map((head, index) => (
-        <p key={index} className="text-txt-dark font-semibold text-lg lg2:text-base p-5">
+        <p key={index} className="text-txt-dark font-semibold text-lg lg2:text-sm p-5">
           {head}
         </p>
       ))}
@@ -222,7 +251,7 @@ const GridHead = ({ info }) => {
 const GridRow = ({ txt, item, client }) => {
   return (
     <p
-      className={`p-6 text-center bg-correct-black-light text-white bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200 flex justify-center items-center lg2:text-base  md:text-sm md:py-4  ${
+      className={`p-6 text-center bg-correct-black-light text-white bg-opacity-70 backdrop-filter backdrop-blur-lg backdrop-saturate-200 flex justify-center items-center lg2:text-xs  md:text-sm md:py-4  ${
         client && "font-semibold"
       } ${!item.orderStatus ? "order-cancel" : ""}`}
     >
@@ -239,7 +268,7 @@ const RowStatus = ({ item }) => {
       }`}
     >
       <span
-        className={`px-3 py-1 rounded-xl lg2:text-base ${
+        className={`px-3 py-1 rounded-xl lg2:text-xs lg2:px-2  ${
           item.status ? "bg-green-400" : "bg-yellow-400"
         } text-white font-semibold`}
       >
@@ -316,6 +345,12 @@ const ExpandedRow = ({ index, expandedRowIndex, toggleExpandedRow, item }) => (
             <p className="w-[33%]">${details.amount}</p>
           </div>
         ))}
+        <div className="w-[50&] h-px border border-gray-400 border-opacity-40"></div>
+        
+        <p>Client : {item.billedTo.client}</p>
+        <p>Amount : {item.amount}</p>
+        <p>Date of billing : {item.date}</p>
+
       </div>
     )}
   </>
@@ -331,7 +366,7 @@ const MoreDetails = ({
   toggleExpandedRow,
   handleEditOrder,
 }) => (
-  <div className="w-[20%] absolute h-auto right-14 z-[100] bg-white rounded-md px-1 py-2 text-black mr-12 mt-10">
+  <div className="w-[150px] absolute h-auto right-14 z-[100] bg-white rounded-md px-1 py-2 text-black mr-12 mt-10">
     <X
       onClick={() => {
         toggleMoreVisible(index);

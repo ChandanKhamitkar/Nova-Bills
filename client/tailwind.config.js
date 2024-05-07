@@ -70,6 +70,8 @@ module.exports = {
       'md': {'max': '950px'},
       // => @media (max-width: 767px) { ... }
       
+      'TableBench' : {'max': '700px'},
+
       'md2': {'max': '780px'},
 
       'sm': {'max': '550px'},
