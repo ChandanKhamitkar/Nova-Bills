@@ -7,6 +7,9 @@ function Encryptr (plainString) {
 }
 
 function Decryptr (scrambledString) {
+    if(scrambledString == ''){
+        return "";
+    }
     const decryptedString = cryptr.decrypt(scrambledString);
     return decryptedString;
 }

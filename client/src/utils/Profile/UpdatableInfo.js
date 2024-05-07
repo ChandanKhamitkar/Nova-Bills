@@ -42,7 +42,7 @@ const updateProfile = {
             name : "accountName",
           },
           accountNumber : {
-            type : "number",
+            type : "text",
             name : "accountNumber",
           },
     }
