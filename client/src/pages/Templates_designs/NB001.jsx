@@ -42,10 +42,10 @@ export default function NB001(props) {
   
   return (
     <div className="flex justify-center item-center mx-auto">
-      <img src={logo ? `${logo}` : BrandLogo} alt="Brand Logo" className="w-60 h-60 opacity-30 absolute" />
 
       {/* main card */}
-      <div className="bg-white  w-[999px] min-h-[1000px] py-16 px-14">
+      <div className="bg-white  w-[999px] min-h-[1000px] py-16 px-14 relative">
+        <img src={logo ? `${logo}` : BrandLogo} alt="Brand Logo" className="w-80 h-80 opacity-15 absolute inset-0 m-auto transform   -translate-y-1" />
         {/* div containing logo Invoice title, billed to details, invoiceNO, date */}
         <div className="flex flex-col justify-center items-center space-y-7">
           <div className="w-full flex justify-between items-center mx-auto ">
