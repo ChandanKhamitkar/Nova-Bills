@@ -5,7 +5,7 @@ const router = express.Router();
 
 export default router.post("/api/user/addInvoice", async (req, res) => {
   const ID = req.user;
-  const { invoiceNo, billedTo, amount, items, invoiceEditID } = req.body;
+  const { invoiceNo, billedTo, amount, items, invoiceEditID, total } = req.body;
 
   try {
     let currentDate = new Date().toLocaleDateString("en-IN", {
@@ -21,6 +21,7 @@ export default router.post("/api/user/addInvoice", async (req, res) => {
       invoice.billedTo = billedTo;
       invoice.amount = amount;
       invoice.items = items;
+      invoice.total = total;
 
       await invoice.save();
       return res.status(200).json({success : true});
@@ -31,6 +32,7 @@ export default router.post("/api/user/addInvoice", async (req, res) => {
         invoiceNo,
         billedTo,
         amount,
+        total,
         items,
         user: ID,
       });

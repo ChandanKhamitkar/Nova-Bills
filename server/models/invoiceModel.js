@@ -29,6 +29,10 @@ const invoiceSchema = new Schema(
             type : Number,
         },
 
+        total : {
+            type : Number,
+        },
+
         status : {
             type : Boolean,
             default : false,

@@ -43,7 +43,7 @@ export default function Login() {
       }
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Server Error | Please try again");
+      toast.error("Incorrect Credentials | Server Error");
     }
   };
 

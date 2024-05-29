@@ -8,7 +8,8 @@ const baseURL = process.env.REACT_APP_BASE_API_URL;
 export default function NB001(props) {
 
   const [logo, setLogo] = useState("");
-  const { billedTo, items, owner, grandTotal, invoiceNo } = props.invoiceDetails || {};
+  const [company, setCompany] = useState("");
+  const { billedTo, items, owner, grandAmount, grandTotal, invoiceNo, charges } = props.invoiceDetails || {};
   const currentDate = new Date().toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
@@ -29,6 +30,7 @@ export default function NB001(props) {
 
         if(response.data.success){
           setLogo(response.data.photo);
+          setCompany(response.data.companyName);
         }
       } catch (error) {
         console.log("Server error!");
@@ -40,13 +42,20 @@ export default function NB001(props) {
   
   return (
     <div className="flex justify-center item-center mx-auto">
+      <img src={logo ? `${logo}` : BrandLogo} alt="Brand Logo" className="w-60 h-60 opacity-30 absolute" />
+
       {/* main card */}
       <div className="bg-white  w-[999px] min-h-[1000px] py-16 px-14">
         {/* div containing logo Invoice title, billed to details, invoiceNO, date */}
         <div className="flex flex-col justify-center items-center space-y-7">
           <div className="w-full flex justify-between items-center mx-auto ">
-            <img src={logo ? `${logo}` : BrandLogo} alt="Brand Logo" className="w-16 h-16" />
-            <p className="text-5xl font-mono tracking-wide uppercase">
+          <div className="flex justify-center items-center gap-4 flex-row-reverse">
+              <div className="text-right space-y-0">
+                <p className="font-bold tracking-wide">{company}</p>
+                <p></p>
+              </div>
+              <img src={logo ? `${logo}` : BrandLogo} alt="Brand Logo" className="w-16 h-16" />
+            </div>            <p className="text-5xl font-mono tracking-wide uppercase">
               Invoice
             </p>
           </div>
@@ -90,10 +99,10 @@ export default function NB001(props) {
                 <td className="pb-2 px-2">{row.itemName}</td>
                 <td className="text-center">{row.qty}</td>
                 <td className="text-center">
-                  $<span>{row.rate}</span>
+                  <span>{row.rate}/-</span>
                 </td>
                 <td className="text-center">
-                  $<span>{row.amount}</span>
+                  <span>{row.amount}/-</span>
                 </td>
               </tr>
               ))
@@ -105,16 +114,20 @@ export default function NB001(props) {
         <div className="float-right min-w-[20%] mt-6 space-y-4 mb-32  ">
           <p className="flex justify-between items-center">
             <span className="font-semibold">Subtotal</span>
-            <span>${grandTotal}</span>
+            <span>{grandAmount}/-</span>
           </p>
           <p className="flex justify-between items-center">
-            <span className="font-semibold">Tax</span>
-            <span>$0</span>
+            <span className="font-semibold">GST</span>
+            <span>{charges.gstCalculated}/-</span>
+          </p>
+          <p className="flex justify-between items-center">
+            <span className="font-semibold text-sm">Shipping Charges</span>
+            <span>{charges.shippingCharges}/-</span>
           </p>
           <div className="h-0.5 bg-black"></div>
           <p className="flex justify-between items-center font-bold text-xl">
             <span>Total</span>
-            <span>$500</span>
+            <span>{grandTotal}/-</span>
           </p>
         </div>
 

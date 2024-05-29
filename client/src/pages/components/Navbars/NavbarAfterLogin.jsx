@@ -106,7 +106,7 @@ export default function NavbarAfterLogin() {
                     <p className="text-xl font-semibold text-black md:text-base">
                       {user.User.companyName}
                     </p>
-                    <p className="text-sm font-medium text-slate-600 md:text-xs">
+                    <p className="text-sm font-medium text-slate-600 md:text-xs w-[80%] overflow-clip">
                       {user.User.email}
                     </p>
                   </div>

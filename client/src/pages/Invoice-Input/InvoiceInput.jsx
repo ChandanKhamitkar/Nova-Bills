@@ -1,6 +1,6 @@
 import DetailCard from "./DetailCard";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import NavbarAfterLogin from "../components/Navbars/NavbarAfterLogin";
 import TableRow from "./TableRow.jsx";
 import BilledToInfo from "../../utils/BilledTo/BillledToInfo.js";
@@ -11,65 +11,15 @@ import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
 import blueBack from "../../assets/Images/intro_blue_ball.png";
 import { jwtDecode } from "jwt-decode";
-
-
+import { Percent, IndianRupee } from "lucide-react";
 
 const baseURL = process.env.REACT_APP_BASE_API_URL;
-
 
 export default function InvoiceInput() {
   const location = useLocation();
   const navigate = useNavigate();
-
   const [invoiceEditID, setInvoiceEditId] = useState("");
-  useEffect(() => {
-    if(location.state){
-      if(location.state.billedTo && location.state.items){
-        const { billedTo, items, invoiceID } = location.state;
-        console.log("Editing mode on...! -- ", billedTo, items, invoiceID);
-        setRows(items);
-        setFormData(billedTo);
-        setInvoiceEditId(invoiceID);
-      }
-    }
-
-  }, [location.state]);
-
-
   const [administrationDetails, setAdministrationDetails] = useState({});
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = Cookies.get("nb_token");
-        if(!token){
-          navigate("/");
-          return;
-        }
-
-        const decodedToken = jwtDecode(token);
-        const currentTime = Date.now() / 1000; 
-      if (decodedToken.exp < currentTime) {
-        navigate("/login");
-        return;
-      }
-        const response = await axios.get(
-          `${baseURL}/api/user/getProfileData`,
-          {
-            headers: {
-              "content-type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setAdministrationDetails(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [setAdministrationDetails, navigate]);
-
   const [rows, setRows] = useState([]);
   const [showModal, setShowModal] = useState(true);
   const [formData, setFormData] = useState({
@@ -81,6 +31,67 @@ export default function InvoiceInput() {
     state: "",
     phoneNumber: "",
   });
+
+  const [billedBy, setBilledBy] = useState({
+    fullName: true,
+    email: true,
+    phoneNumber: true,
+    address: true,
+    city: true,
+    pincode: true,
+    bankName: false,
+    accountName: false,
+    accountNumber: false,
+  });
+  const [grandAmount, setgrandAmount] = useState(0);
+  const [grandTotal, setgrandTotal] = useState(0);
+  const [charges, setCharges] = useState({
+    gstPercentage: 0,
+    shippingCharges: 0,
+    gstCalculated : 0,
+  });
+
+  useEffect(() => {
+    if (location.state) {
+      if (location.state.billedTo && location.state.items) {
+        const { billedTo, items, invoiceID } = location.state;
+        console.log("Editing mode on...! -- ", billedTo, items, invoiceID);
+        setRows(items);
+        setFormData(billedTo);
+        setInvoiceEditId(invoiceID);
+      }
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = Cookies.get("nb_token");
+        if (!token) {
+          navigate("/");
+          return;
+        }
+
+        const decodedToken = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        if (decodedToken.exp < currentTime) {
+          navigate("/login");
+          return;
+        }
+        const response = await axios.get(`${baseURL}/api/user/getProfileData`, {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setAdministrationDetails(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [setAdministrationDetails, navigate]);
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -113,26 +124,22 @@ export default function InvoiceInput() {
     setRows(updatedRows);
   };
 
-  const [billedBy, setBilledBy] = useState({
-    fullName: true,
-    email: true,
-    phoneNumber: true,
-    address: true,
-    city: true,
-    pincode: true,
-    bankName: false,
-    accountName: false,
-    accountNumber: false,
-  });
-
-  const [grandTotal, setGrandTotal] = useState(0);
   useEffect(() => {
-    let GT = 0;
+    let GA = 0;
     rows.forEach((item) => {
-      GT += parseInt(item.amount);
+      GA += parseInt(item.amount);
     });
-    setGrandTotal(GT);
+    setgrandAmount(GA);
   }, [rows]);
+
+
+  useEffect(() => {
+    console.log("calculating gst, total....");
+    const gstCalculated = Math.round((charges.gstPercentage / 100) * grandAmount);
+    const GT = grandAmount + gstCalculated + parseFloat(charges.shippingCharges || 0);
+    setCharges((prev) => ({ ...prev, gstCalculated }));
+    setgrandTotal(GT);
+  }, [grandAmount, charges.gstPercentage, charges.shippingCharges]);
 
   const seletedAdministrationDetails = Object.keys(billedBy)
     .filter((key) => billedBy[key])
@@ -141,64 +148,73 @@ export default function InvoiceInput() {
       return result;
     }, {});
 
-    const invoice = async (e, rows) => {
-      e.preventDefault();
-  
-      const token = Cookies.get("nb_token");
-  
-      try {
-        const response = await axios.post(`${baseURL}/api/user/addInvoice`, {
+  const invoice = async (e, rows) => {
+    e.preventDefault();
+
+    const token = Cookies.get("nb_token");
+
+    try {
+      const response = await axios.post(
+        `${baseURL}/api/user/addInvoice`,
+        {
           invoiceNo,
-          billedTo : formData,
-          amount : grandTotal,
-          items : rows,
-          invoiceEditID : invoiceEditID,
+          billedTo: formData,
+          amount: grandAmount,
+          total: grandTotal,
+          items: rows,
+          invoiceEditID: invoiceEditID,
         },
         {
-          headers : {
-            'content-type' : 'application/json',
-            Authorization : `Bearer ${token}`,
-          }
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
-        if(response.data.success){
-          toast.success("Invoice Stored");
+      if (response.data.success) {
+        toast.success("Invoice Stored");
+      } else {
+        toast.error("Failed to add invoice to database.");
+      }
+    } catch (error) {
+      console.log("Error adding invoice : ", error);
+      toast.error("Interal Server error!");
+    }
+  };
+
+  const [invoiceNo, setInvoiceNo] = useState(0);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = Cookies.get("nb_token");
+        const response = await axios.get(
+          `${baseURL}/api/user/getInvoiceCount`,
+          {
+            headers: {
+              "content-type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.data.success) {
+          setInvoiceNo(`000${response.data.count}`);
         }
-        else{
-          toast.error("Failed to add invoice to database.");
-        }
-        
       } catch (error) {
-        console.log("Error adding invoice : ",error);
-        toast.error("Interal Server error!");
+        console.log(error);
       }
     };
 
-    const [invoiceNo, setInvoiceNo] = useState(0);
-    useEffect(() => {
+    fetchData();
+  }, [setInvoiceNo]);
 
-      const fetchData = async () => {
-        try {
-          const token = Cookies.get("nb_token");
-          const response = await axios.get(`${baseURL}/api/user/getInvoiceCount`, {
-            headers : {
-              'content-type' : 'application/json',
-              Authorization : `Bearer ${token}`
-            }
-          })
-          if(response.data.success){
-            setInvoiceNo(`000${response.data.count}`);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
+  const InputHeadStyling = "border border-slate-600 bg-blue-600 py-2 text-left md:text-sm px-4";
+  const TableHeadings = ["Item", "Quantity", "Rate", "Amount"];
 
-      fetchData();
-    }, [setInvoiceNo])
-
-    const InputHeadStyling = "border border-slate-600 bg-blue-600 py-2 text-left md:text-sm px-4";
-    const TableHeadings = ["Item", "Quantity" , "Rate", "Amount"];
+  const handleCharges = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setCharges({ ...charges, [name]: value });
+  };
 
   return (
     <div
@@ -207,11 +223,10 @@ export default function InvoiceInput() {
     >
       <NavbarAfterLogin />
 
-
       <img
         src={blueBack}
         alt="blueBall"
-        className="absolute top-0 right-80 opacity-20 w-[1000px] md:right-0 sm:top-32"
+        className="absolute top-0 right-10 opacity-20 w-[3000px] md:right-0 sm:top-32"
       />
       <div className="w-3/4 md:w-[85%] h-auto bg-white/10 backdrop-blur-md bg-opacity-35 flex justify-center items-center mx-auto my-10 rounded-md border border-white/40 shadow-md shadow-slate-700">
         <form
@@ -285,10 +300,54 @@ export default function InvoiceInput() {
               </div>
             </div>
           </div>
+
+          <div className="flex justify-center items-center space-x-4 bg-white/20 bg-opacity-50 rounded-lg p-6 w-fit md:w-[90%] shadow-lg ">
+            <div className="flex flex-col justify-center items-start gap-2">
+              <label
+                htmlFor="gstPercentage"
+                className="flex justify-center items-center space-x-2 text-white/70"
+              >
+                <span>Add GST</span>
+                <Percent size={15} />
+              </label>
+              <input
+                onChange={(e) => handleCharges(e)}
+                type="number"
+                placeholder="Enter GST percentage"
+                name="gstPercentage"
+                min="0"
+                max="100"
+                step="0.5"
+                className="outline-none py-2 w-60 rounded-md pl-3 border-2  border-[#8758FF] bg-white/10 no-arrows placeholder-white"
+              />
+            </div>
+            <div className="flex flex-col justify-center items-start gap-2">
+              <label
+                htmlFor="shippingCharges"
+                className="flex justify-center items-center space-x-2 text-white/70"
+              >
+                <span>Shipping Charges</span>
+                <IndianRupee size={15} />
+              </label>
+              <input
+                onChange={(e) => handleCharges(e)}
+                type="number"
+                placeholder="Enter Shipping Charges"
+                name="shippingCharges"
+                className="outline-none py-2 w-60 rounded-md pl-3 border-2  border-[#8758FF] bg-white/10 no-arrows placeholder-white"
+              />
+            </div>
+          </div>
+
           <table className="w-full space-y-6">
             <thead>
               <tr>
-                {TableHeadings.map((head, index) => <th key={index} className={InputHeadStyling}> {head} </th>)}
+                {TableHeadings.map((head, index) => (
+                  <th key={index} className={InputHeadStyling}>
+                    {" "}
+                    {head}{" "}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody className="bg-gray-800 backdrop-blur-lg bg-opacity-30">
@@ -328,9 +387,11 @@ export default function InvoiceInput() {
                 state: {
                   billedTo: formData,
                   items: rows,
+                  grandAmount: grandAmount,
                   grandTotal : grandTotal,
                   owner: seletedAdministrationDetails,
-                  invoiceNo
+                  invoiceNo,
+                  charges,
                 },
               });
             }}

@@ -15,6 +15,7 @@ export default router.get("/api/user/getLogo", async (req, res) => {
     res.status(200).json({
       success: true,
       photo : user.photo,
+      companyName : user.companyName
     });
   } catch (error) {
     console.log("Error : ", error);
