@@ -10,8 +10,8 @@ import Loader from "../components/Loader/Loader.jsx";
 const baseURL = process.env.REACT_APP_BASE_API_URL;
 
 export default function Login() {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
