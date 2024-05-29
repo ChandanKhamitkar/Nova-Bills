@@ -17,13 +17,16 @@ export default function Step2() {
     billedTo: {},
     items: [],
     owner : {},
+    grandAmount : 0,
     grandTotal : 0,
-    invoiceNo : 0
+    invoiceNo : 0,
+    charges : {}
   });
   useEffect(() => {
     if (location.state) {
-      const { billedTo, items, owner, grandTotal, invoiceNo } = location.state;
-      setInvoiceDetails({ billedTo, items, owner, grandTotal, invoiceNo });
+      const { billedTo, items, owner, grandAmount, grandTotal, invoiceNo, charges } = location.state;
+      setInvoiceDetails({ billedTo, items, owner, grandAmount, grandTotal, invoiceNo, charges });
+      console.log(location.state);
     }
   }, [location.state]);
 
