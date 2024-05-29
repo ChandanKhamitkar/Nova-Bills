@@ -226,7 +226,7 @@ export default function InvoiceInput() {
       <img
         src={blueBack}
         alt="blueBall"
-        className="absolute top-0 right-10 opacity-20 w-[3000px] md:right-0 sm:top-32"
+        className="top-0 right-10 opacity-20 w-[3000px] md:right-0 sm:top-32 fixed"
       />
       <div className="w-3/4 md:w-[85%] h-auto bg-white/10 backdrop-blur-md bg-opacity-35 flex justify-center items-center mx-auto my-10 rounded-md border border-white/40 shadow-md shadow-slate-700">
         <form
@@ -301,7 +301,7 @@ export default function InvoiceInput() {
             </div>
           </div>
 
-          <div className="flex justify-center items-center space-x-4 bg-white/20 bg-opacity-50 rounded-lg p-6 w-fit md:w-[90%] shadow-lg ">
+          <div className="flex justify-center items-center space-x-4 bg-white/20 bg-opacity-50 rounded-lg p-6 w-fit md:w-[90%] shadow-lg md:flex-wrap md:space-x-0 md:gap-4">
             <div className="flex flex-col justify-center items-start gap-2">
               <label
                 htmlFor="gstPercentage"
@@ -318,7 +318,7 @@ export default function InvoiceInput() {
                 min="0"
                 max="100"
                 step="0.5"
-                className="outline-none py-2 w-60 rounded-md pl-3 border-2  border-[#8758FF] bg-white/10 no-arrows placeholder-white"
+                className="outline-none py-2 w-60 md2:w-44 rounded-md pl-3 border-2  border-[#8758FF] bg-white/10 no-arrows placeholder-white"
               />
             </div>
             <div className="flex flex-col justify-center items-start gap-2">
@@ -334,7 +334,7 @@ export default function InvoiceInput() {
                 type="number"
                 placeholder="Enter Shipping Charges"
                 name="shippingCharges"
-                className="outline-none py-2 w-60 rounded-md pl-3 border-2  border-[#8758FF] bg-white/10 no-arrows placeholder-white"
+                className="outline-none py-2 w-60 md2:w-44 rounded-md pl-3 border-2  border-[#8758FF] bg-white/10 no-arrows placeholder-white"
               />
             </div>
           </div>
