@@ -5,6 +5,7 @@ import { MoveRight } from "lucide-react";
 import PreNavbar from "../components/Navbars/PreNavbar.jsx";
 import OpenSource from "../components/Cards/opensource/OpenSource.jsx";
 import Footer from "../components/Footer/Footer.jsx";
+import { TracingBeamDemo } from "../components/TacingBeam/TracingBeamDemo.jsx";
 
 
 export default function LandingPage() {
@@ -39,6 +40,8 @@ export default function LandingPage() {
           <MoveRight size={19} />
         </button>
       </div>
+
+      <TracingBeamDemo />
       <OpenSource />
 
       <Footer/>
