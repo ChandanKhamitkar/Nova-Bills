@@ -40,13 +40,13 @@ export default function OTPModal(props) {
     <div
       ref={modalRef}
       onClick={closeModal}
-      className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center select-none"
+      className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center select-none z-20"
     >
       <div className="mt-10 flex flex-col gap-5 text-white mobile:mx-6">
         <button onClick={props.onClose} className="place-self-end">
           <X size={30} />
         </button>
-        <div className="max-w-[500px] max-h-72 py-6 px-4 flex flex-col items-center  bg-blue-600 rounded-xl space-y-5 shadow-lg shadow-gray-800">
+        <div className="max-w-[500px] max-h-80 py-6 px-4 flex flex-col items-center  bg-blue-600 rounded-xl space-y-5 shadow-lg shadow-gray-800">
           <h1 className="uppercase text-2xl font-extrabold">
             otp verification
           </h1>

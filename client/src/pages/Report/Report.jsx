@@ -31,6 +31,8 @@ export default function Report() {
   const [isMonth, setIsMonth] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    
     const fetchData = async () => {
       try {
         const token = Cookies.get("nb_token");

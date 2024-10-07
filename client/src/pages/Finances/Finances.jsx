@@ -30,6 +30,8 @@ export default function Finances() {
   const [HeadTitles, setHeadTitles] = useState([]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    
     const fetchData = async () => {
       try {
         const token = Cookies.get("nb_token");
@@ -372,7 +374,7 @@ const MoreDetails = ({
         toggleMoreVisible(index);
       }}
       size={18}
-      className="float-right mr-1 mb-4 hover:text-gray-800"
+      className="float-right mr-1 mb-4 hover:text-gray-800 cursor-pointer"
     />
     <ul className="space-y-2">
       <li

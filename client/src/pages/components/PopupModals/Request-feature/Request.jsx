@@ -49,7 +49,7 @@ export default function Request(props) {
         <button onClick={props.onClose} className="place-self-end">
           <X size={30} />
         </button>
-        <div className="w-[500px] min-h-72 py-6 px-4 flex flex-col items-center bg-blue-600 rounded-xl space-y-5 shadow-lg shadow-gray-800">
+        <div className="w-[500px] sm:w-[100%] min-h-72 py-6 px-4 flex flex-col items-center bg-blue-600 rounded-xl space-y-5 shadow-lg shadow-gray-800">
         <Card title={"Got an idea to improve our service?"} subTitle={"We'd love to hear from you! Drop us an message with your suggestions."} roundedFull={true} />
 
           <form onSubmit={onSubmit} className="w-full space-y-5 flex flex-col items-center">

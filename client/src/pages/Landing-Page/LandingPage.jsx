@@ -19,10 +19,10 @@ export default function LandingPage() {
         fill="white"
       />
       <div className=" p-4 max-w-7xl h-screen  mx-auto relative z-10  w-full flex flex-col justify-center items-center">
-        <h1 className="text-7xl md:text-6xl md2:text-5xl mobile:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
+        <h1 className="py-3 text-7xl md:text-6xl md2:text-5xl mobile:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
           Streamline your invoicing <br /> process effortlessly
         </h1>
-        <p className="mt-4 font-normal text-base text-neutral-300 max-w-lg text-center mx-auto md2:text-sm mobile:text-xs">
+        <p className="mt-4 font-normal text-base text-neutral-300 max-w-lg text-center mx-auto md2:text-sm mobile:text-xs mobile:text-neutral-400">
           Say goodbye to tedious paperwork and hello to seamless transactions.
           With our intuitive platform, managing invoices has never been easier.
           Stay organized, save time, and focus on what you do best growing your

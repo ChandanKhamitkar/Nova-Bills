@@ -89,8 +89,8 @@ export default function PreNavbar() {
           <div className="absolute z-50 cursor-pointer right-16 shadow-sm shadow-white/20 md:block bg-white w-[150px] mobile:top-15 mobile:right-10 text-black rounded-lg border border-slate-600 p-4">
             <ul className="space-y-3">
               <li className="opacity-50" >Feature</li>
-              <li className="opacity-50" >Blog</li>
-              <li className="opacity-50" >Pricing</li>
+              {/* <li className="opacity-50" >Blog</li>
+              <li className="opacity-50" >Pricing</li> */}
               <li onClick={() => navigate("/login")}>Log in</li>
               <li onClick={() => navigate("/signup")}>Sign up</li>
             </ul>

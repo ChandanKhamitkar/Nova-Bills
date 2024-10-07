@@ -95,7 +95,7 @@ export default function NavbarAfterLogin() {
             />
 
             {menuVisible && (
-              <div className="w-[300px] absolute right-8 top-16 bg-white border border-gray-300 rounded-lg shadow-md p-2 z-[100] space-y-6 px-3 py-4">
+              <div className="w-[300px] absolute right-8 sm:right-7 top-16 bg-white border border-gray-300 rounded-lg shadow-md p-2 z-[100] space-y-6 px-3 py-4">
                 <div className="flex justify-start items-center space-x-4">
                   <img
                     src={logo ? `${logo}` : userLogoBlue}
@@ -106,7 +106,7 @@ export default function NavbarAfterLogin() {
                     <p className="text-xl font-semibold text-black md:text-base">
                       {user.User.companyName}
                     </p>
-                    <p className="text-sm font-medium text-slate-600 md:text-xs w-[80%] overflow-clip">
+                    <p className="text-sm font-medium text-slate-600 md:text-xs w-[80%] truncate overflow-hidden whitespace-nowrap">
                       {user.User.email}
                     </p>
                   </div>

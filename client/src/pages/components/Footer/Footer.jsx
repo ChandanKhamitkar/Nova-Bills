@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <div className="my-10 text-center text-white ">
-      <p>Made with ❤️ By Khamitkar Chandan</p>
+      <p>Made with ❤️ By Chandan Khamitkar</p>
     </div>
   );
 }

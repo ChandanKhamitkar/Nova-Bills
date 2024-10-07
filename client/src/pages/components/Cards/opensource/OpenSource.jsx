@@ -1,14 +1,14 @@
 export default function OpenSource() {
     return (
       <div className="w-full py-6 text-center flex flex-col space-y-6 justify-center items-center antialiased bg-gray-900/20 min-h-[300px] border-y border-y-gray-900 backdrop-blur-sm text-white">
-        <p className="text-5xl font-bold tracking-wide drop-shadow-md bg-gradient-to-r bg-clip-text text-transparent from-white to-slate-500">Proudly Open Source</p>
+        <p className="py-4 text-5xl font-bold tracking-wide drop-shadow-md bg-gradient-to-r bg-clip-text text-transparent from-white to-slate-500">Proudly Open Source</p>
         <p className="flex justify-center items-center text-gray-500 w-[30%] text-center text-wrap md2:text-sm md2:w-[40%]">
           Our source code is available on GitHub - feel free to read, review, or
           contribute to it however you want!
         </p>
         <section class="flex justify-center items-center">
           <a
-            href="https://github.com/Chandan-6/Nova-Bills"
+            href="https://github.com/ChandanKhamitkar/Nova-Bills"
             target="blank"
             className="group flex justify-center p-2 rounded-md drop-shadow-xl bg-white text-black font-semibold hover:px-7 hover:rounded-2xl transition-all duration-500 "
           >
