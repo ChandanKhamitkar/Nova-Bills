@@ -59,7 +59,7 @@ export default function Login() {
         alt="blueBall"
         className="absolute top-0 right-80 opacity-15  w-[500px] sm:right-0"
       />
-      <div className="h-3/4 flex justify-center items-center rounded-2xl">
+      <div className="h-3/4 flex justify-center items-center rounded-2xl z-10">
         <div className="w-[450px] rounded-2xl h-auto border border-gray-700 md:max-w-[350px]">
           <Card
             title={"Sign in to NovaBills"}
