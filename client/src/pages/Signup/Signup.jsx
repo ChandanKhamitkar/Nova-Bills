@@ -117,18 +117,18 @@ export default function Signup() {
         alt="blueBall"
         className="absolute top-0 right-80 opacity-15 w-[500px] sm:right-0"
       />
-      <div className="h-3/4 flex justify-center items-center">
+      <div className="h-3/4 flex justify-center items-center z-10">
         <div className="w-[450px] rounded-2xl h-auto border border-gray-700 md:max-w-[350px]">
           <Card
             title={"Create Your NovaBills account"}
             subTitle={"Get started for free."}
           />
 
-          <div className="px-6 py-5 bg-gray-950 bg-opacity-30 rounded-b-2xl">
+          <div className="px-6 py-5 bg-gray-950 bg-opacity-30 rounded-b-2xl  z-10">
             <form className="flex flex-col justify-center items-center space-y-4">
               <div className="w-[80%] space-y-5">
                 {signupInfo.map((item, index) => (
-                  <div key={index} className=" flex flex-col space-y-1">
+                  <div key={index} className="flex flex-col space-y-1">
                     <LabelTag title={item.title} name={item.name} />
                     <InputTag
                       formData={formData}
